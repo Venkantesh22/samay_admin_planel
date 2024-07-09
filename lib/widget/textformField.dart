@@ -88,16 +88,43 @@ class _FormCustomTextFieldState extends State<FormCustomTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.title,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: Dimensions.dimenisonNo16,
-            fontFamily: GoogleFonts.roboto().fontFamily,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.15,
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: widget.title,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: Dimensions.dimenisonNo18,
+                  fontFamily: GoogleFonts.roboto().fontFamily,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.15,
+                ),
+              ),
+              TextSpan(
+                text: ' *',
+                style: TextStyle(
+                  color: const Color(0xFFFC0000),
+                  fontSize: Dimensions.dimenisonNo18,
+                  fontFamily: GoogleFonts.roboto().fontFamily,
+                  fontWeight: FontWeight.w500,
+                  height: 0,
+                  letterSpacing: 0.15,
+                ),
+              ),
+            ],
           ),
         ),
+        // Text(
+        //   widget.title,,
+        //   style: TextStyle(
+        //     color: Colors.black,
+        //     fontSize: Dimensions.dimenisonNo16,
+        //     fontFamily: GoogleFonts.roboto().fontFamily,
+        //     fontWeight: FontWeight.w500,
+        //     letterSpacing: 0.15,
+        //   ),
+        // ),
         SizedBox(
           height: Dimensions.dimenisonNo5,
         ),

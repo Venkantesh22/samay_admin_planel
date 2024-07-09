@@ -91,16 +91,43 @@ class _SalonTimeSectionState extends State<SalonTimeSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Select the timing of salon. ",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: Dimensions.dimenisonNo16,
-            fontFamily: GoogleFonts.roboto().fontFamily,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.15,
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: "Select the timing of ${GlobalVariable.salon}",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: Dimensions.dimenisonNo18,
+                  fontFamily: GoogleFonts.roboto().fontFamily,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.15,
+                ),
+              ),
+              TextSpan(
+                text: ' *',
+                style: TextStyle(
+                  color: const Color(0xFFFC0000),
+                  fontSize: Dimensions.dimenisonNo18,
+                  fontFamily: GoogleFonts.roboto().fontFamily,
+                  fontWeight: FontWeight.w500,
+                  height: 0,
+                  letterSpacing: 0.15,
+                ),
+              ),
+            ],
           ),
         ),
+        // Text(
+        //   "Select the timing of salon. ",
+        //   style: TextStyle(
+        //     color: Colors.black,
+        //     fontSize: Dimensions.dimenisonNo16,
+        //     fontFamily: GoogleFonts.roboto().fontFamily,
+        //     fontWeight: FontWeight.w500,
+        //     letterSpacing: 0.15,
+        //   ),
+        // ),
         SizedBox(
           height: Dimensions.dimenisonNo5,
         ),
@@ -156,45 +183,7 @@ class _SalonTimeSectionState extends State<SalonTimeSection> {
                         ),
                       ),
                     ),
-
-                    // TextFormField(
-                    //   controller: widget.openController,
-                    //   readOnly: true,
-                    //   onTap: () {
-                    //     setState(() {
-                    //       _selectTime(context, widget.openController)
-                    //           .then((value) {
-                    //         Provider.of<GlobalVariables>(context, listen: false)
-                    //             .setOpeningTime(
-                    //                 "${widget.openController.text}");
-
-                    //         //           GlobalVariable.openTimeGlo =
-                    //         //               ;
-                    //       });
-                    //     });
-                    //   },
-                    //   // onTap: () => _selectTime(context),
-                    //   cursorHeight: Dimensions.dimenisonNo16,
-                    //   style: TextStyle(fontSize: Dimensions.dimenisonNo12),
-                    //   keyboardType: TextInputType.phone,
-                    //   decoration: InputDecoration(
-                    //     contentPadding: EdgeInsets.symmetric(
-                    //         horizontal: Dimensions.dimenisonNo10,
-                    //         vertical: Dimensions.dimenisonNo10),
-                    //     border: OutlineInputBorder(
-                    //       borderRadius:
-                    //           BorderRadius.circular(Dimensions.dimenisonNo16),
-                    //     ),
-                    //   ),
-                    //   validator: (val) {
-                    //     if (val == null || val.isEmpty) {
-                    //       return 'Enter your Time';
-                    //     }
-                    //     return null;
-                    //   },
-                    // ),
-                  ),
-                  Text(GlobalVariable.OpenTime.format(context).toString())
+                  )
                 ],
               ),
               SizedBox(

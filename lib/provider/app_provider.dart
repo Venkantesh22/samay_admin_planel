@@ -1,5 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:typed_data';
+
+import 'package:samay_admin_plan/models/salon_infor_model.dart';
 import 'package:universal_io/io.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +24,42 @@ class AppProvider with ChangeNotifier {
     } catch (e) {
       print('Error fetching admin info: $e');
     }
+  }
+
+  // Add a Salon infor to firebase
+  void addsalonInfoForm(
+      Uint8List image,
+      String salonName,
+      String email,
+      String mobile,
+      String whatApp,
+      String salonType,
+      String description,
+      String address,
+      String openTime,
+      String closeTime,
+      String instagram,
+      String facebook,
+      String googleMap,
+      String linked,
+      BuildContext context) async {
+    SalonModel salonModel = await FirebaseFirestoreHelper.instance.addSalon(
+        image,
+        salonName,
+        email,
+        mobile,
+        whatApp,
+        salonType,
+        description,
+        address,
+        openTime,
+        closeTime,
+        instagram,
+        facebook,
+        googleMap,
+        linked,
+        context);
+    notifyListeners();
   }
 
   //------- Admin Information

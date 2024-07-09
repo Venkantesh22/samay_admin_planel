@@ -30,7 +30,9 @@ class _WeekRowState extends State<WeekRow> {
       'Close',
     ];
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: Dimensions.dimenisonNo30),
+      padding: EdgeInsets.symmetric(
+          horizontal: Dimensions.dimenisonNo30,
+          vertical: Dimensions.dimenisonNo10),
       child: Row(
         children: [
           Text(

@@ -45,6 +45,7 @@ dependencies:
   firebase_storage: ^11.6.0
   universal_io: ^2.2.2
   file_picker: ^8.0.0+1
+  font_awesome_flutter: ^10.7.0
 
 dev_dependencies:
   flutter_test:

@@ -1,33 +1,50 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:samay_admin_plan/constants/global_variable.dart';
+import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
 
 void showMessage(String message) {
   Fluttertoast.showToast(
+    webPosition: "center",
     msg: message,
     backgroundColor: Colors.white,
     textColor: Colors.black,
-    fontSize: 16.0,
+    fontSize: Dimensions.dimenisonNo16,
   );
 }
 
 showLoaderDialog(BuildContext context) {
   AlertDialog alert = AlertDialog(
+    backgroundColor: AppColor.bgForAdminCreateSec,
     content: Builder(builder: (context) {
       return SizedBox(
-        width: Dimensions.dimenisonNo100,
-        child: Column(
+        height: Dimensions.dimenisonNo40,
+        width: Dimensions.dimenisonNo200,
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            SizedBox(
+              width: Dimensions.dimenisonNo20,
+            ),
             const CircularProgressIndicator(
               color: Color(0xffe16555),
             ),
             SizedBox(
-              height: Dimensions.dimenisonNo18,
+              width: Dimensions.dimenisonNo18,
             ),
             Container(
-                margin: const EdgeInsets.only(left: 7),
-                child: const Text("Loading...")),
+                margin: EdgeInsets.only(left: Dimensions.dimenisonNo10),
+                child: Text(
+                  "Loading...",
+                  style: TextStyle(
+                      fontSize: Dimensions.dimenisonNo16,
+                      fontFamily: GoogleFonts.roboto().fontFamily,
+                      fontWeight: FontWeight.w500),
+                )),
           ],
         ),
       );
@@ -69,8 +86,8 @@ String getMessageFromErrorCode(String errorCode) {
       return "Too many requests to log into this account.";
     case "ERROR_INVALID_EMAIL":
       return "Email address is invalid.";
-    // case "invalid-email":
-    //   return "Email address is invalid.";
+    case "invalid-email":
+      return "Email address is invalid.";
     default:
       return "Login failed. Please try again.";
   }
@@ -107,6 +124,75 @@ bool signUpVaildation(
     return false;
   } else if (password.isEmpty) {
     showMessage("Password is Empty");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+bool formCreateAccount(
+  String salonName,
+  String email,
+  String mobile,
+  String whatApp,
+  String salonType,
+  String descrition,
+  String address,
+  String openTime,
+  String closeTime,
+  String instagram,
+  String facebook,
+  String googleMap,
+  String linked,
+  Uint8List image,
+) {
+  if (email.isEmpty &&
+      salonName.isEmpty &&
+      mobile.isEmpty &&
+      whatApp.isEmpty &&
+      salonType.isEmpty &&
+      descrition.isEmpty &&
+      address.isEmpty &&
+      openTime.isEmpty &&
+      closeTime.isEmpty &&
+      instagram.isEmpty &&
+      facebook.isEmpty &&
+      googleMap.isEmpty &&
+      linked.isEmpty) {
+    showMessage("All Fields are empty");
+    return false;
+  } else if (salonName.isEmpty) {
+    showMessage("${GlobalVariable.salon} is Empty");
+    return false;
+  } else if (email.isEmpty) {
+    showMessage("Email is Empty");
+    return false;
+  } else if (image.isEmpty) {
+    showMessage("Images is not select");
+    return false;
+  } else if (mobile.isEmpty) {
+    if (mobile.length < 10) {
+      showMessage("Phone is Empty");
+      return false;
+    }
+    return false;
+  } else if (whatApp.isEmpty) {
+    showMessage("WhatApp number not is Empty");
+    return false;
+  } else if (salonType.isEmpty) {
+    showMessage("Select a type of salon");
+    return false;
+  } else if (descrition.isEmpty) {
+    showMessage("descrition not is Empty");
+    return false;
+  } else if (address.isEmpty) {
+    showMessage("address not is Empty");
+    return false;
+  } else if (openTime.isEmpty) {
+    showMessage("${GlobalVariable.salon} open time is not select");
+    return false;
+  } else if (closeTime.isEmpty) {
+    showMessage("${GlobalVariable.salon} closing time is not select");
     return false;
   } else {
     return true;
