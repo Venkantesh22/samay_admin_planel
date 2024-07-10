@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -122,6 +121,12 @@ bool signUpVaildation(
   } else if (phone.isEmpty) {
     showMessage("Phone is Empty");
     return false;
+  } else if (phone.length == 10) {
+    showMessage("Enter 10 digit mobile number.");
+    return false;
+  } else if (!RegExp(r'^\d+$').hasMatch(phone)) {
+    showMessage('Please enter only digits in Mobile');
+    return false;
   } else if (password.isEmpty) {
     showMessage("Password is Empty");
     return false;
@@ -171,13 +176,16 @@ bool formCreateAccount(
     showMessage("Images is not select");
     return false;
   } else if (mobile.isEmpty) {
-    if (mobile.length < 10) {
-      showMessage("Phone is Empty");
-      return false;
-    }
+    showMessage("Phone is Empty");
+    return false;
+  } else if (mobile.length == 10) {
+    showMessage("Enter 10 digit mobile number.");
     return false;
   } else if (whatApp.isEmpty) {
     showMessage("WhatApp number not is Empty");
+    return false;
+  } else if (whatApp.length == 10) {
+    showMessage("Enter 10 digit mobile number.");
     return false;
   } else if (salonType.isEmpty) {
     showMessage("Select a type of salon");
@@ -193,6 +201,50 @@ bool formCreateAccount(
     return false;
   } else if (closeTime.isEmpty) {
     showMessage("${GlobalVariable.salon} closing time is not select");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+bool formWeekday(
+  String monday,
+  String tuesday,
+  String wednesday,
+  String thursday,
+  String friday,
+  String saturday,
+  String sunday,
+) {
+  if (monday.isEmpty &&
+      tuesday.isEmpty &&
+      wednesday.isEmpty &&
+      thursday.isEmpty &&
+      friday.isEmpty &&
+      saturday.isEmpty &&
+      sunday.isEmpty) {
+    showMessage("All Fields are empty");
+    return false;
+  } else if (monday.isEmpty) {
+    showMessage("Select a Time on Monday");
+    return false;
+  } else if (tuesday.isEmpty) {
+    showMessage("Select a Time on Tuesday");
+    return false;
+  } else if (wednesday.isEmpty) {
+    showMessage("Select a Time on Wednesday");
+    return false;
+  } else if (thursday.isEmpty) {
+    showMessage("Select a Time on Thursday");
+    return false;
+  } else if (friday.isEmpty) {
+    showMessage("Select a Time on Friday");
+    return false;
+  } else if (saturday.isEmpty) {
+    showMessage("Select a Time on Saturday");
+    return false;
+  } else if (sunday.isEmpty) {
+    showMessage("Select a Time on Sunday");
     return false;
   } else {
     return true;

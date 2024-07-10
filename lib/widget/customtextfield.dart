@@ -66,14 +66,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
 // Text field for Profile form
 class FormCustomTextField extends StatefulWidget {
   final TextEditingController controller;
-  final TextInputType? keyboardType;
+
   int? maxline;
   final String title;
 
   FormCustomTextField({
     Key? key,
     required this.controller,
-    this.keyboardType,
     this.maxline = 1,
     required this.title,
   }) : super(key: key);
@@ -137,7 +136,6 @@ class _FormCustomTextFieldState extends State<FormCustomTextField> {
             cursorHeight: Dimensions.dimenisonNo16,
             style: const TextStyle(fontSize: 12),
             controller: widget.controller,
-            keyboardType: widget.keyboardType,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(
                   horizontal: Dimensions.dimenisonNo10,

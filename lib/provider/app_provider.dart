@@ -3,28 +3,26 @@
 import 'dart:typed_data';
 
 import 'package:samay_admin_plan/models/salon_infor_model.dart';
-import 'package:universal_io/io.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
-import 'package:samay_admin_plan/constants/constants.dart';
+
 import 'package:samay_admin_plan/firebase_helper/firebase_firestore_helper/firebase_firestore.dart';
-import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebase_storage_helper.dart';
-import 'package:samay_admin_plan/models/admin_models.dart';
+import 'package:samay_admin_plan/models/salon_form_models/admin_models.dart';
 
 class AppProvider with ChangeNotifier {
   AdminModel? _adminModel;
 
   AdminModel get getAdminInformation => _adminModel!;
 
-  void getAdminInfoFirebase() async {
-    try {
-      _adminModel =
-          await FirebaseFirestoreHelper.instance.getAdminInformation();
-      notifyListeners();
-    } catch (e) {
-      print('Error fetching admin info: $e');
-    }
-  }
+  // void getAdminInfoFirebase() async {
+  //   try {
+  //     _adminModel =
+  //         await FirebaseFirestoreHelper.instance.getAdminInformation();
+  //     notifyListeners();
+  //   } catch (e) {
+  //     print('Error fetching admin info: $e');
+  //   }
+  // }
 
   // Add a Salon infor to firebase
   void addsalonInfoForm(

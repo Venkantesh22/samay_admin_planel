@@ -15,7 +15,7 @@ import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:samay_admin_plan/widget/customauthbutton.dart';
-import 'package:samay_admin_plan/widget/textformField.dart';
+import 'package:samay_admin_plan/widget/customtextfield.dart';
 
 class SingupScreen extends StatefulWidget {
   const SingupScreen({Key? key}) : super(key: key);
@@ -152,8 +152,7 @@ class _SingupScreenState extends State<SingupScreen> {
 
                           if (isLogined) {
                             Routes.instance.pushAndRemoveUntil(
-                                widget: const AccountCreateForm(),
-                                context: context);
+                                widget: const HomeScreen(), context: context);
                           }
                         }
                       },

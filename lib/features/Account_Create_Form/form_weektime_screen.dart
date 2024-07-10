@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:samay_admin_plan/constants/global_variable.dart';
+import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/week_row.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
@@ -82,7 +82,18 @@ class _FormTimeSectionState extends State<FormTimeSection> {
                       padding: EdgeInsets.symmetric(
                           horizontal: Dimensions.dimenisonNo10,
                           vertical: Dimensions.dimenisonNo20),
-                      child: CustomAuthButton(text: "Save", ontap: () {}),
+                      child: CustomAuthButton(
+                          text: "Save",
+                          ontap: () {
+                            bool _isVaildated = formWeekday(
+                                mondayController.text,
+                                tuesdayController.text,
+                                wednesdayController.text,
+                                thursdayController.text,
+                                fridayController.text,
+                                saturdayController.text,
+                                sundayController.text);
+                          }),
                     ),
                   ],
                 ),

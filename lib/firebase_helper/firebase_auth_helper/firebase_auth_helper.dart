@@ -6,8 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
+import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebase_storage_helper.dart';
-import 'package:samay_admin_plan/models/admin_models.dart';
+import 'package:samay_admin_plan/models/salon_form_models/admin_models.dart';
 
 class FirebaseAuthHelper {
   static FirebaseAuthHelper instance = FirebaseAuthHelper();
@@ -40,6 +41,7 @@ class FirebaseAuthHelper {
 
       // Upload image to storage
       String uidOfCreateUser = userCredential.user!.uid;
+
       final adminData =
           AdminModel(uidOfCreateUser, name, email, int.parse(number), password);
 

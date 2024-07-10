@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:samay_admin_plan/constants/router.dart';
+import 'package:samay_admin_plan/features/Account_Create_Form/account_create_form.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/widget/custom_appbar.dart';
@@ -18,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
-    appProvider.getAdminInfoFirebase();
+    // appProvider.getAdminInfoFirebase();
     getCategoruList();
     super.initState();
   }
@@ -39,10 +41,17 @@ class _HomeScreenState extends State<HomeScreen> {
             Text("Hii"),
             ElevatedButton(
               onPressed: () {
+                Routes.instance
+                    .push(widget: AccountCreateForm(), context: context);
+              },
+              child: Text("Form"),
+            ),
+            ElevatedButton(
+              onPressed: () {
                 FirebaseAuthHelper.instance.signOut();
               },
-              child: Text("SingOut"),
-            )
+              child: Text("singup"),
+            ),
           ],
         ),
       ),

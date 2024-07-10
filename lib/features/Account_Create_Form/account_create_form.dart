@@ -3,6 +3,7 @@
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -12,12 +13,11 @@ import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/salon_social_media_add.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/saloon_Time.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/form_weektime_screen.dart';
-import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebase_storage_helper.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
 import 'package:samay_admin_plan/widget/customauthbutton.dart';
-import 'package:samay_admin_plan/widget/textformField.dart';
+import 'package:samay_admin_plan/widget/customtextfield.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AccountCreateForm extends StatefulWidget {
@@ -40,6 +40,7 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
   final TextEditingController _facebook = TextEditingController();
   final TextEditingController _googleMap = TextEditingController();
   final TextEditingController _linked = TextEditingController();
+  String? adminUid = FirebaseAuth.instance.currentUser?.uid;
 
   //! For DropDownList
   String? _selectedSalonType;
@@ -163,19 +164,16 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                   FormCustomTextField(
                     controller: _email,
                     title: "Email ID",
-                    keyboardType: TextInputType.emailAddress,
                   ),
                   SizedBox(height: Dimensions.dimenisonNo10),
                   FormCustomTextField(
                     controller: _mobile,
                     title: "Mobile No",
-                    keyboardType: TextInputType.number,
                   ),
                   SizedBox(height: Dimensions.dimenisonNo10),
                   FormCustomTextField(
                     controller: _whatApp,
                     title: "WhatApp No",
-                    keyboardType: TextInputType.number,
                   ),
                   SizedBox(height: Dimensions.dimenisonNo10),
                   Text.rich(
@@ -243,6 +241,7 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                     maxline: 5,
                   ),
                   SizedBox(height: Dimensions.dimenisonNo10),
+                  // select a time
                   SalonTimeSection(
                     openController: _openTime,
                     closeController: _closeTime,
@@ -293,6 +292,13 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                   CustomAuthButton(
                     text: "Save",
                     ontap: () {
+                      // print(" open Time :${_openTime.text} \n");
+                      // print(" close Time :${_closeTime.text}");
+                      // print(" open Time glo :${GlobalVariable.OpenTime} \n");
+                      // print(" close Time glo :${GlobalVariable.CloseTime}");
+                      print(" open Time  :${GlobalVariable.OpenTimeGlo} \n");
+                      print(" close Time  :${GlobalVariable.closerTimeGlo}");
+
                       bool _isVaildated = formCreateAccount(
                         _salonName.text,
                         _email.text,
@@ -310,27 +316,27 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                         selectedImage!,
                       );
 
-                      if (_isVaildated) {
-                        appProvider.addsalonInfoForm(
-                            selectedImage!,
-                            _salonName.text.trim(),
-                            _email.text.trim(),
-                            _mobile.text.trim(),
-                            _whatApp.text.trim(),
-                            _selectedSalonType!,
-                            _descrition.text.trim(),
-                            _address.text.trim(),
-                            _openTime.text.trim(),
-                            _closeTime.text.trim(),
-                            _instagram.text.trim(),
-                            _facebook.text.trim(),
-                            _googleMap.text.trim(),
-                            _instagram.text.trim(),
-                            context);
-                        showMessage("Salon Information Successfully add");
-                        Routes.instance.push(
-                            widget: const FormTimeSection(), context: context);
-                      }
+                      // if (_isVaildated) {
+                      //   appProvider.addsalonInfoForm(
+                      //       selectedImage!,
+                      //       _salonName.text.trim(),
+                      //       _email.text.trim(),
+                      //       _mobile.text.trim(),
+                      //       _whatApp.text.trim(),
+                      //       _selectedSalonType!,
+                      //       _descrition.text.trim(),
+                      //       _address.text.trim(),
+                      //       _openTime.text.trim(),
+                      //       _closeTime.text.trim(),
+                      //       _instagram.text.trim(),
+                      //       _facebook.text.trim(),
+                      //       _googleMap.text.trim(),
+                      //       _instagram.text.trim(),
+                      //       context);
+                      //   showMessage("Salon Information Successfully add");
+                      Routes.instance.push(
+                          widget: const FormTimeSection(), context: context);
+                      // }
                     },
                   ),
                 ],
@@ -342,7 +348,6 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
     );
   }
 }
-
 
 // class AccountCreateForm extends StatefulWidget {
 //   const AccountCreateForm({Key? key}) : super(key: key);

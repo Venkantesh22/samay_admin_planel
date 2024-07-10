@@ -41,20 +41,6 @@ class _SalonTimeSectionState extends State<SalonTimeSection> {
     return '${hours.toString().padLeft(2, '0')} : ${time.minute.toString().padLeft(2, '0')} $period';
   }
 
-  // Show TimePicker and update the controller
-  Future<void> _selectTime(
-      BuildContext context, TextEditingController controller) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-    if (picked != null) {
-      setState(() {
-        controller.text = _formatTimeOfDay(picked);
-      });
-    }
-  }
-
 //!-------------------------------------------
 // Function for selection current Time
   TimeOfDay _selectedTimeOpen = TimeOfDay(hour: 9, minute: 0);
@@ -66,13 +52,14 @@ class _SalonTimeSectionState extends State<SalonTimeSection> {
     if (picked != null && picked != _selectedTimeOpen) {
       setState(() {
         _selectedTimeOpen = picked;
-        GlobalVariable.OpenTime = _selectedTimeOpen;
+        GlobalVariable.OpenTime = picked;
+        GlobalVariable.OpenTimeGlo = _formatTimeOfDay(picked);
       });
     }
   }
 
 // Function for selection current Time
-  TimeOfDay _selectedTimeClose = TimeOfDay(hour: 9, minute: 0);
+  TimeOfDay _selectedTimeClose = TimeOfDay(hour: 6, minute: 0);
 
   //Function for set time
   Future<void> _selectTimesClose(BuildContext context) async {
@@ -81,13 +68,13 @@ class _SalonTimeSectionState extends State<SalonTimeSection> {
     if (picked != null && picked != _selectedTimeClose) {
       setState(() {
         _selectedTimeClose = picked;
-        GlobalVariable.CloseTime = _selectedTimeClose;
+        GlobalVariable.CloseTime = picked;
+        GlobalVariable.closerTimeGlo = _formatTimeOfDay(picked);
       });
     }
   }
 
   Widget build(BuildContext context) {
-    // final globalVariables = Provider.of<GlobalVariables>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -118,16 +105,6 @@ class _SalonTimeSectionState extends State<SalonTimeSection> {
             ],
           ),
         ),
-        // Text(
-        //   "Select the timing of salon. ",
-        //   style: TextStyle(
-        //     color: Colors.black,
-        //     fontSize: Dimensions.dimenisonNo16,
-        //     fontFamily: GoogleFonts.roboto().fontFamily,
-        //     fontWeight: FontWeight.w500,
-        //     letterSpacing: 0.15,
-        //   ),
-        // ),
         SizedBox(
           height: Dimensions.dimenisonNo5,
         ),

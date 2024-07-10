@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:samay_admin_plan/models/admin_models.dart';
+import 'package:samay_admin_plan/models/salon_form_models/admin_models.dart';
 import 'package:samay_admin_plan/models/salon_infor_model.dart';
 
 class FirebaseStorageHelper {
@@ -26,7 +26,7 @@ class FirebaseStorageHelper {
   Future<String?> uploadImageToStorageSalon(
       SalonModel salonModel, Uint8List selectedImage) async {
     try {
-      Reference imageRef = _storage.ref("Salon images/${salonModel.id}.jpg");
+      Reference imageRef = _storage.ref("Salonimages/${salonModel.id}.jpg");
       UploadTask task = imageRef.putData(
           selectedImage, SettableMetadata(contentType: 'image/jpeg'));
       TaskSnapshot snapshot = await task;

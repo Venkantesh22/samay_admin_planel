@@ -34,6 +34,7 @@ class _WeekRowState extends State<WeekRow> {
           horizontal: Dimensions.dimenisonNo30,
           vertical: Dimensions.dimenisonNo10),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             widget.dayOfWeek,
@@ -44,7 +45,6 @@ class _WeekRowState extends State<WeekRow> {
               letterSpacing: 0.02,
             ),
           ),
-          Spacer(),
           SizedBox(
             height: Dimensions.dimenisonNo50,
             width: Dimensions.dimenisonNo200,

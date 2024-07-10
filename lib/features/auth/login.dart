@@ -12,7 +12,7 @@ import 'package:samay_admin_plan/utility/dimenison.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:samay_admin_plan/utility/images.dart';
 import 'package:samay_admin_plan/widget/customauthbutton.dart';
-import 'package:samay_admin_plan/widget/textformField.dart';
+import 'package:samay_admin_plan/widget/customtextfield.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
