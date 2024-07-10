@@ -121,7 +121,7 @@ bool signUpVaildation(
   } else if (phone.isEmpty) {
     showMessage("Phone is Empty");
     return false;
-  } else if (phone.length == 10) {
+  } else if (phone.length != 10) {
     showMessage("Enter 10 digit mobile number.");
     return false;
   } else if (!RegExp(r'^\d+$').hasMatch(phone)) {
@@ -178,13 +178,13 @@ bool formCreateAccount(
   } else if (mobile.isEmpty) {
     showMessage("Phone is Empty");
     return false;
-  } else if (mobile.length == 10) {
+  } else if (mobile.length != 10) {
     showMessage("Enter 10 digit mobile number.");
     return false;
   } else if (whatApp.isEmpty) {
     showMessage("WhatApp number not is Empty");
     return false;
-  } else if (whatApp.length == 10) {
+  } else if (whatApp.length != 10) {
     showMessage("Enter 10 digit mobile number.");
     return false;
   } else if (salonType.isEmpty) {

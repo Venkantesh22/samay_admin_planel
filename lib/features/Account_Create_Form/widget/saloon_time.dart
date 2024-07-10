@@ -53,7 +53,7 @@ class _SalonTimeSectionState extends State<SalonTimeSection> {
       setState(() {
         _selectedTimeOpen = picked;
         GlobalVariable.OpenTime = picked;
-        GlobalVariable.OpenTimeGlo = _formatTimeOfDay(picked);
+        GlobalVariable.openTimeGlo = _formatTimeOfDay(picked);
       });
     }
   }

@@ -40,31 +40,31 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider<AppProvider>(
       create: (context) => AppProvider(),
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: themeData,
-          home: Builder(
-            builder: (context) {
-              Dimensions.init(context);
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: themeData,
+        // home: Builder(
+        //   builder: (context) {
+        //     Dimensions.init(context);
 
-              return FormTimeSection();
-              // return SingupScreen();
-              // return AccountCreateForm();
-              // return SingupScreen();
-            },
-          )
-          // home: StreamBuilder(
-          //   stream: FirebaseAuthHelper.instance.getAuthChange,
-          //   builder: (context, snapshot) {
-          //     if (snapshot.hasData) {
-          //       Dimensions.init(context);
-          //       return const HomeScreen();
-          //     }
-          //     Dimensions.init(context);
-          //     return const LoginScreen();
-          //   },
-          // ),
-          ),
+        //     // return FormTimeSection();
+        //     // return SingupScreen();
+        //     // return AccountCreateForm();
+        //     // return SingupScreen();
+        //   },
+        // )
+        home: StreamBuilder(
+          stream: FirebaseAuthHelper.instance.getAuthChange,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              Dimensions.init(context);
+              return const HomeScreen();
+            }
+            Dimensions.init(context);
+            return const LoginScreen();
+          },
+        ),
+      ),
     );
   }
 }
