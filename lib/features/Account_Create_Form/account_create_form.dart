@@ -13,6 +13,7 @@ import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/salon_social_media_add.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/saloon_Time.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/form_weektime_screen.dart';
+import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
@@ -327,8 +328,21 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                             _instagram.text.trim(),
                             context);
                         showMessage("Salon Information Successfully add");
+                        print("Salon ID ${GlobalVariable.salonID}");
                         Routes.instance.push(
-                            widget: const FormTimeSection(), context: context);
+                            widget: FormTimeSection(
+                                // id: GlobalVariable.salonID,
+                                // name: _salonName.text,
+                                // email: _email.text.trim(),
+                                // number: int.parse(_mobile.text),
+                                // whatApp: int.parse(_whatApp.text),
+                                // salonType: _selectedSalonType!,
+                                // description: _descrition.text.trim(),
+                                // openTime: GlobalVariable.openTimeGlo,
+                                // closeTime: GlobalVariable.closerTimeGlo,
+                                // address: _address.text.trim(),
+                                ),
+                            context: context);
                       }
                     },
                   ),

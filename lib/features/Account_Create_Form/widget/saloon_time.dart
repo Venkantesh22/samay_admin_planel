@@ -43,7 +43,7 @@ class _SalonTimeSectionState extends State<SalonTimeSection> {
 
 //!-------------------------------------------
 // Function for selection current Time
-  TimeOfDay _selectedTimeOpen = TimeOfDay(hour: 9, minute: 0);
+  TimeOfDay _selectedTimeOpen = TimeOfDay(hour: 1, minute: 0);
 
   //Function for set time
   Future<void> _selectTimesOpen(BuildContext context) async {
@@ -59,7 +59,7 @@ class _SalonTimeSectionState extends State<SalonTimeSection> {
   }
 
 // Function for selection current Time
-  TimeOfDay _selectedTimeClose = TimeOfDay(hour: 6, minute: 0);
+  TimeOfDay _selectedTimeClose = TimeOfDay(hour: 1, minute: 0);
 
   //Function for set time
   Future<void> _selectTimesClose(BuildContext context) async {

@@ -5,41 +5,23 @@
 
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
+import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebase_storage_helper.dart';
-import 'package:samay_admin_plan/models/salon_form_models/admin_models.dart';
-import 'package:samay_admin_plan/models/salon_infor_model.dart';
+import 'package:samay_admin_plan/models/admin_models.dart';
+
+import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
+import 'package:samay_admin_plan/models/salon_form_models/weekday_model.dart';
 
 class FirebaseFirestoreHelper {
   static FirebaseFirestoreHelper instance = FirebaseFirestoreHelper();
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-
-  // Get Admin information
-  // Future<AdminModel?> getAdminInformation() async {
-  //   try {
-  //     String? uid = FirebaseAuth.instance.currentUser?.uid;
-  //     if (uid == null) {
-  //       throw Exception("User not authenticated");
-  //     }
-
-  //     DocumentSnapshot<Map<String, dynamic>> querySnapshot =
-  //         await _firebaseFirestore.collection("admins").doc(uid).get();
-
-  //     if (!querySnapshot.exists) {
-  //       throw Exception("Admin document does not exist");
-  //     }
-
-  //     return AdminModel.fromJson(querySnapshot.data()!);
-  //   } catch (e) {
-  //     print("Error getting admin information: $e");
-  //     return null; // or handle error as appropriate for your app flow
-  //   }
-  // }
 
 // Add Salon Information under Admin
   Future<SalonModel> addSalon(
@@ -64,7 +46,7 @@ class FirebaseFirestoreHelper {
       DocumentReference reference = _firebaseFirestore
           .collection("admins")
           .doc(adminUid)
-          .collection("Salon")
+          .collection("salon")
           .doc();
 
       SalonModel addSalon = SalonModel(
@@ -87,6 +69,9 @@ class FirebaseFirestoreHelper {
           .uploadImageToStorageSalon(addSalon, image);
 
       await reference.set(addSalon.toJson());
+      // GlobalVariable.salonID = reference.id;
+      // print("Print ID ${reference.id}");
+      // print("Print ID ${GlobalVariable.salonID}");
 
       return addSalon;
     } catch (e) {
@@ -94,50 +79,76 @@ class FirebaseFirestoreHelper {
       rethrow; // Ensure the error is still thrown
     }
   }
+
+  Future<Map<String, dynamic>?> getAdminInformation() async {
+    try {
+      DocumentSnapshot doc = await _firebaseFirestore
+          .collection('admins')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      if (doc.exists) {
+        return doc.data() as Map<String, dynamic>?;
+      }
+    } catch (e) {
+      print('Error fetching admin info: $e');
+    }
+    return null;
+  }
+
+  Future<SalonModel?> getSalonInformation() async {
+    try {
+      CollectionReference salonCollection = await _firebaseFirestore
+          .collection("admins")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('Salon');
+      QuerySnapshot snapshot = await salonCollection.limit(1).get();
+      if (snapshot.docs.isNotEmpty) {
+        DocumentSnapshot doc = snapshot.docs.first;
+        return SalonModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
+      }
+    } catch (e) {
+      showMessage('Error fetching salon: $e');
+    }
+    return null;
+  }
+
 // Add Salon weekday Time Information under Admin
-  // Future<SalonModel> addWeekDayTime(
-  //    String monday,
-  // String tuesday,
-  // String wednesday,
-  // String thursday,
-  // String friday,
-  // String saturday,
-  // String sunday,
-  //     BuildContext context) async {
-  //   try {
-  //     String? adminUid = FirebaseAuth.instance.currentUser?.uid;
+  Future<WeekdayModel> addWeekDay(
+      String salonID,
+      String monday,
+      String tuesday,
+      String wednesday,
+      String thursday,
+      String friday,
+      String saturday,
+      String sunday,
+      BuildContext context) async {
+    try {
+      String? _adminUid = FirebaseAuth.instance.currentUser?.uid;
+      DocumentReference reference = _firebaseFirestore
+          .collection("admins")
+          .doc(_adminUid)
+          .collection("Salon")
+          .doc(salonID) //! First fatch salon date so that you can get Salon id
+          .collection("WeekDayTime")
+          .doc();
 
-  //     DocumentReference reference = _firebaseFirestore
-  //         .collection("Salon")
-  //         .doc(adminUid) //! First fatch salon date so that you can get Salon id
-  //         .collection("WeekDayTime")
-  //         .doc();
+      WeekdayModel addweekday = WeekdayModel(
+          id: reference.id,
+          monday: monday,
+          tuesday: tuesday,
+          wednesday: wednesday,
+          thursday: thursday,
+          friday: friday,
+          saturday: saturday,
+          sunday: sunday);
 
-  //     SalonModel addSalon = SalonModel(
-  //       id: reference.id,
-  //       description: description,
-  //       name: salonName,
-  //       email: email,
-  //       number: int.parse(mobile),
-  //       whatApp: int.parse(whatApp),
-  //       salonType: salonType,
-  //       openTime: openTime,
-  //       closeTime: closeTime,
-  //       address: address,
-  //       instagram: instagram,
-  //       facebook: facebook,
-  //       googleMap: googleMap,
-  //       linked: linked,
-  //     );
-  //     await FirebaseStorageHelper.instance
-  //         .uploadImageToStorageSalon(addSalon, image);
+      await reference.set(addweekday.toJson());
 
-  //     await reference.set(addSalon.toJson());
-
-  //     return addSalon;
-  //   } catch (e) {
-  //     showMessage(e.toString());
-  //     rethrow; // Ensure the error is still thrown
-  //   }
-  // }
+      return addweekday;
+    } catch (e) {
+      showMessage(e.toString());
+      rethrow; // Ensure the error is still thrown
+    }
+  }
 }

@@ -3,11 +3,9 @@
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/constants/router.dart';
-import 'package:samay_admin_plan/features/Account_Create_Form/account_create_form.dart';
 import 'package:samay_admin_plan/features/auth/login.dart';
 import 'package:samay_admin_plan/features/home/home_screen.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
@@ -204,9 +202,11 @@ class _SingupScreenState extends State<SingupScreen> {
                       letterSpacing: 0.15,
                     ),
                   ),
-                  Image.asset(
-                    "assets/images/cartoon.png",
-                    height: Dimensions.dimenisonNo400,
+                  Expanded(
+                    child: Image.asset(
+                      "assets/images/cartoon.png",
+                      height: Dimensions.dimenisonNo400,
+                    ),
                   ),
                 ],
               )
