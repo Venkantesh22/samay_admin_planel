@@ -35,6 +35,9 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
   final TextEditingController _whatApp = TextEditingController();
   final TextEditingController _descrition = TextEditingController();
   final TextEditingController _address = TextEditingController();
+  final TextEditingController _city = TextEditingController();
+  final TextEditingController _state = TextEditingController();
+  final TextEditingController _pincode = TextEditingController();
   final TextEditingController _openTime = TextEditingController();
   final TextEditingController _closeTime = TextEditingController();
   final TextEditingController _instagram = TextEditingController();
@@ -85,13 +88,15 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          color: AppColor.bgForAdminCreateSec,
+          color: Colors.grey,
+          // color: AppColor.bgForAdminCreateSec,
           child: Center(
             child: Container(
               padding: EdgeInsets.symmetric(
                   horizontal: Dimensions.dimenisonNo30,
                   vertical: Dimensions.dimenisonNo20),
-              color: Colors.white,
+              color: Colors.green,
+              // color: Colors.white,
               width: Dimensions.screenWidth / 1.5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,9 +256,29 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                   FormCustomTextField(
                     controller: _address,
                     title: "Address",
-                    maxline: 5,
+                    maxline: 2,
                   ),
                   SizedBox(height: Dimensions.dimenisonNo20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                          width: Dimensions.dimenisonNo200,
+                          child: FormCustomTextField(
+                              controller: _city, title: "City")),
+                      SizedBox(
+                          width: Dimensions.dimenisonNo200,
+                          child: FormCustomTextField(
+                              controller: _state, title: "State")),
+                      SizedBox(
+                        width: Dimensions.dimenisonNo200,
+                        child: FormCustomTextField(
+                            controller: _pincode, title: "Pincode"),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: Dimensions.dimenisonNo20),
+
                   Text(
                     'Social media Information',
                     style: TextStyle(
@@ -301,6 +326,9 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                         _selectedSalonType!,
                         _descrition.text,
                         _address.text,
+                        _city.text,
+                        _state.text,
+                        _pincode.text,
                         GlobalVariable.openTimeGlo,
                         GlobalVariable.closerTimeGlo,
                         _instagram.text,
@@ -320,6 +348,9 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                             _selectedSalonType!,
                             _descrition.text.trim(),
                             _address.text.trim(),
+                            _city.text.trim(),
+                            _state.text.trim(),
+                            _pincode.text.trim(),
                             GlobalVariable.openTimeGlo,
                             GlobalVariable.closerTimeGlo,
                             _instagram.text.trim(),
@@ -329,20 +360,8 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                             context);
                         showMessage("Salon Information Successfully add");
                         print("Salon ID ${GlobalVariable.salonID}");
-                        Routes.instance.push(
-                            widget: FormTimeSection(
-                                // id: GlobalVariable.salonID,
-                                // name: _salonName.text,
-                                // email: _email.text.trim(),
-                                // number: int.parse(_mobile.text),
-                                // whatApp: int.parse(_whatApp.text),
-                                // salonType: _selectedSalonType!,
-                                // description: _descrition.text.trim(),
-                                // openTime: GlobalVariable.openTimeGlo,
-                                // closeTime: GlobalVariable.closerTimeGlo,
-                                // address: _address.text.trim(),
-                                ),
-                            context: context);
+                        Routes.instance
+                            .push(widget: FormTimeSection(), context: context);
                       }
                     },
                   ),

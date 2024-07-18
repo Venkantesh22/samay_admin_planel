@@ -14,10 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebase_storage_helper.dart';
-import 'package:samay_admin_plan/models/admin_models.dart';
-
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
-import 'package:samay_admin_plan/models/salon_form_models/weekday_model.dart';
 
 class FirebaseFirestoreHelper {
   static FirebaseFirestoreHelper instance = FirebaseFirestoreHelper();
@@ -33,6 +30,9 @@ class FirebaseFirestoreHelper {
       String salonType,
       String description,
       String address,
+      String city,
+      String state,
+      String pinCode,
       String openTime,
       String closeTime,
       String instagram,
@@ -49,7 +49,7 @@ class FirebaseFirestoreHelper {
           .collection("salon")
           .doc();
 
-      SalonModel addSalon = SalonModel(
+      SalonModel salonModel = SalonModel(
         id: reference.id,
         description: description,
         name: salonName,
@@ -60,20 +60,29 @@ class FirebaseFirestoreHelper {
         openTime: openTime,
         closeTime: closeTime,
         address: address,
+        city: city,
+        state: state,
+        pinCode: pinCode,
         instagram: instagram,
         facebook: facebook,
         googleMap: googleMap,
         linked: linked,
       );
-      await FirebaseStorageHelper.instance
-          .uploadImageToStorageSalon(addSalon, image);
+      // upload image of create new folder then upload
 
-      await reference.set(addSalon.toJson());
+      String? uploadImageUrl = await FirebaseStorageHelper.instance
+          .uploadALLImageToStorage(
+              salonModel.id,
+              "${GlobalVariable.salon}${salonModel.name}${salonModel.id}images",
+              image);
+      salonModel.image = uploadImageUrl;
+
+      await reference.set(salonModel.toJson());
       // GlobalVariable.salonID = reference.id;
       // print("Print ID ${reference.id}");
       // print("Print ID ${GlobalVariable.salonID}");
 
-      return addSalon;
+      return salonModel;
     } catch (e) {
       showMessage(e.toString());
       rethrow; // Ensure the error is still thrown
@@ -90,6 +99,7 @@ class FirebaseFirestoreHelper {
         return doc.data() as Map<String, dynamic>?;
       }
     } catch (e) {
+      showMessage('Error fetching admin info: ${e.toString()}');
       print('Error fetching admin info: $e');
     }
     return null;
@@ -100,7 +110,7 @@ class FirebaseFirestoreHelper {
       CollectionReference salonCollection = await _firebaseFirestore
           .collection("admins")
           .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection('Salon');
+          .collection('salon');
       QuerySnapshot snapshot = await salonCollection.limit(1).get();
       if (snapshot.docs.isNotEmpty) {
         DocumentSnapshot doc = snapshot.docs.first;
@@ -113,42 +123,42 @@ class FirebaseFirestoreHelper {
   }
 
 // Add Salon weekday Time Information under Admin
-  Future<WeekdayModel> addWeekDay(
-      String salonID,
-      String monday,
-      String tuesday,
-      String wednesday,
-      String thursday,
-      String friday,
-      String saturday,
-      String sunday,
-      BuildContext context) async {
-    try {
-      String? _adminUid = FirebaseAuth.instance.currentUser?.uid;
-      DocumentReference reference = _firebaseFirestore
-          .collection("admins")
-          .doc(_adminUid)
-          .collection("Salon")
-          .doc(salonID) //! First fatch salon date so that you can get Salon id
-          .collection("WeekDayTime")
-          .doc();
+  // Future<WeekdayModel> addWeekDay(
+  //     String salonID,
+  //     String monday,
+  //     String tuesday,
+  //     String wednesday,
+  //     String thursday,
+  //     String friday,
+  //     String saturday,
+  //     String sunday,
+  //     BuildContext context) async {
+  //   try {
+  //     String? _adminUid = FirebaseAuth.instance.currentUser?.uid;
+  //     DocumentReference reference = _firebaseFirestore
+  //         .collection("admins")
+  //         .doc(_adminUid)
+  //         .collection("Salon")
+  //         .doc(salonID) //! First fatch salon date so that you can get Salon id
+  //         .collection("WeekDayTime")
+  //         .doc();
 
-      WeekdayModel addweekday = WeekdayModel(
-          id: reference.id,
-          monday: monday,
-          tuesday: tuesday,
-          wednesday: wednesday,
-          thursday: thursday,
-          friday: friday,
-          saturday: saturday,
-          sunday: sunday);
+  //     WeekdayModel addweekday = WeekdayModel(
+  //         id: reference.id,
+  //         monday: monday,
+  //         tuesday: tuesday,
+  //         wednesday: wednesday,
+  //         thursday: thursday,
+  //         friday: friday,
+  //         saturday: saturday,
+  //         sunday: sunday);
 
-      await reference.set(addweekday.toJson());
+  //     await reference.set(addweekday.toJson());
 
-      return addweekday;
-    } catch (e) {
-      showMessage(e.toString());
-      rethrow; // Ensure the error is still thrown
-    }
-  }
+  //     return addweekday;
+  //   } catch (e) {
+  //     showMessage(e.toString());
+  //     rethrow; // Ensure the error is still thrown
+  //   }
+  // }
 }

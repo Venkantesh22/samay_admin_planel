@@ -114,16 +114,6 @@ class _FormCustomTextFieldState extends State<FormCustomTextField> {
             ],
           ),
         ),
-        // Text(
-        //   widget.title,,
-        //   style: TextStyle(
-        //     color: Colors.black,
-        //     fontSize: Dimensions.dimenisonNo16,
-        //     fontFamily: GoogleFonts.roboto().fontFamily,
-        //     fontWeight: FontWeight.w500,
-        //     letterSpacing: 0.15,
-        //   ),
-        // ),
         SizedBox(
           height: Dimensions.dimenisonNo5,
         ),
@@ -134,7 +124,11 @@ class _FormCustomTextFieldState extends State<FormCustomTextField> {
           child: TextFormField(
             maxLines: widget.maxline,
             cursorHeight: Dimensions.dimenisonNo16,
-            style: const TextStyle(fontSize: 12),
+            style: TextStyle(
+                fontSize: Dimensions.dimenisonNo12,
+                fontFamily: GoogleFonts.roboto().fontFamily,
+                fontWeight: FontWeight.w500,
+                color: Colors.black),
             controller: widget.controller,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(

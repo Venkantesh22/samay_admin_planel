@@ -9,7 +9,7 @@ import 'package:samay_admin_plan/features/Account_Create_Form/form_weektime_scre
 import 'package:samay_admin_plan/features/home/ex.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
-import 'package:samay_admin_plan/widget/custom_appbar.dart';
+import 'package:samay_admin_plan/features/custom_appbar/custom_appbar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,16 +21,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
+
+    // TODO: implement initState
+
     appProvider.getSalonInfoFirebase();
     appProvider.getAdminInfoFirebase();
     // appProvider.getAdminInfoFirebase();
-    getCategoruList();
+
     super.initState();
   }
-
-  void getCategoruList() async {}
 
   @override
   Widget build(BuildContext context) {

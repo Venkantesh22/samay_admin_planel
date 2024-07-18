@@ -11,6 +11,7 @@ import 'package:samay_admin_plan/features/auth/singup.dart';
 import 'package:samay_admin_plan/features/home/home_screen.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
+import 'package:samay_admin_plan/provider/service_provider.dart';
 
 import 'package:samay_admin_plan/utility/dimenison.dart';
 
@@ -37,34 +38,72 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AppProvider>(
-      create: (context) => AppProvider(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: themeData,
-        // home: Builder(
-        //   builder: (context) {
-        //     Dimensions.init(context);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AppProvider()),
+        ChangeNotifierProvider(create: (context) => ServiceProvider()),
+      ],
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: themeData,
+          // home: Builder(
+          //   builder: (context) {
+          //     Dimensions.init(context);
 
-        //     // return FormTimeSection();
-        //     // return SingupScreen();
-        //     // return AccountCreateForm();
-        //     // return SingupScreen();
-        //   },
-        // )
-        home: StreamBuilder(
-          stream: FirebaseAuthHelper.instance.getAuthChange,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
+          //     // return FormTimeSection();
+          //     // return SingupScreen();
+          //     // return AccountCreateForm();
+          //     // return SingupScreen();
+          //   },
+          // )
+          home: StreamBuilder(
+            stream: FirebaseAuthHelper.instance.getAuthChange,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                Dimensions.init(context);
+                return const HomeScreen();
+              }
               Dimensions.init(context);
-              return const HomeScreen();
-            }
-            Dimensions.init(context);
-            return const LoginScreen();
-          },
-        ),
-      ),
+              return const LoginScreen();
+            },
+          ),
+        );
+      },
     );
   }
 }
+
+
+//     return ChangeNotifierProvider<AppProvider>(
+//       create: (context) => AppProvider(),
+//       child: MaterialApp(
+//         debugShowCheckedModeBanner: false,
+//         title: 'Flutter Demo',
+//         theme: themeData,
+//         // home: Builder(
+//         //   builder: (context) {
+//         //     Dimensions.init(context);
+
+//         //     // return FormTimeSection();
+//         //     // return SingupScreen();
+//         //     // return AccountCreateForm();
+//         //     // return SingupScreen();
+//         //   },
+//         // )
+//         home: StreamBuilder(
+//           stream: FirebaseAuthHelper.instance.getAuthChange,
+//           builder: (context, snapshot) {
+//             if (snapshot.hasData) {
+//               Dimensions.init(context);
+//               return const HomeScreen();
+//             }
+//             Dimensions.init(context);
+//             return const LoginScreen();
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }

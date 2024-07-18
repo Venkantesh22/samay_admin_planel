@@ -143,6 +143,9 @@ bool formCreateAccount(
   String salonType,
   String descrition,
   String address,
+  String city,
+  String state,
+  String pinCode,
   String openTime,
   String closeTime,
   String instagram,
@@ -195,6 +198,15 @@ bool formCreateAccount(
     return false;
   } else if (address.isEmpty) {
     showMessage("address not is Empty");
+    return false;
+  } else if (city.isEmpty) {
+    showMessage("city not is Empty");
+    return false;
+  } else if (state.isEmpty) {
+    showMessage("city not is Empty");
+    return false;
+  } else if (pinCode.isEmpty) {
+    showMessage("city not is Empty");
     return false;
   } else if (openTime.isEmpty) {
     showMessage("${GlobalVariable.salon} open time is not select");

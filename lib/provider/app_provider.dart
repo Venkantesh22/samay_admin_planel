@@ -2,7 +2,6 @@
 
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebase_storage_helper.dart';
@@ -10,7 +9,6 @@ import 'package:samay_admin_plan/models/admin_models.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_firestore_helper/firebase_firestore.dart';
-import 'package:samay_admin_plan/models/salon_form_models/weekday_model.dart';
 
 class AppProvider with ChangeNotifier {
   SalonModel? _salonModel;
@@ -28,6 +26,9 @@ class AppProvider with ChangeNotifier {
       String salonType,
       String description,
       String address,
+      String city,
+      String state,
+      String pinCode,
       String openTime,
       String closeTime,
       String instagram,
@@ -44,6 +45,9 @@ class AppProvider with ChangeNotifier {
         salonType,
         description,
         address,
+        city,
+        state,
+        pinCode,
         openTime,
         closeTime,
         instagram,
@@ -80,7 +84,7 @@ class AppProvider with ChangeNotifier {
       await FirebaseFirestore.instance
           .collection("admins")
           .doc(_adminModel!.id)
-          .collection('Salon')
+          .collection('salon')
           .doc(_salonModel!.id)
           .set(_salonModel!.toJson());
       Navigator.of(context, rootNavigator: true).pop();
@@ -88,12 +92,16 @@ class AppProvider with ChangeNotifier {
     } else {
       showLoaderDialog(context);
 
-      String? imageUrl = await FirebaseStorageHelper.instance
-          .uploadImageToStorageSalon(_salonModel!, image);
+      String? uploadImageUrl = await FirebaseStorageHelper.instance
+          .uploadALLImageToStorage(
+              salonModel.id,
+              "${GlobalVariable.salon}${salonModel.name}${salonModel.id}images",
+              image);
+      salonModel.image = uploadImageUrl;
       await FirebaseFirestore.instance
           .collection("admins")
           .doc(_adminModel!.id)
-          .collection('Salon')
+          .collection('salon')
           .doc(_salonModel!.id)
           .set(_salonModel!.toJson());
       Navigator.of(context, rootNavigator: true).pop();
@@ -101,62 +109,6 @@ class AppProvider with ChangeNotifier {
 
       showMessage("Successfully updated profile");
 
-      notifyListeners();
-    }
-
-//  void updateUserInfoFirebase(
-//       BuildContext context, UserModel userModel, File? file) async {
-//     if (file == null) {
-//       showLoaderDialog(context);
-
-//       _userModel = userModel;
-//       await FirebaseFirestore.instance
-//           .collection("users")
-//           .doc(_userModel!.id)
-//           .set(_userModel!.toJson());
-//       Navigator.of(context, rootNavigator: true).pop();
-//       Navigator.of(context).pop();
-//     } else {
-//       showLoaderDialog(context);
-
-//       String imageUrl =
-//           await FirebaseStorageHelper.instance.uploadUserImage(file);
-//       _userModel = userModel.copyWith(image: imageUrl);
-//       await FirebaseFirestore.instance
-//           .collection("users")
-//           .doc(_userModel!.id)
-//           .set(_userModel!.toJson());
-//       Navigator.of(context, rootNavigator: true).pop();
-//       Navigator.of(context).pop();
-//     }
-//     showMessage("Successfully updated profile");
-
-//     notifyListeners();
-//   }
-
-    // Add a Salon weekday  infor to firebase
-    void addWeekday(
-        String salonID,
-        String monday,
-        String tuesday,
-        String wednesday,
-        String thursday,
-        String friday,
-        String saturday,
-        String sunday,
-        BuildContext context) async {
-      WeekdayModel weekdayModel =
-          await FirebaseFirestoreHelper.instance.addWeekDay(
-        salonID,
-        monday,
-        tuesday,
-        wednesday,
-        thursday,
-        friday,
-        saturday,
-        sunday,
-        context,
-      );
       notifyListeners();
     }
   }

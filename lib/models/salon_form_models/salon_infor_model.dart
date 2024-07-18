@@ -17,6 +17,9 @@ class SalonModel {
     required this.openTime,
     required this.closeTime,
     required this.address,
+    required this.city,
+    required this.state,
+    required this.pinCode,
     this.instagram = null,
     this.facebook = null,
     this.googleMap = null,
@@ -41,6 +44,9 @@ class SalonModel {
   String openTime;
   String closeTime;
   String address;
+  String city;
+  String state;
+  String pinCode;
   String? instagram;
   String? facebook;
   String? googleMap;
@@ -71,6 +77,9 @@ class SalonModel {
         openTime: json["openTime"],
         closeTime: json["closeTime"],
         address: json["address"],
+        city: json['city'],
+        state: json['state'],
+        pinCode: json['pinCode'],
         instagram: json["instagram"],
         facebook: json["facebook"],
         googleMap: json["googleMap"],
@@ -96,6 +105,9 @@ class SalonModel {
         "openTime": openTime,
         "closeTime": closeTime,
         "address": address,
+        'city': city,
+        'state': state,
+        'pinCode': pinCode,
         "instagram": instagram,
         "facebook": facebook,
         "googleMap": googleMap,
@@ -120,6 +132,9 @@ class SalonModel {
     String? openTime,
     String? closeTime,
     String? address,
+    String? city,
+    String? state,
+    String? pinCode,
     String? instagram,
     String? facebook,
     String? googleMap,
@@ -144,25 +159,14 @@ class SalonModel {
       openTime: openTime ?? this.openTime,
       closeTime: closeTime ?? this.closeTime,
       address: address ?? this.address,
+      city: city ?? this.city,
+      state: state ?? this.state,
+      pinCode: pinCode ?? this.pinCode,
       instagram: instagram ?? this.instagram,
       facebook: facebook ?? this.facebook,
       googleMap: googleMap ?? this.googleMap,
       linked: linked ?? this.linked,
       image: image ?? this.image,
-      // name: name,
-      // email: email,
-      // number: number,
-      // whatApp: whatApp,
-      // salonType: salonType,
-      // description: description,
-      // openTime: openTime,
-      // closeTime: closeTime,
-      // address: address,
-      // instagram: instagram,
-      // facebook: facebook,
-      // googleMap: googleMap,
-      // linked: linked,
-      // image: image,
       monday: monday ?? this.monday,
       tuesday: tuesday ?? this.tuesday,
       wednesday: wednesday ?? this.wednesday,
