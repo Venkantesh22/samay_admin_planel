@@ -75,8 +75,11 @@ class AppProvider with ChangeNotifier {
     }
   }
 
-  void updateSalonInfoFirebase(BuildContext context, SalonModel salonModel,
-      {Uint8List? image}) async {
+  void updateSalonInfoFirebase(
+    BuildContext context,
+    SalonModel salonModel, {
+    Uint8List? image,
+  }) async {
     if (image == null) {
       showLoaderDialog(context);
 

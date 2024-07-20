@@ -1,38 +1,45 @@
-class Category {
+class CategoryModel {
+  final String id;
   final String categoryName;
-  final String categoryId;
+
   final String salonId;
 
-  Category({
+  CategoryModel({
+    required this.id,
     required this.categoryName,
-    required this.categoryId,
     required this.salonId,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'categoryName': categoryName,
-      'categoryId': categoryId,
+      'id': id,
       'salonId': salonId,
     };
   }
 
-  factory Category.fromMap(Map<String, dynamic> map) {
-    return Category(
+  factory CategoryModel.fromMap(Map<String, dynamic> map) {
+    return CategoryModel(
       categoryName: map['categoryName'],
-      categoryId: map['categoryId'],
+      id: map['id'],
       salonId: map['salonId'],
     );
   }
 
-  Category copyWith({
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "categoryName": categoryName,
+        "salonId": salonId,
+      };
+
+  CategoryModel copyWith({
     String? categoryName,
-    String? categoryId,
+    String? id,
     String? salonId,
   }) {
-    return Category(
+    return CategoryModel(
       categoryName: categoryName ?? this.categoryName,
-      categoryId: categoryId ?? this.categoryId,
+      id: id ?? this.id,
       salonId: salonId ?? this.salonId,
     );
   }

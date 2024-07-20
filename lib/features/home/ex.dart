@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
-import 'package:samay_admin_plan/features/custom_appbar/custom_appbar.dart';
+import 'package:samay_admin_plan/features/custom_appbar/screen/custom_appbar.dart';
 
 class MyEx extends StatelessWidget {
   const MyEx({Key? key}) : super(key: key);

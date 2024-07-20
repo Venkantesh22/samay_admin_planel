@@ -127,7 +127,7 @@ class _FormCustomTextFieldState extends State<FormCustomTextField> {
             style: TextStyle(
                 fontSize: Dimensions.dimenisonNo12,
                 fontFamily: GoogleFonts.roboto().fontFamily,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.bold,
                 color: Colors.black),
             controller: widget.controller,
             decoration: InputDecoration(

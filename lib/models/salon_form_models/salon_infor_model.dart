@@ -20,11 +20,11 @@ class SalonModel {
     required this.city,
     required this.state,
     required this.pinCode,
-    this.instagram = null,
-    this.facebook = null,
-    this.googleMap = null,
-    this.linked = null,
-    this.image = null,
+    this.instagram,
+    this.facebook,
+    this.googleMap,
+    this.linked,
+    this.image,
     this.monday,
     this.tuesday,
     this.wednesday,
@@ -32,6 +32,7 @@ class SalonModel {
     this.friday,
     this.saturday,
     this.sunday,
+    this.isDefaultCategoryCreate = false,
   });
 
   String id;
@@ -59,6 +60,7 @@ class SalonModel {
   String? friday;
   String? saturday;
   String? sunday;
+  bool isDefaultCategoryCreate;
 
   factory SalonModel.fromJson(
     Map<String, dynamic> json,
@@ -92,6 +94,7 @@ class SalonModel {
         friday: json['friday'],
         saturday: json['saturday'],
         sunday: json['sunday'],
+        isDefaultCategoryCreate: json['isDefaultCategoryCreate'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -120,6 +123,7 @@ class SalonModel {
         'friday': friday,
         'saturday': saturday,
         'sunday': sunday,
+        'isDefaultCategoryCreate': isDefaultCategoryCreate,
       };
 
   SalonModel copyWith({
@@ -147,6 +151,7 @@ class SalonModel {
     String? friday,
     String? saturday,
     String? sunday,
+    bool? isDefaultCategoryCreate,
   }) {
     return SalonModel(
       id: id,
@@ -174,6 +179,8 @@ class SalonModel {
       friday: friday ?? this.friday,
       saturday: saturday ?? this.saturday,
       sunday: sunday ?? this.sunday,
+      isDefaultCategoryCreate:
+          isDefaultCategoryCreate ?? this.isDefaultCategoryCreate,
     );
   }
 }

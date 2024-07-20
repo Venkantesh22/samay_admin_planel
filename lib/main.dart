@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:samay_admin_plan/constants/theame.dart';
-import 'package:samay_admin_plan/features/Account_Create_Form/account_create_form.dart';
-import 'package:samay_admin_plan/features/Account_Create_Form/form_weektime_screen.dart';
+import 'package:samay_admin_plan/features/Account_Create_Form/screen/account_create_form.dart';
+import 'package:samay_admin_plan/features/Account_Create_Form/screen/form_weektime_screen.dart';
 import 'package:samay_admin_plan/features/auth/login.dart';
-import 'package:samay_admin_plan/features/auth/singup.dart';
 import 'package:samay_admin_plan/features/home/home_screen.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
@@ -51,6 +50,7 @@ class MyApp extends StatelessWidget {
           // home: Builder(
           //   builder: (context) {
           //     Dimensions.init(context);
+          //     return ServicesPages();
 
           //     // return FormTimeSection();
           //     // return SingupScreen();
@@ -64,6 +64,7 @@ class MyApp extends StatelessWidget {
               if (snapshot.hasData) {
                 Dimensions.init(context);
                 return const HomeScreen();
+                // return ServicesPages();
               }
               Dimensions.init(context);
               return const LoginScreen();
@@ -74,36 +75,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-//     return ChangeNotifierProvider<AppProvider>(
-//       create: (context) => AppProvider(),
-//       child: MaterialApp(
-//         debugShowCheckedModeBanner: false,
-//         title: 'Flutter Demo',
-//         theme: themeData,
-//         // home: Builder(
-//         //   builder: (context) {
-//         //     Dimensions.init(context);
-
-//         //     // return FormTimeSection();
-//         //     // return SingupScreen();
-//         //     // return AccountCreateForm();
-//         //     // return SingupScreen();
-//         //   },
-//         // )
-//         home: StreamBuilder(
-//           stream: FirebaseAuthHelper.instance.getAuthChange,
-//           builder: (context, snapshot) {
-//             if (snapshot.hasData) {
-//               Dimensions.init(context);
-//               return const HomeScreen();
-//             }
-//             Dimensions.init(context);
-//             return const LoginScreen();
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }

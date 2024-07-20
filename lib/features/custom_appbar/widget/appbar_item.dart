@@ -31,7 +31,6 @@ class Appbaritem extends StatelessWidget {
               fontSize: Dimensions.dimenisonNo16,
               fontFamily: GoogleFonts.roboto().fontFamily,
               fontWeight: FontWeight.w400,
-              height: 0,
             ),
           ),
         ],

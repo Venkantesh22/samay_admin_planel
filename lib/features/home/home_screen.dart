@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/constants/router.dart';
-import 'package:samay_admin_plan/features/Account_Create_Form/account_create_form.dart';
-import 'package:samay_admin_plan/features/Account_Create_Form/form_weektime_screen.dart';
+import 'package:samay_admin_plan/features/Account_Create_Form/screen/account_create_form.dart';
+import 'package:samay_admin_plan/features/Account_Create_Form/screen/form_weektime_screen.dart';
 import 'package:samay_admin_plan/features/home/ex.dart';
+import 'package:samay_admin_plan/features/popup/add_new_category.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
-import 'package:samay_admin_plan/features/custom_appbar/custom_appbar.dart';
+import 'package:samay_admin_plan/features/custom_appbar/screen/custom_appbar.dart';
+import 'package:samay_admin_plan/widget/add_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -22,20 +24,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
-
     // TODO: implement initState
 
     appProvider.getSalonInfoFirebase();
     appProvider.getAdminInfoFirebase();
-    // appProvider.getAdminInfoFirebase();
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.green[700],
+        // backgroundColor: Colors.green[700],
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
           child: CustomAppBar(),
@@ -72,6 +71,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         .push(widget: FormTimeSection(), context: context);
                   },
                   child: Text("FormTimeSection")),
+              AddButton(
+                text: "Add Category",
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AddNewCategory();
+                      });
+                },
+              ),
             ],
           ),
         ));

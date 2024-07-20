@@ -12,9 +12,11 @@ import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/salon_social_media_add.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/saloon_Time.dart';
-import 'package:samay_admin_plan/features/Account_Create_Form/form_weektime_screen.dart';
+import 'package:samay_admin_plan/features/Account_Create_Form/screen/form_weektime_screen.dart';
+import 'package:samay_admin_plan/models/category%20model/category_model.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
+import 'package:samay_admin_plan/provider/service_provider.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
 import 'package:samay_admin_plan/widget/customauthbutton.dart';
@@ -69,6 +71,8 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(context);
+    ServiceProvider serviceProvider = Provider.of<ServiceProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.mainColor,
@@ -317,51 +321,71 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                   SizedBox(height: Dimensions.dimenisonNo20),
                   CustomAuthButton(
                     text: "Save",
-                    ontap: () {
-                      bool _isVaildated = formCreateAccount(
-                        _salonName.text,
-                        _email.text,
-                        _mobile.text,
-                        _whatApp.text,
-                        _selectedSalonType!,
-                        _descrition.text,
-                        _address.text,
-                        _city.text,
-                        _state.text,
-                        _pincode.text,
-                        GlobalVariable.openTimeGlo,
-                        GlobalVariable.closerTimeGlo,
-                        _instagram.text,
-                        _facebook.text,
-                        _googleMap.text,
-                        _instagram.text,
-                        selectedImage!,
-                      );
+                    ontap: () async {
+                      try {
+                        bool _isVaildated = formCreateAccount(
+                          _salonName.text,
+                          _email.text,
+                          _mobile.text,
+                          _whatApp.text,
+                          _selectedSalonType!,
+                          _descrition.text,
+                          _address.text,
+                          _city.text,
+                          _state.text,
+                          _pincode.text,
+                          GlobalVariable.openTimeGlo,
+                          GlobalVariable.closerTimeGlo,
+                          _instagram.text,
+                          _facebook.text,
+                          _googleMap.text,
+                          _instagram.text,
+                          selectedImage!,
+                        );
 
-                      if (_isVaildated) {
-                        appProvider.addsalonInfoForm(
-                            selectedImage!,
-                            _salonName.text.trim(),
-                            _email.text.trim(),
-                            _mobile.text.trim(),
-                            _whatApp.text.trim(),
-                            _selectedSalonType!,
-                            _descrition.text.trim(),
-                            _address.text.trim(),
-                            _city.text.trim(),
-                            _state.text.trim(),
-                            _pincode.text.trim(),
-                            GlobalVariable.openTimeGlo,
-                            GlobalVariable.closerTimeGlo,
-                            _instagram.text.trim(),
-                            _facebook.text.trim(),
-                            _googleMap.text.trim(),
-                            _instagram.text.trim(),
-                            context);
-                        showMessage("Salon Information Successfully add");
-                        print("Salon ID ${GlobalVariable.salonID}");
-                        Routes.instance
-                            .push(widget: FormTimeSection(), context: context);
+                        if (_isVaildated) {
+                          appProvider.addsalonInfoForm(
+                              selectedImage!,
+                              _salonName.text.trim(),
+                              _email.text.trim(),
+                              _mobile.text.trim(),
+                              _whatApp.text.trim(),
+                              _selectedSalonType!,
+                              _descrition.text.trim(),
+                              _address.text.trim(),
+                              _city.text.trim(),
+                              _state.text.trim(),
+                              _pincode.text.trim(),
+                              GlobalVariable.openTimeGlo,
+                              GlobalVariable.closerTimeGlo,
+                              _instagram.text.trim(),
+                              _facebook.text.trim(),
+                              _googleMap.text.trim(),
+                              _instagram.text.trim(),
+                              context);
+                          showMessage("Salon create Successfully add");
+                          print("Salon ID ${GlobalVariable.salonID}");
+
+                          // // Initialize category collection on save button click
+                          // CategoryModel? category =
+                          //     await serviceProvider.initializeCategory(
+                          //   "HireCut",
+                          //   appProvider.getSalonInformation.id,
+                          //   context,
+                          // );
+                          // if (category != null) {
+                          //   showMessage(
+                          //       'Salon Information Successfully Added: ${category.categoryName}');
+                          // } else {
+                          //   showMessage(
+                          //       'Category collection already initialized or an error occurred');
+                          // }
+                          Routes.instance.push(
+                              widget: const FormTimeSection(),
+                              context: context);
+                        }
+                      } catch (e) {
+                        showMessage('Salon is not create or an error occurred');
                       }
                     },
                   ),

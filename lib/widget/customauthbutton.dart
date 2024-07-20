@@ -1,25 +1,34 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
 
 class CustomAuthButton extends StatelessWidget {
   final String text;
   final VoidCallback ontap;
-  const CustomAuthButton({Key? key, required this.text, required this.ontap})
-      : super(key: key);
+  Color? bgColor;
+  double? buttonWidth;
+  CustomAuthButton({
+    Key? key,
+    required this.text,
+    required this.ontap,
+    this.bgColor = AppColor.bgForAuth,
+    this.buttonWidth = double.infinity,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: ontap,
+    return CupertinoButton(
+      onPressed: ontap,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: Dimensions.dimenisonNo20),
         decoration: BoxDecoration(
-            color: AppColor.bgForAuth,
+            color: bgColor,
             borderRadius: BorderRadius.circular(Dimensions.dimenisonNo30)),
         height: Dimensions.dimenisonNo40,
-        width: double.infinity,
+        width: buttonWidth,
         child: Center(
           child: Text(
             text,

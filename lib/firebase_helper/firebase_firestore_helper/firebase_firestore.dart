@@ -5,20 +5,22 @@
 
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebase_storage_helper.dart';
+import 'package:samay_admin_plan/models/category%20model/category_model.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 
 class FirebaseFirestoreHelper {
   static FirebaseFirestoreHelper instance = FirebaseFirestoreHelper();
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
 // Add Salon Information under Admin
   Future<SalonModel> addSalon(
@@ -41,7 +43,7 @@ class FirebaseFirestoreHelper {
       String linked,
       BuildContext context) async {
     try {
-      String? adminUid = FirebaseAuth.instance.currentUser?.uid;
+      String? adminUid = _auth.currentUser?.uid;
 
       DocumentReference reference = _firebaseFirestore
           .collection("admins")
@@ -89,6 +91,38 @@ class FirebaseFirestoreHelper {
     }
   }
 
+  // initializeCategoryCollection a Category
+  Future<CategoryModel> initializeCategoryCollection(
+    String categoryName,
+    String salonId,
+    BuildContext context,
+  ) async {
+    try {
+      String? adminUid = FirebaseAuth.instance.currentUser?.uid;
+
+      DocumentReference reference = _firebaseFirestore
+          .collection("admins")
+          .doc(adminUid)
+          .collection("salon")
+          .doc(salonId)
+          .collection("category")
+          .doc();
+
+      CategoryModel categoryModel = CategoryModel(
+        id: reference.id,
+        categoryName: categoryName,
+        salonId: salonId,
+      );
+
+      await reference.set(categoryModel.toJson());
+      return categoryModel;
+    } catch (e) {
+      showMessage("Error create Category ${e.toString()}");
+      rethrow; // Ensure the error is still thrown
+    }
+  }
+
+// Get Admin information
   Future<Map<String, dynamic>?> getAdminInformation() async {
     try {
       DocumentSnapshot doc = await _firebaseFirestore
@@ -105,6 +139,7 @@ class FirebaseFirestoreHelper {
     return null;
   }
 
+// Get salon information
   Future<SalonModel?> getSalonInformation() async {
     try {
       CollectionReference salonCollection = await _firebaseFirestore
@@ -122,43 +157,28 @@ class FirebaseFirestoreHelper {
     return null;
   }
 
-// Add Salon weekday Time Information under Admin
-  // Future<WeekdayModel> addWeekDay(
-  //     String salonID,
-  //     String monday,
-  //     String tuesday,
-  //     String wednesday,
-  //     String thursday,
-  //     String friday,
-  //     String saturday,
-  //     String sunday,
-  //     BuildContext context) async {
-  //   try {
-  //     String? _adminUid = FirebaseAuth.instance.currentUser?.uid;
-  //     DocumentReference reference = _firebaseFirestore
-  //         .collection("admins")
-  //         .doc(_adminUid)
-  //         .collection("Salon")
-  //         .doc(salonID) //! First fatch salon date so that you can get Salon id
-  //         .collection("WeekDayTime")
-  //         .doc();
+  // Get Single Category Information
 
-  //     WeekdayModel addweekday = WeekdayModel(
-  //         id: reference.id,
-  //         monday: monday,
-  //         tuesday: tuesday,
-  //         wednesday: wednesday,
-  //         thursday: thursday,
-  //         friday: friday,
-  //         saturday: saturday,
-  //         sunday: sunday);
+  Future<CategoryModel?> getSingleCategory() async {}
 
-  //     await reference.set(addweekday.toJson());
-
-  //     return addweekday;
-  //   } catch (e) {
-  //     showMessage(e.toString());
-  //     rethrow; // Ensure the error is still thrown
-  //   }
-  // }
+// Get category List
+  Future<List<CategoryModel>> getCategoryListFirebase(String salonId) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firebaseFirestore
+              .collection("admins")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection('salon')
+              .doc(salonId)
+              .collection("category")
+              .get();
+      List<CategoryModel> categoryList = querySnapshot.docs
+          .map((e) => CategoryModel.fromMap(e.data()))
+          .toList();
+      return categoryList;
+    } catch (e) {
+      print("Error while get category List ${e.toString()}");
+      rethrow;
+    }
+  }
 }
