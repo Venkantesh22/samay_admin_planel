@@ -96,7 +96,7 @@ class AppProvider with ChangeNotifier {
       showLoaderDialog(context);
 
       String? uploadImageUrl = await FirebaseStorageHelper.instance
-          .uploadALLImageToStorage(
+          .uploadSalonImageToStorage(
               salonModel.id,
               "${GlobalVariable.salon}${salonModel.name}${salonModel.id}images",
               image);

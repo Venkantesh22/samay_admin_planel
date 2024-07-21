@@ -1,6 +1,13 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:samay_admin_plan/constants/constants.dart';
+import 'package:samay_admin_plan/constants/router.dart';
+import 'package:samay_admin_plan/features/services_page/screen/services_page.dart';
+import 'package:samay_admin_plan/provider/app_provider.dart';
+import 'package:samay_admin_plan/provider/service_provider.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
 import 'package:samay_admin_plan/widget/customauthbutton.dart';
 import 'package:samay_admin_plan/widget/customtextfield.dart';
@@ -10,6 +17,8 @@ class AddNewCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppProvider appProvider = Provider.of<AppProvider>(context);
+    ServiceProvider serviceProvider = Provider.of<ServiceProvider>(context);
     final TextEditingController _categoryController = TextEditingController();
 
     return AlertDialog(
@@ -22,8 +31,8 @@ class AddNewCategory extends StatelessWidget {
           horizontal: Dimensions.dimenisonNo20,
           vertical: Dimensions.dimenisonNo10),
       actionsPadding: EdgeInsets.symmetric(
-          horizontal: Dimensions.dimenisonNo5,
-          vertical: Dimensions.dimenisonNo10),
+        vertical: Dimensions.dimenisonNo10,
+      ),
       title: Column(
         children: [
           Row(
@@ -46,7 +55,7 @@ class AddNewCategory extends StatelessWidget {
         ],
       ),
       content: SizedBox(
-        height: Dimensions.dimenisonNo80,
+        height: Dimensions.dimenisonNo60,
         child: FormCustomTextField(
             controller: _categoryController, title: "Category Name"),
       ),
@@ -65,8 +74,31 @@ class AddNewCategory extends StatelessWidget {
             CustomAuthButton(
               buttonWidth: Dimensions.dimenisonNo150,
               text: "Save",
-              ontap: () {
-                Navigator.pop(context);
+              ontap: () async {
+                try {
+                  showLoaderDialog(context);
+
+                  bool isVaildated =
+                      addNewCategoryVaildation(_categoryController.text);
+
+                  if (isVaildated) {
+                    await serviceProvider.addNewCategoryPro(
+                        appProvider.getAdminInformation.id,
+                        appProvider.getSalonInformation.id,
+                        _categoryController.text.trim(),
+                        context);
+                    Navigator.of(context, rootNavigator: true).pop();
+
+                    // Routes.instance
+                    //     .push(widget: ServicesPages(), context: context);
+                    showMessage("New Category add Successfully");
+                  }
+                  Navigator.of(context, rootNavigator: true).pop();
+                } catch (e) {
+                  Navigator.of(context, rootNavigator: true).pop();
+
+                  showMessage("Error create new Category ${e.toString()}");
+                }
               },
             ),
           ],

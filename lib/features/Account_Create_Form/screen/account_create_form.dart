@@ -13,6 +13,7 @@ import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/salon_social_media_add.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/saloon_Time.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/screen/form_weektime_screen.dart';
+import 'package:samay_admin_plan/features/home/home_screen.dart';
 import 'package:samay_admin_plan/models/category%20model/category_model.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
@@ -92,15 +93,15 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          color: Colors.grey,
-          // color: AppColor.bgForAdminCreateSec,
+          // color: Colors.grey,
+          color: AppColor.bgForAdminCreateSec,
           child: Center(
             child: Container(
               padding: EdgeInsets.symmetric(
                   horizontal: Dimensions.dimenisonNo30,
                   vertical: Dimensions.dimenisonNo20),
-              color: Colors.green,
-              // color: Colors.white,
+              // color: Colors.green,
+              color: Colors.white,
               width: Dimensions.screenWidth / 1.5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -323,7 +324,7 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                     text: "Save",
                     ontap: () async {
                       try {
-                        bool _isVaildated = formCreateAccount(
+                        bool _isVaildated = formCreateAccountVaildation(
                           _salonName.text,
                           _email.text,
                           _mobile.text,
@@ -366,23 +367,8 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                           showMessage("Salon create Successfully add");
                           print("Salon ID ${GlobalVariable.salonID}");
 
-                          // // Initialize category collection on save button click
-                          // CategoryModel? category =
-                          //     await serviceProvider.initializeCategory(
-                          //   "HireCut",
-                          //   appProvider.getSalonInformation.id,
-                          //   context,
-                          // );
-                          // if (category != null) {
-                          //   showMessage(
-                          //       'Salon Information Successfully Added: ${category.categoryName}');
-                          // } else {
-                          //   showMessage(
-                          //       'Category collection already initialized or an error occurred');
-                          // }
                           Routes.instance.push(
-                              widget: const FormTimeSection(),
-                              context: context);
+                              widget: const HomeScreen(), context: context);
                         }
                       } catch (e) {
                         showMessage('Salon is not create or an error occurred');

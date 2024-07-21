@@ -42,7 +42,6 @@ class _FormTimeSectionState extends State<FormTimeSection> {
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
 
     // TODO: implement initState
-
     appProvider.getAdminInfoFirebase();
     super.initState();
   }
@@ -124,7 +123,9 @@ class _FormTimeSectionState extends State<FormTimeSection> {
                                 text: "Save",
                                 ontap: () async {
                                   try {
-                                    bool _isVaildated = formWeekday(
+                                    appProvider.getSalonInformation;
+
+                                    bool _isVaildated = formWeekdayVaildation(
                                         mondayController.text,
                                         tuesdayController.text,
                                         wednesdayController.text,
@@ -132,6 +133,32 @@ class _FormTimeSectionState extends State<FormTimeSection> {
                                         fridayController.text,
                                         saturdayController.text,
                                         sundayController.text);
+
+                                    // if (_isVaildated) {
+                                    //   SalonModel salonModel = appProvider
+                                    //       .getSalonInformation
+                                    //       .copyWith(
+                                    //     monday: mondayController.text.trim(),
+                                    //     tuesday: tuesdayController.text.trim(),
+                                    //     wednesday:
+                                    //         wednesdayController.text.trim(),
+                                    //     thursday:
+                                    //         thursdayController.text.trim(),
+                                    //     friday: fridayController.text.trim(),
+                                    //     saturday:
+                                    //         saturdayController.text.trim(),
+                                    //     sunday: sundayController.text.trim(),
+                                    //   );
+
+                                    //   appProvider.updateSalonInfoFirebase(
+                                    //     context,
+                                    //     salonModel,
+                                    //   );
+
+                                    //   Routes.instance.pushAndRemoveUntil(
+                                    //       widget: const HomeScreen(),
+                                    //       context: context);
+                                    // }
 
                                     if (_isVaildated) {
                                       SalonModel salonModel = appProvider
@@ -157,10 +184,12 @@ class _FormTimeSectionState extends State<FormTimeSection> {
                                       Routes.instance.pushAndRemoveUntil(
                                           widget: const HomeScreen(),
                                           context: context);
+                                      showMessage(
+                                          'Week Timing is add Successfully');
                                     }
                                   } catch (e) {
                                     showMessage(
-                                        'WeekTiming is not add or an error occurred');
+                                        'Week Timing is not add or an error occurred');
                                   }
                                 }),
                           ),

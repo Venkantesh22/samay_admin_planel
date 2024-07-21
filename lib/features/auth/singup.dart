@@ -130,7 +130,7 @@ class _SingupScreenState extends State<SingupScreen> {
                         obscureForPassword: true,
                         keyboardType: TextInputType.name,
                         label: "Password"),
-                    SizedBox(height: Dimensions.dimenisonNo20),
+                    SizedBox(height: Dimensions.dimenisonNo10),
                     CustomAuthButton(
                       text: "SingUp",
                       ontap: () async {

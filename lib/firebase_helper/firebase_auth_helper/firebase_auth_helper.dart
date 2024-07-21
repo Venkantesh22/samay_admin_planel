@@ -47,7 +47,7 @@ class FirebaseAuthHelper {
       // String? uploadImageUrl = await FirebaseStorageHelper.instance
       //     .uploadImageToStorage(adminData, selectedImage);
       String? uploadImageUrl = await FirebaseStorageHelper.instance
-          .uploadALLImageToStorage(
+          .uploadProfileImageToStorage(
               adminData.id, "adminProfileimages", selectedImage);
 
       await _auth.currentUser?.updateDisplayName(adminData.name);

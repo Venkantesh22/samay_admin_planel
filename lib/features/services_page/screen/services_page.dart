@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:samay_admin_plan/features/custom_appbar/screen/custom_appbar.dart';
+import 'package:samay_admin_plan/features/home/ex.dart';
 import 'package:samay_admin_plan/features/services_page/screen/category_drawer.dart';
 import 'package:samay_admin_plan/features/services_page/screen/services_list.dart';
 
@@ -36,6 +37,11 @@ class _ServicesPagesState extends State<ServicesPages> {
                   );
                 }
                 return null;
+                // MaterialPageRoute(
+                //   builder: (context) => Container(
+                //     child: Text("hii not cat"),
+                //   ),
+                // );
               },
               initialRoute: '/',
               onUnknownRoute: (settings) => MaterialPageRoute(

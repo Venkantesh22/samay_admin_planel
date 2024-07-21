@@ -8,6 +8,7 @@ import 'package:samay_admin_plan/features/Account_Create_Form/screen/account_cre
 import 'package:samay_admin_plan/features/Account_Create_Form/screen/form_weektime_screen.dart';
 import 'package:samay_admin_plan/features/home/ex.dart';
 import 'package:samay_admin_plan/features/popup/add_new_category.dart';
+import 'package:samay_admin_plan/features/popup/add_services.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/features/custom_appbar/screen/custom_appbar.dart';
@@ -77,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return AddNewCategory();
+                        return AddNewServices();
                       });
                 },
               ),

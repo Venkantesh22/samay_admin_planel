@@ -16,6 +16,7 @@ import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebase_storage_helper.dart';
 import 'package:samay_admin_plan/models/category%20model/category_model.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
+import 'package:samay_admin_plan/models/service%20model/service_model.dart';
 
 class FirebaseFirestoreHelper {
   static FirebaseFirestoreHelper instance = FirebaseFirestoreHelper();
@@ -73,7 +74,7 @@ class FirebaseFirestoreHelper {
       // upload image of create new folder then upload
 
       String? uploadImageUrl = await FirebaseStorageHelper.instance
-          .uploadALLImageToStorage(
+          .uploadSalonImageToStorage(
               salonModel.id,
               "${GlobalVariable.salon}${salonModel.name}${salonModel.id}images",
               image);
@@ -122,6 +123,72 @@ class FirebaseFirestoreHelper {
     }
   }
 
+// Add new Category
+  Future<CategoryModel> addNewCategoryFirebase(
+    String adminId,
+    String categoryName,
+    String salonId,
+    BuildContext context,
+  ) async {
+    try {
+      DocumentReference reference = _firebaseFirestore
+          .collection("admins")
+          .doc(adminId)
+          .collection("salon")
+          .doc(salonId)
+          .collection("category")
+          .doc();
+
+      CategoryModel categoryModel = CategoryModel(
+        id: reference.id,
+        categoryName: categoryName,
+        salonId: salonId,
+      );
+
+      await reference.set(categoryModel.toJson());
+      return categoryModel;
+    } catch (e) {
+      rethrow; // Ensure the error is still thrown
+    }
+  }
+
+  // Add Service to firebase Information under Admin/salon/category/services
+
+  Future<ServiceModel> addServiceFirebase(
+    String adminId,
+    String salonId,
+    String categoryId,
+    String servicesName,
+    double price,
+    double hours,
+    double min,
+    String description,
+  ) async {
+    DocumentReference reference = _firebaseFirestore
+        .collection("admins")
+        .doc(adminId)
+        .collection("salon")
+        .doc(salonId)
+        .collection("category")
+        .doc(categoryId)
+        .collection("service")
+        .doc();
+
+    ServiceModel serviceModel = ServiceModel(
+      salonId: salonId,
+      categoryId: categoryId,
+      id: reference.id,
+      servicesName: servicesName,
+      price: price,
+      hours: hours,
+      minutes: min,
+      description: description,
+    );
+
+    await reference.set(serviceModel.toJson());
+    return serviceModel;
+  }
+
 // Get Admin information
   Future<Map<String, dynamic>?> getAdminInformation() async {
     try {
@@ -159,7 +226,25 @@ class FirebaseFirestoreHelper {
 
   // Get Single Category Information
 
-  Future<CategoryModel?> getSingleCategory() async {}
+  // Get salon information
+  // Future<ServiceModel?> getSingleServicesInformation() async {
+  //   try {
+  //     CollectionReference serviceCollection = await _firebaseFirestore
+  //         .collection("admins")
+  //         .doc(FirebaseAuth.instance.currentUser!.uid)
+  //         .collection('salon');
+  //     QuerySnapshot snapshot = await salonCollection.limit(1).get();
+  //     if (snapshot.docs.isNotEmpty) {
+  //       DocumentSnapshot doc = snapshot.docs.first;
+  //       return SalonModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
+  //     }
+  //   } catch (e) {
+  //     showMessage('Error fetching salon: $e');
+  //   }
+  //   return null;
+  // }
+
+// Get category List
 
 // Get category List
   Future<List<CategoryModel>> getCategoryListFirebase(String salonId) async {

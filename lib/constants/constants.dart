@@ -92,6 +92,8 @@ String getMessageFromErrorCode(String errorCode) {
   }
 }
 
+// Login Text Field Validation.
+
 bool loginVaildation(String email, String password) {
   if (email.isEmpty && password.isEmpty) {
     showMessage("Both Fields are empty");
@@ -107,6 +109,7 @@ bool loginVaildation(String email, String password) {
   }
 }
 
+// SignUp Text Field Validation.
 bool signUpVaildation(
     String email, String password, String name, String phone) {
   if (email.isEmpty && password.isEmpty && name.isEmpty && phone.isEmpty) {
@@ -135,7 +138,8 @@ bool signUpVaildation(
   }
 }
 
-bool formCreateAccount(
+// Salon form Text Field Validation.
+bool formCreateAccountVaildation(
   String salonName,
   String email,
   String mobile,
@@ -219,7 +223,8 @@ bool formCreateAccount(
   }
 }
 
-bool formWeekday(
+// Salon week day Text Field Validation.
+bool formWeekdayVaildation(
   String monday,
   String tuesday,
   String wednesday,
@@ -257,6 +262,66 @@ bool formWeekday(
     return false;
   } else if (sunday.isEmpty) {
     showMessage("Select a Time on Sunday");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+// Add new Category popup Text Field Validation.
+bool addNewCategoryVaildation(
+  String categoryName,
+) {
+  if (categoryName.isEmpty) {
+    showMessage("Enter a Category Name");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+// Add new Category popup Text Field Validation.
+bool addNewServiceVaildation(
+  final String servicesName,
+  final String price,
+  final String hours,
+  final String minutes,
+  final String description,
+) {
+  final double? min = double.tryParse(minutes);
+  final double? hr = double.tryParse(minutes);
+  final double? pr = double.tryParse(price);
+
+  if (servicesName.isEmpty &&
+      price.isEmpty &&
+      hours.isEmpty &&
+      minutes.isEmpty &&
+      description.isEmpty) {
+    showMessage("All Fields are empty");
+    return false;
+  } else if (servicesName.isEmpty) {
+    showMessage("Enter a Service Name");
+    return false;
+  } else if (price.isEmpty) {
+    showMessage("Enter a Price");
+    return false;
+  } else if (pr == null || pr < 0) {
+    showMessage("Enter a Price");
+    return false;
+  } else if (hours.isEmpty) {
+    showMessage("Enter a Hours");
+    return false;
+  } else if (hr == null || hr < 0) {
+    showMessage("Enter a correct hours.");
+    return false;
+  } else if (minutes.isEmpty) {
+    showMessage("Enter a Minutes");
+    return false;
+  } else if (min == null || min < 0 || min > 59) {
+    showMessage("Enter a correct minute.");
+    return false;
+  } else if (description.isEmpty) {
+    showMessage("Enter a Service description");
     return false;
   } else {
     return true;
