@@ -10,9 +10,11 @@ import 'package:samay_admin_plan/utility/dimenison.dart';
 class SalonTimeSection extends StatefulWidget {
   TextEditingController openController;
   TextEditingController closeController;
-  SalonTimeSection(
-      {Key? key, required this.openController, required this.closeController})
-      : super(key: key);
+  SalonTimeSection({
+    Key? key,
+    required this.openController,
+    required this.closeController,
+  }) : super(key: key);
 
   @override
   State<SalonTimeSection> createState() => _SalonTimeSectionState();

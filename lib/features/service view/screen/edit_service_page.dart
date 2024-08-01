@@ -1,11 +1,13 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 import 'package:samay_admin_plan/constants/constants.dart';
-import 'package:samay_admin_plan/constants/global_variable.dart';
+import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/models/category_model/category_model.dart';
+import 'package:samay_admin_plan/models/service_model/service_model.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/provider/service_provider.dart';
 import 'package:samay_admin_plan/utility/color.dart';
@@ -13,28 +15,36 @@ import 'package:samay_admin_plan/utility/dimenison.dart';
 import 'package:samay_admin_plan/widget/customauthbutton.dart';
 import 'package:samay_admin_plan/widget/customtextfield.dart';
 
-class AddServiceForm extends StatefulWidget {
+class EditServicePage extends StatefulWidget {
+  final int index;
+  final ServiceModel serviceModel;
   final CategoryModel categoryModel;
-  const AddServiceForm({
+  const EditServicePage({
     Key? key,
+    required this.index,
+    required this.serviceModel,
     required this.categoryModel,
   }) : super(key: key);
 
   @override
-  State<AddServiceForm> createState() => _AddServiceFormState();
+  State<EditServicePage> createState() => _EditServicePageState();
 }
 
-class _AddServiceFormState extends State<AddServiceForm> {
+class _EditServicePageState extends State<EditServicePage> {
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(context);
     ServiceProvider serviceProvider = Provider.of<ServiceProvider>(context);
-    final TextEditingController _serviceController = TextEditingController();
-    final TextEditingController _priceController = TextEditingController();
-    final TextEditingController _hoursController = TextEditingController();
-    final TextEditingController _minController = TextEditingController();
+    final TextEditingController _serviceController =
+        TextEditingController(text: widget.serviceModel.servicesName);
+    final TextEditingController _priceController =
+        TextEditingController(text: widget.serviceModel.price.toString());
+    final TextEditingController _hoursController =
+        TextEditingController(text: widget.serviceModel.hours.toString());
+    final TextEditingController _minController =
+        TextEditingController(text: widget.serviceModel.minutes.toString());
     final TextEditingController _descriptionController =
-        TextEditingController();
+        TextEditingController(text: widget.serviceModel.description);
     return Scaffold(
       backgroundColor: AppColor.bgForAdminCreateSec,
       body: SingleChildScrollView(
@@ -50,6 +60,7 @@ class _AddServiceFormState extends State<AddServiceForm> {
                 horizontal: Dimensions.dimenisonNo30,
                 vertical: Dimensions.dimenisonNo30),
             decoration: const BoxDecoration(
+              // color: Colors.green,
               color: Colors.white,
               // borderRadius: BorderRadius.circular(Dimensions.dimenisonNo20),
             ),
@@ -60,7 +71,7 @@ class _AddServiceFormState extends State<AddServiceForm> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Add New Service in ${widget.categoryModel.categoryName} Category',
+                      'Update ${widget.serviceModel.servicesName} Service ',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
@@ -197,7 +208,7 @@ class _AddServiceFormState extends State<AddServiceForm> {
                   height: Dimensions.dimenisonNo10,
                 ),
                 FormCustomTextField(
-                    maxline: 4,
+                    maxline: 6,
                     controller: _descriptionController,
                     title: "Service Description"),
                 SizedBox(
@@ -205,40 +216,36 @@ class _AddServiceFormState extends State<AddServiceForm> {
                 ),
                 CustomAuthButton(
                   text: "Save",
-                  ontap: () {
+                  ontap: () async {
                     try {
                       showLoaderDialog(context);
                       bool isVaildated = addNewServiceVaildation(
-                          _serviceController.text,
-                          _priceController.text,
-                          _hoursController.text,
-                          _minController.text,
-                          _descriptionController.text);
+                          _serviceController.text.trim(),
+                          _priceController.text.trim(),
+                          _hoursController.text.trim(),
+                          _minController.text.trim(),
+                          _descriptionController.text.trim());
 
                       if (isVaildated) {
-                        serviceProvider.addSingleServicePro(
-                            appProvider.getAdminInformation.id,
-                            appProvider.getSalonInformation.id,
-                            widget.categoryModel.id,
-                            _serviceController.text.trim(),
-                            double.parse(_priceController.text.trim()),
-                            double.parse(_hoursController.text.trim()),
-                            double.parse(_minController.text.trim()),
-                            _descriptionController.text.trim());
-                        Navigator.of(
-                          context,
-                        ).pop();
-                        CategoryModel categoryModel =
-                            widget.categoryModel.copyWith(haveData: true);
-                        serviceProvider.updateSingleCategoryPro(categoryModel);
+                        ServiceModel serviceModel =
+                            widget.serviceModel.copyWith(
+                          servicesName: _serviceController.text.trim(),
+                          price: double.parse(_priceController.text.trim()),
+                          hours: double.parse(_hoursController.text.trim()),
+                          minutes: double.parse(_minController.text.trim()),
+                          description: _descriptionController.text.trim(),
+                        );
 
-                        showMessage("New Service add Successfully");
+                        serviceProvider.updateSingleServicePro(
+                            widget.index, serviceModel);
                       }
                       Navigator.of(context, rootNavigator: true).pop();
-                    } catch (e) {
-                      // Navigator.of(context, rootNavigator: true).pop();
+                      Navigator.of(context).pop();
 
-                      showMessage("Error create add Service ${e.toString()}");
+                      showMessage(
+                          "Successfully updated ${widget.serviceModel.servicesName} service");
+                    } catch (e) {
+                      showMessage("Error not updated  service");
                     }
                   },
                 ),

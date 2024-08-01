@@ -14,9 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebase_storage_helper.dart';
-import 'package:samay_admin_plan/models/category%20model/category_model.dart';
+import 'package:samay_admin_plan/models/category_model/category_model.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
-import 'package:samay_admin_plan/models/service%20model/service_model.dart';
+import 'package:samay_admin_plan/models/service_model/service_model.dart';
 
 class FirebaseFirestoreHelper {
   static FirebaseFirestoreHelper instance = FirebaseFirestoreHelper();
@@ -54,6 +54,7 @@ class FirebaseFirestoreHelper {
 
       SalonModel salonModel = SalonModel(
         id: reference.id,
+        adminId: adminUid!,
         description: description,
         name: salonName,
         email: email,
@@ -70,6 +71,13 @@ class FirebaseFirestoreHelper {
         facebook: facebook,
         googleMap: googleMap,
         linked: linked,
+        monday: '',
+        tuesday: '',
+        wednesday: '',
+        thursday: '',
+        friday: '',
+        saturday: '',
+        sunday: '',
       );
       // upload image of create new folder then upload
 
@@ -152,8 +160,40 @@ class FirebaseFirestoreHelper {
     }
   }
 
-  // Add Service to firebase Information under Admin/salon/category/services
+  //Update a Category
+  Future<void> updateSingleCategoryFirebase(CategoryModel categoryModel) async {
+    try {
+      String? adminUid = FirebaseAuth.instance.currentUser?.uid;
+      await _firebaseFirestore
+          .collection("admins")
+          .doc(adminUid)
+          .collection("salon")
+          .doc(categoryModel.salonId)
+          .collection("category")
+          .doc(categoryModel.id)
+          .update(categoryModel.toJson());
+    } catch (e) {}
+  }
 
+//Delete Single Category
+  Future<bool> deleteSingleCategoryFb(CategoryModel categoryModel) async {
+    try {
+      String? adminUid = FirebaseAuth.instance.currentUser?.uid;
+      await _firebaseFirestore
+          .collection("admins")
+          .doc(adminUid)
+          .collection("salon")
+          .doc(categoryModel.salonId)
+          .collection("category")
+          .doc(categoryModel.id)
+          .delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Add Service to firebase Information under Admin/salon/category/services
   Future<ServiceModel> addServiceFirebase(
     String adminId,
     String salonId,
@@ -174,7 +214,7 @@ class FirebaseFirestoreHelper {
         .collection("service")
         .doc();
 
-    ServiceModel serviceModel = ServiceModel(
+    ServiceModel addserviceModel = ServiceModel(
       salonId: salonId,
       categoryId: categoryId,
       id: reference.id,
@@ -185,8 +225,45 @@ class FirebaseFirestoreHelper {
       description: description,
     );
 
-    await reference.set(serviceModel.toJson());
-    return serviceModel;
+    await reference.set(addserviceModel.toJson());
+    return addserviceModel;
+  }
+
+//Update Single Service for firebase
+  Future<void> updateSingleServiceFirebae(ServiceModel serviceModel) async {
+    String? adminUid = FirebaseAuth.instance.currentUser?.uid;
+
+    await _firebaseFirestore
+        .collection("admins")
+        .doc(adminUid)
+        .collection("salon")
+        .doc(serviceModel.salonId)
+        .collection("category")
+        .doc(serviceModel.categoryId)
+        .collection("service")
+        .doc(serviceModel.id)
+        .update(serviceModel.toJson());
+  }
+
+//Delete Single Service for firebase
+  Future<bool> deleteServiceFirebase(ServiceModel serviceModel) async {
+    try {
+      String? adminUid = FirebaseAuth.instance.currentUser?.uid;
+
+      await _firebaseFirestore
+          .collection("admins")
+          .doc(adminUid)
+          .collection("salon")
+          .doc(serviceModel.salonId)
+          .collection("category")
+          .doc(serviceModel.categoryId)
+          .collection("service")
+          .doc(serviceModel.id)
+          .delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
 // Get Admin information
@@ -223,28 +300,23 @@ class FirebaseFirestoreHelper {
     }
     return null;
   }
-
-  // Get Single Category Information
-
-  // Get salon information
-  // Future<ServiceModel?> getSingleServicesInformation() async {
+//! Get Single Service information
+  // Future<SalonModel?> getSingleServiceInformation() async {
   //   try {
   //     CollectionReference serviceCollection = await _firebaseFirestore
   //         .collection("admins")
   //         .doc(FirebaseAuth.instance.currentUser!.uid)
   //         .collection('salon');
-  //     QuerySnapshot snapshot = await salonCollection.limit(1).get();
-  //     if (snapshot.docs.isNotEmpty) {
-  //       DocumentSnapshot doc = snapshot.docs.first;
-  //       return SalonModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
-  //     }
+  //         .doc()
+  //     // if (snapshot.docs.isNotEmpty) {
+  //     //   DocumentSnapshot doc = snapshot.docs.first;
+  //     //   return SalonModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
+  //     // }
   //   } catch (e) {
   //     showMessage('Error fetching salon: $e');
   //   }
   //   return null;
   // }
-
-// Get category List
 
 // Get category List
   Future<List<CategoryModel>> getCategoryListFirebase(String salonId) async {

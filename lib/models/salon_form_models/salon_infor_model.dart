@@ -8,6 +8,7 @@ import 'dart:convert';
 class SalonModel {
   SalonModel({
     required this.id,
+    required this.adminId,
     required this.name,
     required this.email,
     required this.number,
@@ -36,6 +37,7 @@ class SalonModel {
   });
 
   String id;
+  String adminId;
   String name;
   String email;
   int number;
@@ -68,6 +70,7 @@ class SalonModel {
   ) =>
       SalonModel(
         id: json["id"],
+        adminId: json["adminId"],
         name: json["name"],
         email: json["email"],
         number:
@@ -99,6 +102,7 @@ class SalonModel {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "adminId": adminId,
         "name": name,
         "email": email,
         "number": number,
@@ -155,6 +159,7 @@ class SalonModel {
   }) {
     return SalonModel(
       id: id,
+      adminId: adminId,
       name: name ?? this.name,
       email: email ?? this.email,
       number: number ?? this.number,

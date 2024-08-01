@@ -24,6 +24,8 @@ class Dimensions {
       screenWidth <= 550 ? screenHeightM / 75.4 : screenWidth / 123.2;
   static double dimenisonNo12 =
       screenWidth <= 550 ? screenHeightM / 62.833 : screenWidth / 102.666;
+  static double dimenisonNo14 =
+      screenWidth <= 550 ? screenHeightM / 53.85714 : screenWidth / 88.00;
   static double dimenisonNo15 =
       screenWidth <= 550 ? screenHeightM / 50.266 : screenWidth / 82.133;
   static double dimenisonNo16 =

@@ -2,16 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/screen/account_create_form.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/screen/form_weektime_screen.dart';
 import 'package:samay_admin_plan/features/home/ex.dart';
-import 'package:samay_admin_plan/features/popup/add_new_category.dart';
-import 'package:samay_admin_plan/features/popup/add_services.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/features/custom_appbar/screen/custom_appbar.dart';
+import 'package:samay_admin_plan/provider/service_provider.dart';
 import 'package:samay_admin_plan/widget/add_button.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,12 +22,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
     // TODO: implement initState
+    getDate();
+    super.initState();
+  }
 
+  void getDate() async {
+    AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
+
+    ServiceProvider serviceProvider =
+        Provider.of<ServiceProvider>(context, listen: false);
     appProvider.getSalonInfoFirebase();
     appProvider.getAdminInfoFirebase();
-    super.initState();
+    await serviceProvider.callBackFunction(appProvider.getSalonInformation.id);
   }
 
   @override
@@ -74,13 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text("FormTimeSection")),
               AddButton(
                 text: "Add Category",
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AddNewServices();
-                      });
-                },
+                onTap: () {},
               ),
             ],
           ),

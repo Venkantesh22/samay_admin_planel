@@ -9,7 +9,7 @@ import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/week_row.dart';
 import 'package:samay_admin_plan/features/home/home_screen.dart';
-import 'package:samay_admin_plan/models/category%20model/category_model.dart';
+import 'package:samay_admin_plan/models/category_model/category_model.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/provider/service_provider.dart';
@@ -133,32 +133,6 @@ class _FormTimeSectionState extends State<FormTimeSection> {
                                         fridayController.text,
                                         saturdayController.text,
                                         sundayController.text);
-
-                                    // if (_isVaildated) {
-                                    //   SalonModel salonModel = appProvider
-                                    //       .getSalonInformation
-                                    //       .copyWith(
-                                    //     monday: mondayController.text.trim(),
-                                    //     tuesday: tuesdayController.text.trim(),
-                                    //     wednesday:
-                                    //         wednesdayController.text.trim(),
-                                    //     thursday:
-                                    //         thursdayController.text.trim(),
-                                    //     friday: fridayController.text.trim(),
-                                    //     saturday:
-                                    //         saturdayController.text.trim(),
-                                    //     sunday: sundayController.text.trim(),
-                                    //   );
-
-                                    //   appProvider.updateSalonInfoFirebase(
-                                    //     context,
-                                    //     salonModel,
-                                    //   );
-
-                                    //   Routes.instance.pushAndRemoveUntil(
-                                    //       widget: const HomeScreen(),
-                                    //       context: context);
-                                    // }
 
                                     if (_isVaildated) {
                                       SalonModel salonModel = appProvider

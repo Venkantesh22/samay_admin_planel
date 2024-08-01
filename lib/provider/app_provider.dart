@@ -9,6 +9,7 @@ import 'package:samay_admin_plan/models/admin_models.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_firestore_helper/firebase_firestore.dart';
+import 'package:samay_admin_plan/models/service_model/service_model.dart';
 
 class AppProvider with ChangeNotifier {
   SalonModel? _salonModel;
@@ -16,6 +17,10 @@ class AppProvider with ChangeNotifier {
 
   AdminModel? _adminModel;
   AdminModel get getAdminInformation => _adminModel!;
+
+  // ServiceModel? _serviceModel;
+  // ServiceModel get getServiceInformation => _serviceModel!;
+
   // Add a Salon infor to firebase
   void addsalonInfoForm(
       Uint8List image,
@@ -59,11 +64,13 @@ class AppProvider with ChangeNotifier {
     notifyListeners();
   }
 
+// Fetch a Salon infor
   Future<void> getSalonInfoFirebase() async {
     _salonModel = await FirebaseFirestoreHelper.instance.getSalonInformation();
     notifyListeners();
   }
 
+// Fetch a Admin infor
   Future<void> getAdminInfoFirebase() async {
     Map<String, dynamic>? adminData =
         await FirebaseFirestoreHelper.instance.getAdminInformation();
@@ -75,6 +82,7 @@ class AppProvider with ChangeNotifier {
     }
   }
 
+// Update a Salon infor
   void updateSalonInfoFirebase(
     BuildContext context,
     SalonModel salonModel, {
@@ -94,7 +102,7 @@ class AppProvider with ChangeNotifier {
       Navigator.of(context).pop();
     } else {
       showLoaderDialog(context);
-
+      _salonModel = salonModel;
       String? uploadImageUrl = await FirebaseStorageHelper.instance
           .uploadSalonImageToStorage(
               salonModel.id,
@@ -110,9 +118,8 @@ class AppProvider with ChangeNotifier {
       Navigator.of(context, rootNavigator: true).pop();
       Navigator.of(context).pop();
 
-      showMessage("Successfully updated profile");
-
-      notifyListeners();
+      showMessage("Successfully updated ${GlobalVariable.salon} profile");
     }
+    notifyListeners();
   }
 }

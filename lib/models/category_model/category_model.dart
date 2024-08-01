@@ -1,13 +1,16 @@
+import 'package:flutter/material.dart';
+
 class CategoryModel {
   final String id;
   final String categoryName;
-
   final String salonId;
+  final bool haveData;
 
   CategoryModel({
     required this.id,
     required this.categoryName,
     required this.salonId,
+    this.haveData = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -15,6 +18,7 @@ class CategoryModel {
       'categoryName': categoryName,
       'id': id,
       'salonId': salonId,
+      'haveData': haveData,
     };
   }
 
@@ -23,6 +27,15 @@ class CategoryModel {
       categoryName: map['categoryName'],
       id: map['id'],
       salonId: map['salonId'],
+      haveData: map['haveData'],
+    );
+  }
+  factory CategoryModel.fromJson(Map<String, dynamic> map) {
+    return CategoryModel(
+      categoryName: map['categoryName'],
+      id: map['id'],
+      salonId: map['salonId'],
+      haveData: map['haveData'],
     );
   }
 
@@ -30,17 +43,18 @@ class CategoryModel {
         "id": id,
         "categoryName": categoryName,
         "salonId": salonId,
+        "haveData": haveData,
       };
 
   CategoryModel copyWith({
     String? categoryName,
-    String? id,
-    String? salonId,
+    bool? haveData,
   }) {
     return CategoryModel(
       categoryName: categoryName ?? this.categoryName,
-      id: id ?? this.id,
-      salonId: salonId ?? this.salonId,
+      id: id,
+      salonId: salonId,
+      haveData: haveData ?? this.haveData,
     );
   }
 }

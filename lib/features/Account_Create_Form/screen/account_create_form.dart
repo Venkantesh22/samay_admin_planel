@@ -12,12 +12,8 @@ import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/salon_social_media_add.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/saloon_Time.dart';
-import 'package:samay_admin_plan/features/Account_Create_Form/screen/form_weektime_screen.dart';
 import 'package:samay_admin_plan/features/home/home_screen.dart';
-import 'package:samay_admin_plan/models/category%20model/category_model.dart';
-import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
-import 'package:samay_admin_plan/provider/service_provider.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
 import 'package:samay_admin_plan/widget/customauthbutton.dart';
@@ -48,6 +44,8 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
   final TextEditingController _googleMap = TextEditingController();
   final TextEditingController _linked = TextEditingController();
   String? adminUid = FirebaseAuth.instance.currentUser?.uid;
+  late TimeOfDay openTime;
+  late TimeOfDay closeTime;
 
   //! For DropDownList
   String? _selectedSalonType;
@@ -72,7 +70,6 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(context);
-    ServiceProvider serviceProvider = Provider.of<ServiceProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -252,7 +249,7 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
                     maxline: 5,
                   ),
                   SizedBox(height: Dimensions.dimenisonNo10),
-                  // select a time
+                  //! select a time
                   SalonTimeSection(
                     openController: _openTime,
                     closeController: _closeTime,

@@ -8,7 +8,7 @@ import 'package:samay_admin_plan/features/Account_Create_Form/screen/account_cre
 import 'package:samay_admin_plan/features/Account_Create_Form/screen/form_weektime_screen.dart';
 import 'package:samay_admin_plan/features/auth/login.dart';
 import 'package:samay_admin_plan/features/home/home_screen.dart';
-import 'package:samay_admin_plan/features/services_page/screen/add_service_form.dart';
+import 'package:samay_admin_plan/features/service%20view/screen/add_service_form.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/provider/service_provider.dart';
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
           //     Dimensions.init(context);
           //     return AddServiceForm();
           //     // return ServicesPages();
-
+//! add new variable 'state' = Pending in service model
           //     // return FormTimeSection();
           //     // return SingupScreen();
           //     // return AccountCreateForm();

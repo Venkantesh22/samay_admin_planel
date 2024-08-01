@@ -157,7 +157,7 @@ class _SingupScreenState extends State<SingupScreen> {
                         }
                       },
                     ),
-                    SizedBox(height: Dimensions.dimenisonNo10),
+                    // SizedBox(height: Dimensions.dimenisonNo10),
                     InkWell(
                       onTap: () {
                         Routes.instance.push(

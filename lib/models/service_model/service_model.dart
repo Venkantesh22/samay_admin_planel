@@ -2,7 +2,6 @@ class ServiceModel {
   final String id;
   final String salonId;
   final String categoryId;
-
   final String servicesName;
   final double price;
   final double hours;
@@ -47,9 +46,9 @@ class ServiceModel {
   }
 
   ServiceModel copyWith({
-    String? salonId,
-    String? categoryId,
-    String? id,
+    // String? salonId,
+    // String? categoryId,
+    // String? id,
     String? servicesName,
     double? price,
     double? hours,
@@ -57,9 +56,9 @@ class ServiceModel {
     String? description,
   }) {
     return ServiceModel(
-      salonId: salonId ?? this.salonId,
-      categoryId: categoryId ?? this.categoryId,
-      id: id ?? this.id,
+      salonId: salonId,
+      categoryId: categoryId,
+      id: id,
       servicesName: servicesName ?? this.servicesName,
       price: price ?? this.price,
       hours: hours ?? this.hours,

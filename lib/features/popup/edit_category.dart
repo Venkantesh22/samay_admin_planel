@@ -1,23 +1,31 @@
-// ignore_for_file: use_build_context_synchronously, no_leading_underscores_for_local_identifiers
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
-import 'package:samay_admin_plan/provider/app_provider.dart';
+import 'package:samay_admin_plan/models/category_model/category_model.dart';
 import 'package:samay_admin_plan/provider/service_provider.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
 import 'package:samay_admin_plan/widget/customauthbutton.dart';
 import 'package:samay_admin_plan/widget/customtextfield.dart';
 
-class AddNewCategory extends StatelessWidget {
-  const AddNewCategory({Key? key}) : super(key: key);
+class EditCategoryPopup extends StatefulWidget {
+  final CategoryModel? categoryModel;
+  const EditCategoryPopup({
+    Key? key,
+    required this.categoryModel,
+  }) : super(key: key);
 
   @override
+  State<EditCategoryPopup> createState() => _EditCategoryPopupState();
+}
+
+class _EditCategoryPopupState extends State<EditCategoryPopup> {
+  @override
+  @override
   Widget build(BuildContext context) {
-    AppProvider appProvider = Provider.of<AppProvider>(context);
     ServiceProvider serviceProvider = Provider.of<ServiceProvider>(context);
-    final TextEditingController _categoryController = TextEditingController();
+    final TextEditingController _categoryController =
+        TextEditingController(text: widget.categoryModel?.categoryName);
 
     return AlertDialog(
       titlePadding: EdgeInsets.only(
@@ -80,13 +88,15 @@ class AddNewCategory extends StatelessWidget {
                       addNewCategoryVaildation(_categoryController.text);
 
                   if (isVaildated) {
-                    serviceProvider.addNewCategoryPro(
-                        appProvider.getAdminInformation.id,
-                        appProvider.getSalonInformation.id,
-                        _categoryController.text.trim(),
-                        context);
+                    CategoryModel categoryModel = widget.categoryModel!
+                        .copyWith(
+                            categoryName: _categoryController.text.trim());
+                    serviceProvider.updateSingleCategoryPro(categoryModel);
+
                     Navigator.of(context, rootNavigator: true).pop();
-                    showMessage("New Category add Successfully");
+
+                    showMessage(
+                        "New Category add Successfully Reload the Page");
                   }
                   Navigator.of(context, rootNavigator: true).pop();
                 } catch (e) {
