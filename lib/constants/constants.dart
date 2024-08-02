@@ -150,8 +150,8 @@ bool formCreateAccountVaildation(
   String city,
   String state,
   String pinCode,
-  String openTime,
-  String closeTime,
+  TimeOfDay openTime,
+  TimeOfDay closeTime,
   String instagram,
   String facebook,
   String googleMap,
@@ -165,8 +165,8 @@ bool formCreateAccountVaildation(
       salonType.isEmpty &&
       descrition.isEmpty &&
       address.isEmpty &&
-      openTime.isEmpty &&
-      closeTime.isEmpty &&
+      openTime.toString().isEmpty &&
+      closeTime.toString().isEmpty &&
       instagram.isEmpty &&
       facebook.isEmpty &&
       googleMap.isEmpty &&
@@ -212,10 +212,10 @@ bool formCreateAccountVaildation(
   } else if (pinCode.isEmpty) {
     showMessage("city not is Empty");
     return false;
-  } else if (openTime.isEmpty) {
+  } else if (openTime.toString().isEmpty) {
     showMessage("${GlobalVariable.salon} open time is not select");
     return false;
-  } else if (closeTime.isEmpty) {
+  } else if (openTime.toString().isEmpty) {
     showMessage("${GlobalVariable.salon} closing time is not select");
     return false;
   } else {
