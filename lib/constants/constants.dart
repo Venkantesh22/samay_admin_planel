@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
+import 'package:samay_admin_plan/widget/custom_button.dart';
 
 void showMessage(String message) {
   Fluttertoast.showToast(
@@ -13,6 +14,87 @@ void showMessage(String message) {
     backgroundColor: Colors.white,
     textColor: Colors.black,
     fontSize: Dimensions.dimenisonNo16,
+  );
+}
+
+// Function to show a message Delete
+void showDeleteAlertDialog(
+    BuildContext context, String title, message, VoidCallback ontap) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(
+          title,
+          style: TextStyle(
+              fontSize: Dimensions.dimenisonNo24, fontWeight: FontWeight.w600),
+        ),
+        // content:  Text('The salon is closed on the selected date.'),
+        content: Text(
+          message,
+          style: TextStyle(
+              fontSize: Dimensions.dimenisonNo16, color: Colors.black),
+        ),
+        actions: [
+          SizedBox(
+            height: Dimensions.dimenisonNo20,
+          ),
+          SizedBox(
+            height: Dimensions.dimenisonNo35,
+            child: Row(
+              children: [
+                CustomButtom(
+                  buttonColor: Colors.white,
+                  text: "No",
+                  ontap: () {
+                    Navigator.pop(context);
+                  },
+                  textColor: Colors.black,
+                ),
+                Spacer(),
+                CustomButtom(buttonColor: Colors.red, text: "Yes", ontap: ontap)
+              ],
+            ),
+          )
+        ],
+      );
+    },
+  );
+}
+
+// Function to show a message
+void showInforAlertDialog(
+  BuildContext context,
+  String title,
+  message,
+) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(
+          title,
+          style: TextStyle(
+              fontSize: Dimensions.dimenisonNo24, fontWeight: FontWeight.w600),
+        ),
+        // content:  Text('The salon is closed on the selected date.'),
+        content: Text(
+          message,
+          style: TextStyle(
+              fontSize: Dimensions.dimenisonNo16, color: Colors.black),
+        ),
+        actions: [
+          CustomButtom(
+            buttonColor: AppColor.buttonColor,
+            text: "OK",
+            ontap: () {
+              Navigator.pop(context);
+            },
+            textColor: Colors.white,
+          )
+        ],
+      );
+    },
   );
 }
 
@@ -49,6 +131,7 @@ showLoaderDialog(BuildContext context) {
       );
     }),
   );
+
   showDialog(
     barrierDismissible: false,
     context: context,

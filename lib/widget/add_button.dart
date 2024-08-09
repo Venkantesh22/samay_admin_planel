@@ -26,6 +26,7 @@ class AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
+      padding: EdgeInsets.zero,
       onPressed: onTap,
       child: Container(
         width: Dimensions.dimenisonNo200,
@@ -63,7 +64,7 @@ class AddButton extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.15,
               ),
-            )
+            ),
           ],
         ),
       ),

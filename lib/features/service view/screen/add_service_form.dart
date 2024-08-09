@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
-import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/models/category_model/category_model.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/provider/service_provider.dart';
@@ -25,16 +24,27 @@ class AddServiceForm extends StatefulWidget {
 }
 
 class _AddServiceFormState extends State<AddServiceForm> {
+  final TextEditingController _serviceController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _hoursController = TextEditingController();
+  final TextEditingController _minController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
+  @override
+  void dispose() {
+    _serviceController.dispose();
+    _priceController.dispose();
+    _hoursController.dispose();
+    _minController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(context);
     ServiceProvider serviceProvider = Provider.of<ServiceProvider>(context);
-    final TextEditingController _serviceController = TextEditingController();
-    final TextEditingController _priceController = TextEditingController();
-    final TextEditingController _hoursController = TextEditingController();
-    final TextEditingController _minController = TextEditingController();
-    final TextEditingController _descriptionController =
-        TextEditingController();
+
     return Scaffold(
       backgroundColor: AppColor.bgForAdminCreateSec,
       body: SingleChildScrollView(
@@ -220,6 +230,7 @@ class _AddServiceFormState extends State<AddServiceForm> {
                             appProvider.getAdminInformation.id,
                             appProvider.getSalonInformation.id,
                             widget.categoryModel.id,
+                            widget.categoryModel.categoryName,
                             _serviceController.text.trim(),
                             double.parse(_priceController.text.trim()),
                             double.parse(_hoursController.text.trim()),

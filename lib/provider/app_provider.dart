@@ -5,11 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebase_storage_helper.dart';
-import 'package:samay_admin_plan/models/admin_models.dart';
+import 'package:samay_admin_plan/models/admin_model/admin_models.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_firestore_helper/firebase_firestore.dart';
-import 'package:samay_admin_plan/models/service_model/service_model.dart';
 
 class AppProvider with ChangeNotifier {
   SalonModel? _salonModel;

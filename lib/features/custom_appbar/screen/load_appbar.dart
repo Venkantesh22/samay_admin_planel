@@ -1,36 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/custom_appbar/widget/appbar_item.dart';
 import 'package:samay_admin_plan/features/home/screen/home_screen.dart';
 import 'package:samay_admin_plan/features/services_page/screen/services_page.dart';
-import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
 import 'package:samay_admin_plan/utility/images.dart';
 
-class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+class LoadAppBar extends StatefulWidget implements PreferredSizeWidget {
+  const LoadAppBar({super.key});
 
   @override
-  State<CustomAppBar> createState() => _CustomAppBarState();
+  State<LoadAppBar> createState() => _LoadAppBarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(60.0);
 }
 
-class _CustomAppBarState extends State<CustomAppBar> {
+class _LoadAppBarState extends State<LoadAppBar> {
   @override
   Widget build(BuildContext context) {
-    AppProvider appProvider = Provider.of<AppProvider>(context);
-
-    if (appProvider.getAdminInformation == null ||
-        appProvider.getSalonInformation == null) {
-      return const SizedBox
-          .shrink(); // Return empty widget if data is not available
-    }
-
     return AppBar(
       backgroundColor: AppColor.mainColor,
       automaticallyImplyLeading: false,
@@ -45,10 +35,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
             Image.asset(
               AppImages.logo,
               height: Dimensions.dimenisonNo40,
-              errorBuilder: (context, error, stackTrace) {
-                return const Icon(
-                    Icons.error); // Display error icon if image fails to load
-              },
             ),
             SizedBox(width: Dimensions.dimenisonNo20),
             Container(
@@ -101,42 +87,27 @@ class _CustomAppBarState extends State<CustomAppBar> {
               height: Dimensions.dimenisonNo40,
               decoration: const BoxDecoration(color: Colors.white),
             ),
-            // SizedBox(width: Dimensions.dimenisonNo16),
+            SizedBox(width: Dimensions.dimenisonNo20),
             Padding(
               padding: EdgeInsets.all(Dimensions.dimenisonNo20),
               child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                  appProvider.getAdminInformation.image ??
-                      'https://via.placeholder.com/150', // Placeholder image URL
-                ),
                 radius: Dimensions.dimenisonNo20,
-                onBackgroundImageError: (exception, stackTrace) {
-                  setState(() {
-                    Image.asset(
-                      AppImages.logo,
-                      height: Dimensions.dimenisonNo40,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(Icons
-                            .error); // Display error icon if image fails to load
-                      },
-                    );
-                  }); // Update UI if image fails to load
-                },
+                child: SizedBox(
+                  height: Dimensions.dimenisonNo20,
+                  width: Dimensions.dimenisonNo20,
+                  child: const CircularProgressIndicator(),
+                ),
               ),
             ),
-
+            SizedBox(width: Dimensions.dimenisonNo20),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  appProvider.getAdminInformation.name,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: Dimensions.dimenisonNo16,
-                    fontFamily: GoogleFonts.roboto().fontFamily,
-                    fontWeight: FontWeight.w700,
-                  ),
+                SizedBox(
+                  height: Dimensions.dimenisonNo20,
+                  width: Dimensions.dimenisonNo20,
+                  child: const CircularProgressIndicator(),
                 ),
                 SizedBox(
                   height: Dimensions.dimenisonNo5,

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_firestore_helper/firebase_firestore.dart';
 import 'package:samay_admin_plan/models/category_model/category_model.dart';
 import 'package:samay_admin_plan/models/service_model/service_model.dart';
@@ -10,9 +9,14 @@ class ServiceProvider extends ChangeNotifier {
   List<CategoryModel> _categoryList = [];
   List<ServiceModel> _servicesList = [];
   CategoryModel? _selectedCategory;
-
+  CategoryModel? _category;
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
+  List<CategoryModel> get getCategoryList => _categoryList;
+  List<ServiceModel> get getserviceList => _servicesList;
+  CategoryModel? get selectedCategory => _selectedCategory;
+  CategoryModel? get getCategory => _category;
 
   void setLoading(bool value) {
     _isLoading = value;
@@ -72,52 +76,6 @@ class ServiceProvider extends ChangeNotifier {
             .toList());
   }
 
-// Update a single Category
-  void updateSingleCategoryPro(CategoryModel categoryModel) async {
-    await FirebaseFirestoreHelper.instance
-        .updateSingleCategoryFirebase(categoryModel);
-    var isRemove = _categoryList.remove(categoryModel);
-    if (isRemove) {
-      _categoryList.add(categoryModel);
-    }
-    notifyListeners();
-  }
-
-  Future<void> deleteSingleCategoryPro(CategoryModel categoryModel) async {
-    bool val = await FirebaseFirestoreHelper.instance
-        .deleteSingleCategoryFb(categoryModel);
-    if (val) {
-      _categoryList.remove(categoryModel);
-    }
-    notifyListeners();
-  }
-
-  // Add new services .
-  void addSingleServicePro(
-    String adminId,
-    String salonId,
-    String categoryId,
-    String servicesName,
-    double price,
-    double hours,
-    double min,
-    String description,
-  ) async {
-    ServiceModel serviceModel =
-        await FirebaseFirestoreHelper.instance.addServiceFirebase(
-      adminId,
-      salonId,
-      categoryId,
-      servicesName,
-      price,
-      hours,
-      min,
-      description,
-    );
-    _servicesList.add(serviceModel);
-    notifyListeners();
-  }
-
   // Update a Single Services
   void updateSingleServicePro(int index, ServiceModel serviceModel) async {
     await FirebaseFirestoreHelper.instance
@@ -140,12 +98,59 @@ class ServiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //! Category Function
+
   void selectCategory(CategoryModel category) {
     _selectedCategory = category;
     notifyListeners();
   }
 
-  List<CategoryModel> get getCategoryList => _categoryList;
-  List<ServiceModel> get getserviceList => _servicesList;
-  CategoryModel? get selectedCategory => _selectedCategory;
+  // Update a single Category
+  void updateSingleCategoryPro(CategoryModel categoryModel) async {
+    await FirebaseFirestoreHelper.instance
+        .updateSingleCategoryFirebase(categoryModel);
+    var isRemove = _categoryList.remove(categoryModel);
+    if (isRemove) {
+      _categoryList.add(categoryModel);
+    }
+    notifyListeners();
+  }
+
+//Delete singleCategory
+  Future<void> deleteSingleCategoryPro(CategoryModel categoryModel) async {
+    bool val = await FirebaseFirestoreHelper.instance
+        .deleteSingleCategoryFb(categoryModel);
+    if (val) {
+      _categoryList.remove(categoryModel);
+    }
+    notifyListeners();
+  }
+
+  // Add new services .
+  void addSingleServicePro(
+    String adminId,
+    String salonId,
+    String categoryId,
+    String categoryName,
+    String servicesName,
+    double price,
+    double hours,
+    double min,
+    String description,
+  ) async {
+    ServiceModel serviceModel =
+        await FirebaseFirestoreHelper.instance.addServiceFirebase(
+      adminId,
+      salonId,
+      categoryId,
+      categoryName,
+      servicesName,
+      price,
+      hours,
+      min,
+      description,
+    );
+    _servicesList.add(serviceModel);
+    notifyListeners();
+  }
 }

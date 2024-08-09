@@ -8,7 +8,6 @@ import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/screen/account_create_form.dart';
 import 'package:samay_admin_plan/features/auth/login.dart';
-import 'package:samay_admin_plan/features/home/home_screen.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
@@ -37,6 +36,17 @@ class _SingupScreenState extends State<SingupScreen> {
     setState(() {
       selectedImage = chosenImageFile!.files.single.bytes;
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    _nameController.dispose();
+    _emailController.dispose();
+    _mobileController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override

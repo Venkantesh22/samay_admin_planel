@@ -81,16 +81,22 @@ class SingleServiceTap extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    try {
-                      showLoaderDialog(context);
-                      serviceProvider.deletelSingleServicePro(serviceModel);
-                      Navigator.of(context, rootNavigator: true).pop();
-                      showMessage(
-                          "Successfully delete ${serviceModel.servicesName}");
-                    } catch (e) {
-                      showMessage(
-                          "Error not delete ${serviceModel.servicesName}");
-                    }
+                    showDeleteAlertDialog(context, "Delete Service",
+                        "Do you want to delete ${serviceModel.servicesName} Service",
+                        () {
+                      try {
+                        showLoaderDialog(context);
+                        serviceProvider.deletelSingleServicePro(serviceModel);
+                        Navigator.of(context, rootNavigator: true).pop();
+                        Navigator.of(context, rootNavigator: true).pop();
+                        showMessage(
+                            "Successfully delete ${serviceModel.servicesName}");
+                      } catch (e) {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        showMessage(
+                            "Error not delete ${serviceModel.servicesName}");
+                      }
+                    });
                   },
                   icon: const Icon(
                     Icons.delete,

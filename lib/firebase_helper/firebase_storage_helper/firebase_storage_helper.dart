@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
-import 'package:samay_admin_plan/models/admin_models.dart';
+import 'package:samay_admin_plan/models/admin_model/admin_models.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 
 class FirebaseStorageHelper {

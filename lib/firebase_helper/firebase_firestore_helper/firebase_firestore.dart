@@ -6,7 +6,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -17,6 +16,7 @@ import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebas
 import 'package:samay_admin_plan/models/category_model/category_model.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/models/service_model/service_model.dart';
+import 'package:samay_admin_plan/models/user_order/user_order_model.dart';
 
 class FirebaseFirestoreHelper {
   static FirebaseFirestoreHelper instance = FirebaseFirestoreHelper();
@@ -151,6 +151,7 @@ class FirebaseFirestoreHelper {
         id: reference.id,
         categoryName: categoryName,
         salonId: salonId,
+        haveData: false,
       );
 
       await reference.set(categoryModel.toJson());
@@ -198,6 +199,7 @@ class FirebaseFirestoreHelper {
     String adminId,
     String salonId,
     String categoryId,
+    String categoryName,
     String servicesName,
     double price,
     double hours,
@@ -217,6 +219,7 @@ class FirebaseFirestoreHelper {
     ServiceModel addserviceModel = ServiceModel(
       salonId: salonId,
       categoryId: categoryId,
+      categoryName: categoryName,
       id: reference.id,
       servicesName: servicesName,
       price: price,
@@ -338,4 +341,26 @@ class FirebaseFirestoreHelper {
       rethrow;
     }
   }
+
+  //! Booking list
+
+  //Get User Appointment by Date
+
+  // Future<List<OrderModel>> getUserBookingListFB(DateTime selectDate) async {
+  //   try {
+  //     QuerySnapshot<Map<String, dynamic>> querySnapshot =
+  //         await _firebaseFirestore
+  //             .collectionGroup('order')
+  //             .where('serviceDate', isEqualTo: selectDate)
+  //             .get();
+
+  //     List<OrderModel> bookingList =
+  //         querySnapshot.docs.map((e) => OrderModel.fromJson(e.data())).toList();
+
+  //     return bookingList;
+  //   } catch (e) {
+  //     print("Error fetching booking list: $e");
+  //     return [];
+  //   }
+  // }
 }

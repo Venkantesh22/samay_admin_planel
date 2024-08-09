@@ -7,10 +7,12 @@ import 'package:samay_admin_plan/constants/theame.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/screen/account_create_form.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/screen/form_weektime_screen.dart';
 import 'package:samay_admin_plan/features/auth/login.dart';
-import 'package:samay_admin_plan/features/home/home_screen.dart';
+import 'package:samay_admin_plan/features/home/screen/home_screen.dart';
 import 'package:samay_admin_plan/features/service%20view/screen/add_service_form.dart';
+import 'package:samay_admin_plan/features/services_page/screen/services_list.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
+import 'package:samay_admin_plan/provider/booking_provider.dart';
 import 'package:samay_admin_plan/provider/service_provider.dart';
 
 import 'package:samay_admin_plan/utility/dimenison.dart';
@@ -42,18 +44,20 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AppProvider()),
         ChangeNotifierProvider(create: (context) => ServiceProvider()),
+        ChangeNotifierProvider(create: (context) => BookingProvider()),
       ],
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: themeData,
+
           // home: Builder(
           //   builder: (context) {
           //     Dimensions.init(context);
           //     return AddServiceForm();
           //     // return ServicesPages();
-//! add new variable 'state' = Pending in service model
+//! add new variable 'categoryName' = Pending in category model
           //     // return FormTimeSection();
           //     // return SingupScreen();
           //     // return AccountCreateForm();
@@ -72,6 +76,9 @@ class MyApp extends StatelessWidget {
               return const LoginScreen();
             },
           ),
+          // routes: {
+          //   '/services_list': (context) => ServicesList(),
+          // },
         );
       },
     );

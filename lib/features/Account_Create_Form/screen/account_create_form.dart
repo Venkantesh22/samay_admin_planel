@@ -1,7 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, unnecessary_string_interpolations
 
 import 'dart:typed_data';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +9,10 @@ import 'package:provider/provider.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/constants/router.dart';
+import 'package:samay_admin_plan/features/Account_Create_Form/screen/form_weektime_screen.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/salon_social_media_add.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/saloon_Time.dart';
-import 'package:samay_admin_plan/features/home/home_screen.dart';
+import 'package:samay_admin_plan/features/home/screen/home_screen.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
@@ -65,6 +65,26 @@ class _AccountCreateFormState extends State<AccountCreateForm> {
         selectedImage = chosenImageFile.files.single.bytes;
       });
     }
+  }
+
+  @override
+  void dispose() {
+    _salonName.dispose();
+    _email.dispose();
+    _mobile.dispose();
+    _whatApp.dispose();
+    _descrition.dispose();
+    _address.dispose();
+    _city.dispose();
+    _state.dispose();
+    _pincode.dispose();
+    _openTime.dispose();
+    _closeTime.dispose();
+    _instagram.dispose();
+    _facebook.dispose();
+    _googleMap.dispose();
+    _linked.dispose();
+    super.dispose();
   }
 
   @override

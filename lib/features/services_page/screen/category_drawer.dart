@@ -1,15 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
-import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/popup/add_new_category.dart';
-import 'package:samay_admin_plan/features/services_page/screen/services_page.dart';
 import 'package:samay_admin_plan/features/services_page/widget/category_button.dart';
-
 import 'package:samay_admin_plan/models/category_model/category_model.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/one_time_run_function/initialize_default_category.dart';
@@ -71,6 +67,9 @@ class _CatergoryDrawerState extends State<CatergoryDrawer> {
                   // color: Color(0xFFE8E8E8),
                   child: Column(
                     children: [
+                      SizedBox(
+                        height: Dimensions.dimenisonNo10,
+                      ),
                       AddButton(
                         text: "Add Category",
                         bgColor: Colors.white,
@@ -177,3 +176,30 @@ class _CatergoryDrawerState extends State<CatergoryDrawer> {
           );
   }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
+// import 'package:samay_admin_plan/provider/service_provider.dart';
+
+// class CatergoryDrawer extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     ServiceProvider serviceProvider = Provider.of<ServiceProvider>(context);
+
+//     return Drawer(
+//       child: ListView.builder(
+//         itemCount: serviceProvider.getCategoryList.length,
+//         itemBuilder: (context, index) {
+//           final category = serviceProvider.getCategoryList[index];
+//           return ListTile(
+//             title: Text(category.categoryName),
+//             onTap: () {
+//               serviceProvider.selectCategory(category);
+//               Navigator.pushNamed(context, '/services_list');
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }

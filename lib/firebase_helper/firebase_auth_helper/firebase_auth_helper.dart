@@ -7,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebase_storage_helper.dart';
-import 'package:samay_admin_plan/models/admin_models.dart';
+import 'package:samay_admin_plan/models/admin_model/admin_models.dart';
 
 class FirebaseAuthHelper {
   static FirebaseAuthHelper instance = FirebaseAuthHelper();

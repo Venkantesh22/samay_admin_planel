@@ -95,10 +95,15 @@ class _EditCategoryPopupState extends State<EditCategoryPopup> {
 
                     Navigator.of(context, rootNavigator: true).pop();
 
-                    showMessage(
-                        "New Category add Successfully Reload the Page");
+                    // showMessage(
+                    //     "New Category add Successfully Reload the Page");
                   }
+
                   Navigator.of(context, rootNavigator: true).pop();
+                  showInforAlertDialog(
+                      context,
+                      "Successfully Edit the Category",
+                      "Category is Edit Successfully reload the page to see changes.");
                 } catch (e) {
                   Navigator.of(context, rootNavigator: true).pop();
                   showMessage("Error create new Category ${e.toString()}");

@@ -2,6 +2,7 @@ class ServiceModel {
   final String id;
   final String salonId;
   final String categoryId;
+  final String categoryName;
   final String servicesName;
   final double price;
   final double hours;
@@ -12,6 +13,7 @@ class ServiceModel {
     required this.id,
     required this.salonId,
     required this.categoryId,
+    required this.categoryName,
     required this.servicesName,
     required this.price,
     required this.hours,
@@ -23,6 +25,7 @@ class ServiceModel {
     return ServiceModel(
       salonId: json['salonId'],
       categoryId: json['categoryId'],
+      categoryName: json['categoryName'],
       id: json['id'],
       servicesName: json['servicesName'],
       price: json['price'],
@@ -36,6 +39,7 @@ class ServiceModel {
     return {
       'salonId': salonId,
       'categoryId': categoryId,
+      'categoryName': categoryName,
       'id': id,
       'servicesName': servicesName,
       'price': price,
@@ -58,6 +62,7 @@ class ServiceModel {
     return ServiceModel(
       salonId: salonId,
       categoryId: categoryId,
+      categoryName: categoryName,
       id: id,
       servicesName: servicesName ?? this.servicesName,
       price: price ?? this.price,
