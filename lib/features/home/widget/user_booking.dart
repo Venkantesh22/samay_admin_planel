@@ -14,7 +14,11 @@ class UserBookingTap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: Dimensions.dimenisonNo12),
+      margin: EdgeInsets.only(
+        bottom: Dimensions.dimenisonNo12,
+        left: Dimensions.dimenisonNo12,
+        right: Dimensions.dimenisonNo12,
+      ),
       padding: EdgeInsets.all(Dimensions.dimenisonNo8),
       height: Dimensions.dimenisonNo60,
       width: double.infinity,
@@ -27,7 +31,10 @@ class UserBookingTap extends StatelessWidget {
           SizedBox(width: Dimensions.dimenisonNo16),
           CircleAvatar(
             radius: Dimensions.dimenisonNo20,
-            // backgroundImage: AssetImage('assets/logo.png'),
+            backgroundColor: Colors.green[100],
+            backgroundImage: NetworkImage(
+              orderModel.userModel.image,
+            ),
           ),
           SizedBox(width: Dimensions.dimenisonNo20),
           Column(
@@ -50,7 +57,7 @@ class UserBookingTap extends StatelessWidget {
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           Center(
             child: Text(
               '${orderModel.serviceStartTime} To ${orderModel.serviceEndTime}',
@@ -60,17 +67,8 @@ class UserBookingTap extends StatelessWidget {
               ),
             ),
           ),
-          Spacer(),
+          const Spacer(),
           StateText(status: orderModel.status),
-
-          // Text(
-          //   orderModel.status,
-          //   style: TextStyle(
-          //     color: Colors.orange,
-          //     fontWeight: FontWeight.bold,
-          //     fontSize: Dimensions.dimenisonNo14,
-          //   ),
-          // ),
           SizedBox(width: Dimensions.dimenisonNo16),
         ],
       ),

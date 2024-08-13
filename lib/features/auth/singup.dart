@@ -94,7 +94,7 @@ class _SingupScreenState extends State<SingupScreen> {
                               print("icon $selectedImage");
                             },
                             child: CircleAvatar(
-                                radius: Dimensions.dimenisonNo35,
+                                radius: Dimensions.dimenisonNo36,
                                 child: const Icon(Icons.camera_alt)),
                           )
                         : InkWell(

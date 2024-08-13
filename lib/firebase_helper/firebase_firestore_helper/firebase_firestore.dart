@@ -16,7 +16,6 @@ import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebas
 import 'package:samay_admin_plan/models/category_model/category_model.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/models/service_model/service_model.dart';
-import 'package:samay_admin_plan/models/user_order/user_order_model.dart';
 
 class FirebaseFirestoreHelper {
   static FirebaseFirestoreHelper instance = FirebaseFirestoreHelper();
@@ -100,7 +99,8 @@ class FirebaseFirestoreHelper {
     }
   }
 
-  // initializeCategoryCollection a Category
+  //! Category Function
+// initializeCategoryCollection a Category
   Future<CategoryModel> initializeCategoryCollection(
     String categoryName,
     String salonId,
@@ -161,7 +161,7 @@ class FirebaseFirestoreHelper {
     }
   }
 
-  //Update a Category
+//Update a Category
   Future<void> updateSingleCategoryFirebase(CategoryModel categoryModel) async {
     try {
       String? adminUid = FirebaseAuth.instance.currentUser?.uid;
@@ -194,7 +194,29 @@ class FirebaseFirestoreHelper {
     }
   }
 
-  // Add Service to firebase Information under Admin/salon/category/services
+// Get category List
+  Future<List<CategoryModel>> getCategoryListFirebase(String salonId) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firebaseFirestore
+              .collection("admins")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection('salon')
+              .doc(salonId)
+              .collection("category")
+              .get();
+      List<CategoryModel> categoryList = querySnapshot.docs
+          .map((e) => CategoryModel.fromMap(e.data()))
+          .toList();
+      return categoryList;
+    } catch (e) {
+      print("Error while get category List ${e.toString()}");
+      rethrow;
+    }
+  }
+
+//!   Service Function
+// Add Service to firebase Information under Admin/salon/category/services
   Future<ServiceModel> addServiceFirebase(
     String adminId,
     String salonId,
@@ -269,6 +291,7 @@ class FirebaseFirestoreHelper {
     }
   }
 
+//! Get Admin information
 // Get Admin information
   Future<Map<String, dynamic>?> getAdminInformation() async {
     try {
@@ -286,6 +309,7 @@ class FirebaseFirestoreHelper {
     return null;
   }
 
+//! Get Salon information
 // Get salon information
   Future<SalonModel?> getSalonInformation() async {
     try {
@@ -303,64 +327,4 @@ class FirebaseFirestoreHelper {
     }
     return null;
   }
-//! Get Single Service information
-  // Future<SalonModel?> getSingleServiceInformation() async {
-  //   try {
-  //     CollectionReference serviceCollection = await _firebaseFirestore
-  //         .collection("admins")
-  //         .doc(FirebaseAuth.instance.currentUser!.uid)
-  //         .collection('salon');
-  //         .doc()
-  //     // if (snapshot.docs.isNotEmpty) {
-  //     //   DocumentSnapshot doc = snapshot.docs.first;
-  //     //   return SalonModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
-  //     // }
-  //   } catch (e) {
-  //     showMessage('Error fetching salon: $e');
-  //   }
-  //   return null;
-  // }
-
-// Get category List
-  Future<List<CategoryModel>> getCategoryListFirebase(String salonId) async {
-    try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await _firebaseFirestore
-              .collection("admins")
-              .doc(FirebaseAuth.instance.currentUser!.uid)
-              .collection('salon')
-              .doc(salonId)
-              .collection("category")
-              .get();
-      List<CategoryModel> categoryList = querySnapshot.docs
-          .map((e) => CategoryModel.fromMap(e.data()))
-          .toList();
-      return categoryList;
-    } catch (e) {
-      print("Error while get category List ${e.toString()}");
-      rethrow;
-    }
-  }
-
-  //! Booking list
-
-  //Get User Appointment by Date
-
-  // Future<List<OrderModel>> getUserBookingListFB(DateTime selectDate) async {
-  //   try {
-  //     QuerySnapshot<Map<String, dynamic>> querySnapshot =
-  //         await _firebaseFirestore
-  //             .collectionGroup('order')
-  //             .where('serviceDate', isEqualTo: selectDate)
-  //             .get();
-
-  //     List<OrderModel> bookingList =
-  //         querySnapshot.docs.map((e) => OrderModel.fromJson(e.data())).toList();
-
-  //     return bookingList;
-  //   } catch (e) {
-  //     print("Error fetching booking list: $e");
-  //     return [];
-  //   }
-  // }
 }

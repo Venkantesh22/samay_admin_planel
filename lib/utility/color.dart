@@ -5,7 +5,10 @@ class AppColor {
   static const bgForAuth = Color(0xFF2E6A50);
   static const bgForAdminCreateSec = Color(0xFFD9D9D9);
   static const buttonColor = Color(0xFF2E6A50);
+  static const whileColor = Color(0xFFF4F3F2);
+  static const sideBarBgColor = Color(0xFFE8E8E8);
 
   // Text color
   static const createText = Color(0xFF2E6A50);
+  static const serviceTapTextColor = Color.fromARGB(255, 52, 52, 52);
 }

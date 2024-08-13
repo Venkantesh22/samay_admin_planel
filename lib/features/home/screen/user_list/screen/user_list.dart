@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -8,15 +7,18 @@ import 'package:samay_admin_plan/features/home/widget/user_booking.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/models/user_order/user_order_model.dart';
 import 'package:samay_admin_plan/provider/booking_provider.dart';
+import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
 import 'package:samay_admin_plan/widget/add_button.dart';
 
 class UserList extends StatefulWidget {
   final SalonModel salonModel;
+  final Function(OrderModel, int index) onBookingSelected;
 
   const UserList({
     Key? key,
     required this.salonModel,
+    required this.onBookingSelected,
   }) : super(key: key);
 
   @override
@@ -78,7 +80,6 @@ class _UserListState extends State<UserList> {
       _currentDate = _currentDate.subtract(const Duration(days: 1));
       _updateDateController();
       _fetchBookings(); // Fetch bookings after date change
-      print("_decrementDate");
     });
   }
 
@@ -88,7 +89,6 @@ class _UserListState extends State<UserList> {
       _currentDate = _currentDate.add(const Duration(days: 1));
       _updateDateController();
       _fetchBookings(); // Fetch bookings after date change
-      print("_incrementDate");
     });
   }
 
@@ -182,6 +182,9 @@ class _UserListState extends State<UserList> {
                           fontWeight: FontWeight.w500,
                         ),
                         decoration: InputDecoration(
+                          filled:
+                              true, // This is required to display the background color
+                          fillColor: AppColor.whileColor,
                           border: InputBorder.none, // Add this line
                           enabledBorder: InputBorder.none, // Add this line
                           focusedBorder: InputBorder.none,
@@ -211,56 +214,38 @@ class _UserListState extends State<UserList> {
               ),
             ),
             const Divider(thickness: 5),
-            // List of users (mock data for now)
-            Padding(
-              padding: EdgeInsets.all(Dimensions.dimenisonNo16),
-              child: FutureBuilder(
-                  future: _fetchBookings(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+            SizedBox(
+              height: Dimensions.dimenisonNo16,
+            ),
+            // Show booking list for the selected date
+            Expanded(
+              child: Consumer<BookingProvider>(
+                builder: (context, bookingProvider, child) {
+                  if (bookingProvider.getBookingList.isEmpty) {
+                    return const Center(
+                      child: Text('No bookings available for this date.'),
+                    );
+                  }
+                  return ListView.builder(
+                    itemCount: bookingProvider.getBookingList.length,
+                    itemBuilder: (context, index) {
+                      OrderModel order = bookingProvider.getBookingList[index];
+                      return GestureDetector(
+                        onTap: () => widget.onBookingSelected(order, index),
+                        child: UserBookingTap(orderModel: order),
                       );
-                    }
-
-                    if (snapshot.hasError) {
-                      return Center(
-                          child:
-                              Text("Error fetching orders: ${snapshot.error}"));
-                    }
-
-                    return Consumer<BookingProvider>(
-                        builder: (context, bookingProvider, value) {
-                      if (bookingProvider.getBookingList.isEmpty) {
-                        return const Center(
-                            child:
-                                Text("No orders found for the selected date"));
-                      }
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: bookingProvider.getBookingList.length,
-                        itemBuilder: (context, index) {
-                          OrderModel orderModel =
-                              bookingProvider.getBookingList[index];
-                          return Column(
-                            children: [
-                              UserBookingTap(
-                                orderModel: orderModel,
-                              ), // Safely handle null
-                            ],
-                          );
-                        },
-                      );
-                    });
-                  }),
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),
-        // Calendar visibility toggle
+        // Display calendar if toggle is on
         if (_showCalendar)
           Positioned(
-            top: 100,
-            left: 100,
+            left: Dimensions.dimenisonNo50,
+            top: Dimensions.dimenisonNo50,
             child: SizedBox(
               height: 400,
               width: 360,

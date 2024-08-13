@@ -115,6 +115,7 @@ import 'package:samay_admin_plan/models/user_model/user_model.dart';
 
 class OrderModel {
   final String orderId;
+  final int appointmentNo;
   final List<ServiceModel> services;
   final String status;
   final double totalPrice;
@@ -131,6 +132,7 @@ class OrderModel {
 
   OrderModel({
     required this.orderId,
+    required this.appointmentNo,
     required this.services,
     required this.status,
     required this.totalPrice,
@@ -149,6 +151,7 @@ class OrderModel {
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
       orderId: json['orderId'] ?? '', // Default to empty string if null
+      appointmentNo: (json['appointmentNo'] ?? '').toInt(),
       services: (json['services'] as List)
           .map((item) => ServiceModel.fromJson(item))
           .toList(),
@@ -178,6 +181,7 @@ class OrderModel {
   Map<String, dynamic> toJson() {
     return {
       'orderId': orderId,
+      'appointmentNo': appointmentNo,
       'services': services.map((e) => e.toJson()).toList(),
       'status': status,
       'totalPrice': totalPrice,
@@ -195,7 +199,7 @@ class OrderModel {
   }
 
   OrderModel copyWith({
-    String? orderId,
+    int? appointmentNo,
     List<ServiceModel>? services,
     String? status,
     double? totalPrice,
@@ -207,11 +211,10 @@ class OrderModel {
     String? userNote,
     String? serviceBookDate,
     String? serviceBookTime,
-    SalonModel? salonModel,
-    UserModel? userModel,
   }) {
     return OrderModel(
-      orderId: orderId ?? this.orderId,
+      orderId: orderId,
+      appointmentNo: appointmentNo ?? this.appointmentNo,
       services: services ?? this.services,
       status: status ?? this.status,
       totalPrice: totalPrice ?? this.totalPrice,
@@ -223,8 +226,8 @@ class OrderModel {
       userNote: userNote ?? this.userNote,
       serviceBookDate: serviceBookDate ?? this.serviceBookDate,
       serviceBookTime: serviceBookTime ?? this.serviceBookTime,
-      salonModel: salonModel ?? this.salonModel,
-      userModel: userModel ?? this.userModel,
+      salonModel: salonModel,
+      userModel: userModel,
     );
   }
 }

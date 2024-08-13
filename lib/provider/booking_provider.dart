@@ -9,6 +9,8 @@
 //   List<OrderModel> _bookinglist = [];
 //   List<OrderModel> get getBookingList => _bookinglist;
 
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 //   // get date for Booking list for firebase
 //   Future<void> getBookingListPro(String selectDate) async {
 //     DateTime _date =
@@ -38,5 +40,12 @@ class BookingProvider with ChangeNotifier {
     _bookinglist = await _userBookingFB.getUserBookingListFB(_formattedDate);
     print("Fetched data for date: $_formattedDate");
     notifyListeners();
+  }
+
+  //update appointment
+  Future<void> updateAppointment(
+      int index, String userId, appointmentId, OrderModel orderModel) async {
+    await _userBookingFB.updateAppointmentFB(userId, appointmentId, orderModel);
+    _bookinglist[index] = orderModel;
   }
 }

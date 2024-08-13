@@ -40,7 +40,7 @@ void showDeleteAlertDialog(
             height: Dimensions.dimenisonNo20,
           ),
           SizedBox(
-            height: Dimensions.dimenisonNo35,
+            height: Dimensions.dimenisonNo36,
             child: Row(
               children: [
                 CustomButtom(

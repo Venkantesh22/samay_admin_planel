@@ -8,7 +8,6 @@ class UserBookingFB {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //Get User Appointment by Date
-
   Future<List<OrderModel>> getUserBookingListFB(String selectDate) async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
@@ -25,5 +24,16 @@ class UserBookingFB {
       print("Error fetching booking list: $e");
       return [];
     }
+  }
+
+// Update Appointment by Id
+  Future<void> updateAppointmentFB(
+      String userId, appointmentId, OrderModel orderModel) async {
+    await _firebaseFirestore
+        .collection('UserOrder')
+        .doc(userId)
+        .collection('order')
+        .doc(appointmentId)
+        .update(orderModel.toJson());
   }
 }

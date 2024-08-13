@@ -18,7 +18,7 @@ class CustomButtom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Dimensions.dimenisonNo35,
+      height: Dimensions.dimenisonNo36,
       width: Dimensions.dimenisonNo200,
       child: ElevatedButton(
         onPressed: ontap,
