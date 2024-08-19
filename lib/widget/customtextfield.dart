@@ -66,15 +66,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
 // Text field for Profile form
 class FormCustomTextField extends StatefulWidget {
   final TextEditingController controller;
-
+  final bool requiredField;
+  final bool readOnly;
   int? maxline;
   final String title;
+  final String? hintText;
 
   FormCustomTextField({
     Key? key,
     required this.controller,
+    this.requiredField = true,
     this.maxline = 1,
     required this.title,
+    this.readOnly = false,
+    this.hintText,
   }) : super(key: key);
 
   @override
@@ -97,20 +102,20 @@ class _FormCustomTextFieldState extends State<FormCustomTextField> {
                   fontSize: Dimensions.dimenisonNo18,
                   fontFamily: GoogleFonts.roboto().fontFamily,
                   fontWeight: FontWeight.w500,
-                  letterSpacing: 0.15,
+                  letterSpacing: 0.90,
                 ),
               ),
-              TextSpan(
-                text: ' *',
-                style: TextStyle(
-                  color: const Color(0xFFFC0000),
-                  fontSize: Dimensions.dimenisonNo18,
-                  fontFamily: GoogleFonts.roboto().fontFamily,
-                  fontWeight: FontWeight.w500,
-                  height: 0,
-                  letterSpacing: 0.15,
+              if (widget.requiredField)
+                TextSpan(
+                  text: ' *',
+                  style: TextStyle(
+                    color: const Color(0xFFFC0000),
+                    fontSize: Dimensions.dimenisonNo18,
+                    fontFamily: GoogleFonts.roboto().fontFamily,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.90,
+                  ),
                 ),
-              ),
             ],
           ),
         ),
@@ -122,6 +127,7 @@ class _FormCustomTextFieldState extends State<FormCustomTextField> {
 
           height: widget.maxline! < 2 ? Dimensions.dimenisonNo30 : null,
           child: TextFormField(
+            readOnly: widget.readOnly,
             maxLines: widget.maxline,
             cursorHeight: Dimensions.dimenisonNo16,
             style: TextStyle(
@@ -131,6 +137,7 @@ class _FormCustomTextFieldState extends State<FormCustomTextField> {
                 color: Colors.black),
             controller: widget.controller,
             decoration: InputDecoration(
+              hintText: widget.hintText,
               contentPadding: EdgeInsets.symmetric(
                   horizontal: Dimensions.dimenisonNo10,
                   vertical: Dimensions.dimenisonNo10),

@@ -54,15 +54,35 @@ class SingleServiceTap extends StatelessWidget {
             // title
             Row(
               children: [
-                Text(
-                  serviceModel.servicesName,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: Dimensions.dimenisonNo20,
-                    fontFamily: GoogleFonts.roboto().fontFamily,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 0.04,
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      serviceModel.servicesName,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: Dimensions.dimenisonNo20,
+                        fontFamily: GoogleFonts.roboto().fontFamily,
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: 0.04,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: Dimensions.dimenisonNo10),
+                      child: Text(
+                        'service code : ${serviceModel.serviceCode}',
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 124, 118, 118),
+                          fontSize: Dimensions.dimenisonNo14,
+                          fontFamily: GoogleFonts.roboto().fontFamily,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: Dimensions.dimenisonNo10,
+                    )
+                  ],
                 ),
                 Spacer(),
                 IconButton(

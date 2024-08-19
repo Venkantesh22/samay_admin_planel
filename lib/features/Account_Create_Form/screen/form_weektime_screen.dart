@@ -200,7 +200,7 @@ import 'package:provider/provider.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/week_row.dart';
-import 'package:samay_admin_plan/features/home/screen/home_screen.dart';
+import 'package:samay_admin_plan/features/home/main_home/home_screen.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/utility/color.dart';

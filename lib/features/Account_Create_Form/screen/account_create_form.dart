@@ -11,7 +11,7 @@ import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/salon_social_media_add.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/widget/saloon_Time.dart';
-import 'package:samay_admin_plan/features/home/screen/home_screen.dart';
+import 'package:samay_admin_plan/features/home/main_home/home_screen.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';

@@ -3,9 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 import 'package:samay_admin_plan/constants/constants.dart';
-import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/models/category_model/category_model.dart';
 import 'package:samay_admin_plan/models/service_model/service_model.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
@@ -33,10 +31,12 @@ class EditServicePage extends StatefulWidget {
 class _EditServicePageState extends State<EditServicePage> {
   @override
   Widget build(BuildContext context) {
-    AppProvider appProvider = Provider.of<AppProvider>(context);
+    // AppProvider appProvider = Provider.of<AppProvider>(context);
     ServiceProvider serviceProvider = Provider.of<ServiceProvider>(context);
     final TextEditingController _serviceController =
         TextEditingController(text: widget.serviceModel.servicesName);
+    final TextEditingController _serviceCodeController =
+        TextEditingController(text: widget.serviceModel.serviceCode);
     final TextEditingController _priceController =
         TextEditingController(text: widget.serviceModel.price.toString());
     final TextEditingController _hoursController =
@@ -95,6 +95,11 @@ class _EditServicePageState extends State<EditServicePage> {
                 ),
                 FormCustomTextField(
                     controller: _serviceController, title: "Service name"),
+                SizedBox(
+                  height: Dimensions.dimenisonNo20,
+                ),
+                FormCustomTextField(
+                    controller: _serviceCodeController, title: "Service Code"),
                 SizedBox(
                   height: Dimensions.dimenisonNo10,
                 ),
@@ -221,6 +226,7 @@ class _EditServicePageState extends State<EditServicePage> {
                       showLoaderDialog(context);
                       bool isVaildated = addNewServiceVaildation(
                           _serviceController.text.trim(),
+                          _serviceCodeController.text.trim(),
                           _priceController.text.trim(),
                           _hoursController.text.trim(),
                           _minController.text.trim(),
@@ -230,6 +236,7 @@ class _EditServicePageState extends State<EditServicePage> {
                         ServiceModel serviceModel =
                             widget.serviceModel.copyWith(
                           servicesName: _serviceController.text.trim(),
+                          serviceCode: _serviceCodeController.text.trim(),
                           price: double.parse(_priceController.text.trim()),
                           hours: double.parse(_hoursController.text.trim()),
                           minutes: double.parse(_minController.text.trim()),

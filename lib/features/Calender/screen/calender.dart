@@ -120,7 +120,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
             setState(() {
               _selectedDate = selectedDay;
               widget.controller.text =
-                  DateFormat('dd MMMM').format(_selectedDate);
+                  DateFormat('dd/MM/yyyy').format(_selectedDate);
               widget.onDateChanged(_selectedDate);
             });
           }

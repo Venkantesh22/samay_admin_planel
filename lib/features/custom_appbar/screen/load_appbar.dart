@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/custom_appbar/widget/appbar_item.dart';
-import 'package:samay_admin_plan/features/home/screen/home_screen.dart';
+import 'package:samay_admin_plan/features/home/main_home/home_screen.dart';
 import 'package:samay_admin_plan/features/services_page/screen/services_page.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';

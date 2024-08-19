@@ -7,6 +7,7 @@ class AppColor {
   static const buttonColor = Color(0xFF2E6A50);
   static const whileColor = Color(0xFFF4F3F2);
   static const sideBarBgColor = Color(0xFFE8E8E8);
+  static const grey = Color.fromARGB(255, 207, 205, 205);
 
   // Text color
   static const createText = Color(0xFF2E6A50);

@@ -25,6 +25,7 @@ class AddServiceForm extends StatefulWidget {
 
 class _AddServiceFormState extends State<AddServiceForm> {
   final TextEditingController _serviceController = TextEditingController();
+  final TextEditingController _serviceCodeController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _hoursController = TextEditingController();
   final TextEditingController _minController = TextEditingController();
@@ -33,6 +34,7 @@ class _AddServiceFormState extends State<AddServiceForm> {
   @override
   void dispose() {
     _serviceController.dispose();
+    _serviceCodeController.dispose();
     _priceController.dispose();
     _hoursController.dispose();
     _minController.dispose();
@@ -94,6 +96,12 @@ class _AddServiceFormState extends State<AddServiceForm> {
                 ),
                 FormCustomTextField(
                     controller: _serviceController, title: "Service name"),
+                SizedBox(
+                  height: Dimensions.dimenisonNo20,
+                ),
+                FormCustomTextField(
+                    controller: _serviceCodeController,
+                    title: "Enter 4-Digit service code"),
                 SizedBox(
                   height: Dimensions.dimenisonNo10,
                 ),
@@ -220,6 +228,7 @@ class _AddServiceFormState extends State<AddServiceForm> {
                       showLoaderDialog(context);
                       bool isVaildated = addNewServiceVaildation(
                           _serviceController.text,
+                          _serviceCodeController.text,
                           _priceController.text,
                           _hoursController.text,
                           _minController.text,
@@ -232,6 +241,7 @@ class _AddServiceFormState extends State<AddServiceForm> {
                             widget.categoryModel.id,
                             widget.categoryModel.categoryName,
                             _serviceController.text.trim(),
+                            _serviceCodeController.text.trim(),
                             double.parse(_priceController.text.trim()),
                             double.parse(_hoursController.text.trim()),
                             double.parse(_minController.text.trim()),

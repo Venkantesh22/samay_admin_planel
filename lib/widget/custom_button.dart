@@ -24,7 +24,7 @@ class CustomButtom extends StatelessWidget {
         onPressed: ontap,
         style: ElevatedButton.styleFrom(
           padding: EdgeInsetsDirectional.symmetric(
-              horizontal: Dimensions.dimenisonNo30),
+              horizontal: Dimensions.dimenisonNo10),
           backgroundColor: buttonColor,
           foregroundColor: Colors.white,
           // Text color
@@ -41,7 +41,7 @@ class CustomButtom extends StatelessWidget {
           style: TextStyle(
             color: textColor,
             // color: Colors.black,
-            fontSize: Dimensions.dimenisonNo18,
+            fontSize: Dimensions.dimenisonNo16,
             fontFamily: GoogleFonts.roboto().fontFamily,
             fontWeight: FontWeight.w500,
             letterSpacing: 1.25,

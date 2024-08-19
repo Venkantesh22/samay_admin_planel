@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/Calender/screen/calender.dart';
+import 'package:samay_admin_plan/features/add_new_appointment/screen/add_new_appointment.dart';
 import 'package:samay_admin_plan/features/home/widget/user_booking.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/models/user_order/user_order_model.dart';
@@ -30,7 +32,7 @@ class _UserListState extends State<UserList> {
   final TextEditingController _dateController =
       TextEditingController(); // Controller for date input field
   bool _showCalendar = false; // Toggle to show/hide calendar
-
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -63,15 +65,14 @@ class _UserListState extends State<UserList> {
   }
 
   Future<void> _fetchBookings() async {
-    try {
-      await Provider.of<BookingProvider>(context, listen: false)
-          .getBookingListPro(_currentDate)
-          .timeout(Duration(seconds: 10), onTimeout: () {
-        throw TimeoutException("Fetching bookings timed out.");
-      });
-    } catch (e) {
-      print('Error in fetching bookings: $e');
-    }
+    setState(() {
+      _isLoading = true;
+    });
+    await Provider.of<BookingProvider>(context, listen: false)
+        .getBookingListPro(_currentDate);
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   // Function to decrease the date by one day
@@ -209,7 +210,14 @@ class _UserListState extends State<UserList> {
                   Text(widget.salonModel.name ??
                       'Salon Name'), // Safely handle null
                   const Spacer(),
-                  AddButton(text: "Add Appointment", onTap: () {}),
+                  AddButton(
+                      text: "Add Appointment",
+                      onTap: () {
+                        Routes.instance.push(
+                            widget: AddNewAppointment(
+                                salonModel: widget.salonModel),
+                            context: context);
+                      }),
                 ],
               ),
             ),
@@ -218,27 +226,36 @@ class _UserListState extends State<UserList> {
               height: Dimensions.dimenisonNo16,
             ),
             // Show booking list for the selected date
-            Expanded(
-              child: Consumer<BookingProvider>(
-                builder: (context, bookingProvider, child) {
-                  if (bookingProvider.getBookingList.isEmpty) {
-                    return const Center(
-                      child: Text('No bookings available for this date.'),
-                    );
-                  }
-                  return ListView.builder(
-                    itemCount: bookingProvider.getBookingList.length,
-                    itemBuilder: (context, index) {
-                      OrderModel order = bookingProvider.getBookingList[index];
-                      return GestureDetector(
-                        onTap: () => widget.onBookingSelected(order, index),
-                        child: UserBookingTap(orderModel: order),
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
+            _isLoading
+                ? Padding(
+                    padding: EdgeInsets.only(top: Dimensions.dimenisonNo200),
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : Expanded(
+                    child: Consumer<BookingProvider>(
+                      builder: (context, bookingProvider, child) {
+                        if (bookingProvider.getBookingList.isEmpty) {
+                          return const Center(
+                            child: Text('No bookings available for this date.'),
+                          );
+                        }
+                        return ListView.builder(
+                          itemCount: bookingProvider.getBookingList.length,
+                          itemBuilder: (context, index) {
+                            OrderModel order =
+                                bookingProvider.getBookingList[index];
+                            return GestureDetector(
+                              onTap: () =>
+                                  widget.onBookingSelected(order, index),
+                              child: UserBookingTap(orderModel: order),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
           ],
         ),
         // Display calendar if toggle is on
@@ -247,8 +264,8 @@ class _UserListState extends State<UserList> {
             left: Dimensions.dimenisonNo50,
             top: Dimensions.dimenisonNo50,
             child: SizedBox(
-              height: 400,
-              width: 360,
+              height: Dimensions.dimenisonNo400,
+              width: Dimensions.dimenisonNo360,
               child: CustomCalendar(
                 salonModel: widget.salonModel,
                 controller: _dateController,

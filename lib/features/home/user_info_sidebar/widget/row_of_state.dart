@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/constants/router.dart';
-import 'package:samay_admin_plan/features/home/screen/home_screen.dart';
+import 'package:samay_admin_plan/features/home/main_home/home_screen.dart';
 import 'package:samay_admin_plan/features/home/widget/state_text.dart';
 import 'package:samay_admin_plan/models/user_order/user_order_model.dart';
 import 'package:samay_admin_plan/provider/booking_provider.dart';

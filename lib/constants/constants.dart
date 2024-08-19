@@ -271,11 +271,17 @@ bool formCreateAccountVaildation(
   } else if (mobile.length != 10) {
     showMessage("Enter 10 digit mobile number.");
     return false;
+  } else if (!RegExp(r'^\d+$').hasMatch(mobile)) {
+    showMessage('Please enter only digits in Mobile');
+    return false;
   } else if (whatApp.isEmpty) {
     showMessage("WhatApp number not is Empty");
     return false;
   } else if (whatApp.length != 10) {
     showMessage("Enter 10 digit mobile number.");
+    return false;
+  } else if (!RegExp(r'^\d+$').hasMatch(whatApp)) {
+    showMessage('Please enter only digits in Mobile');
     return false;
   } else if (salonType.isEmpty) {
     showMessage("Select a type of salon");
@@ -363,9 +369,10 @@ bool addNewCategoryVaildation(
   }
 }
 
-// Add new Category popup Text Field Validation.
+// Add new Service popup Text Field Validation.
 bool addNewServiceVaildation(
   final String servicesName,
+  final String serviceCode,
   final String price,
   final String hours,
   final String minutes,
@@ -376,6 +383,7 @@ bool addNewServiceVaildation(
   final double? pr = double.tryParse(price);
 
   if (servicesName.isEmpty &&
+      serviceCode.isEmpty &&
       price.isEmpty &&
       hours.isEmpty &&
       minutes.isEmpty &&
@@ -385,6 +393,12 @@ bool addNewServiceVaildation(
   } else if (servicesName.isEmpty) {
     showMessage("Enter a Service Name");
     return false;
+  } else if (serviceCode.isEmpty) {
+    showMessage("Enter 4-Digit service code");
+    return false;
+    // } else if (serviceCode.length <= 4) {
+    //   showMessage("Enter 4-Digit service code");
+    //   return false;
   } else if (price.isEmpty) {
     showMessage("Enter a Price");
     return false;
@@ -405,6 +419,35 @@ bool addNewServiceVaildation(
     return false;
   } else if (description.isEmpty) {
     showMessage("Enter a Service description");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+// Add new Appointment Text Field Validation.
+bool addNewAppointmentVaildation(
+  final String name,
+  final String lastName,
+  final String number,
+) {
+  if (name.isEmpty && lastName.isEmpty && number.isEmpty) {
+    showMessage("All Fields are empty");
+    return false;
+  } else if (name.isEmpty) {
+    showMessage("Enter First Name");
+    return false;
+  } else if (lastName.isEmpty) {
+    showMessage("Enter Last Name");
+    return false;
+  } else if (number.isEmpty) {
+    showMessage("Enter Phone Number");
+    return false;
+  } else if (number.length != 10) {
+    showMessage("Enter 10 digit mobile number.");
+    return false;
+  } else if (!RegExp(r'^\d+$').hasMatch(number)) {
+    showMessage('Please enter only digits in Mobile');
     return false;
   } else {
     return true;

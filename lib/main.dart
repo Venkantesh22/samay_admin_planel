@@ -2,19 +2,19 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:samay_admin_plan/constants/theame.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/screen/account_create_form.dart';
 import 'package:samay_admin_plan/features/Account_Create_Form/screen/form_weektime_screen.dart';
+import 'package:samay_admin_plan/features/add_new_appointment/screen/add_new_appointment.dart';
 import 'package:samay_admin_plan/features/auth/login.dart';
-import 'package:samay_admin_plan/features/home/screen/home_screen.dart';
+import 'package:samay_admin_plan/features/home/main_home/home_screen.dart';
+import 'package:samay_admin_plan/features/home/user_info_sidebar/screen/user_payment_screen.dart';
 import 'package:samay_admin_plan/features/service%20view/screen/add_service_form.dart';
 import 'package:samay_admin_plan/features/services_page/screen/services_list.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/provider/booking_provider.dart';
 import 'package:samay_admin_plan/provider/service_provider.dart';
-
 import 'package:samay_admin_plan/utility/dimenison.dart';
 
 void main() async {
@@ -51,13 +51,12 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: themeData,
-
           // home: Builder(
           //   builder: (context) {
           //     Dimensions.init(context);
-          //     return AddServiceForm();
+          //     return AddNewAppointment();
+          //     // return AddServiceForm();
           //     // return ServicesPages();
-//! add new variable 'categoryName' = Pending in category model
           //     // return FormTimeSection();
           //     // return SingupScreen();
           //     // return AccountCreateForm();

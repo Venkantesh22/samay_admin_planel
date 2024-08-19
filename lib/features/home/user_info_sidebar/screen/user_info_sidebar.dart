@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:samay_admin_plan/features/home/screen/user_info_sidebar/widget/infor.dart';
-import 'package:samay_admin_plan/features/home/screen/user_info_sidebar/widget/price_text.dart';
-import 'package:samay_admin_plan/features/home/screen/user_info_sidebar/widget/row_of_state.dart';
-import 'package:samay_admin_plan/features/home/screen/user_info_sidebar/widget/service_tap_orderlist.dart';
+import 'package:samay_admin_plan/constants/router.dart';
+import 'package:samay_admin_plan/features/home/user_info_sidebar/screen/user_payment_screen.dart';
+import 'package:samay_admin_plan/features/home/user_info_sidebar/widget/infor.dart';
+import 'package:samay_admin_plan/features/home/user_info_sidebar/widget/row_of_state.dart';
+import 'package:samay_admin_plan/features/home/user_info_sidebar/widget/service_tap_orderlist.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/widget/custom_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
-import 'package:samay_admin_plan/features/home/screen/user_info_sidebar/widget/custom_icon_button.dart';
+import 'package:samay_admin_plan/features/home/user_info_sidebar/widget/custom_icon_button.dart';
 import 'package:samay_admin_plan/models/user_order/user_order_model.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
 
@@ -29,8 +30,6 @@ class UserInfoSideBar extends StatefulWidget {
 class _UserInfoSideBarState extends State<UserInfoSideBar> {
   @override
   Widget build(BuildContext context) {
-    final double subtotal = widget.orderModel.totalPrice - 20;
-
     // Method to launch the dialer with the phone number
     void _launchDialer(String phoneNumber) async {
       try {
@@ -220,51 +219,18 @@ class _UserInfoSideBarState extends State<UserInfoSideBar> {
               height: Dimensions.dimenisonNo10,
             ),
             Divider(),
-            userInfoColumn(
-                title: "Client Note", infoText: widget.orderModel.userNote),
+            widget.orderModel.userNote.length >= 2
+                ? userInfoColumn(
+                    title: "Client Note", infoText: widget.orderModel.userNote)
+                : const userInfoColumn(
+                    title: "Client Note", infoText: "No user note"),
             SizedBox(
               height: Dimensions.dimenisonNo10,
             ),
             // Divider(),
-            // Container(
-            //   padding: EdgeInsets.symmetric(
-            //       horizontal: Dimensions.dimenisonNo16,
-            //       vertical: Dimensions.dimenisonNo5),
-            //   width: double.infinity,
-            //   // color: Colors.white70,
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Text(
-            //         'Payment Details',
-            //         style: TextStyle(
-            //           fontSize: Dimensions.dimenisonNo16,
-            //           fontWeight: FontWeight.w600,
-            //         ),
-            //       ),
-            //       SizedBox(height: Dimensions.dimenisonNo5),
-            //       CustomText(
-            //         firstText: "Payment Method:",
-            //         lastText: widget.orderModel.payment,
-            //       ),
-            //       SizedBox(height: Dimensions.dimenisonNo5),
-            //       CustomText(
-            //         firstText: "Subtotal:",
-            //         lastText: subtotal.toString(),
-            //         showicon: true,
-            //       ),
-            //       SizedBox(height: Dimensions.dimenisonNo5),
-            //       Divider(),
-            //       CustomText(
-            //         firstText: "Total:",
-            //         lastText: widget.orderModel.totalPrice.toString(),
-            //         showicon: true,
-            //       ),
-            //     ],
-            //   ),
-            // ),
+
             SizedBox(height: Dimensions.dimenisonNo10),
-            Divider(
+            const Divider(
               thickness: 3,
             ),
             userInfoColumn(
@@ -278,7 +244,13 @@ class _UserInfoSideBarState extends State<UserInfoSideBar> {
               width: double.infinity,
               child: CustomButtom(
                   text: "CheckOut",
-                  ontap: () {},
+                  ontap: () {
+                    Routes.instance.push(
+                        widget: UserSideBarPaymentScreen(
+                          orderModel: widget.orderModel,
+                        ),
+                        context: context);
+                  },
                   buttonColor: AppColor.buttonColor),
             ),
             SizedBox(
