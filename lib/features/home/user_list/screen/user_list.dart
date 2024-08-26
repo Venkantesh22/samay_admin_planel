@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:samay_admin_plan/constants/router.dart';
+import 'package:samay_admin_plan/features/Account_Create_Form/screen/form_weektime_screen.dart';
 import 'package:samay_admin_plan/features/Calender/screen/calender.dart';
 import 'package:samay_admin_plan/features/add_new_appointment/screen/add_new_appointment.dart';
 import 'package:samay_admin_plan/features/home/widget/user_booking.dart';
@@ -103,160 +104,174 @@ class _UserListState extends State<UserList> {
     // BookingProvider bookingProvider = Provider.of<BookingProvider>(context);
     return Stack(
       children: [
-        Column(
-          children: [
-            Container(
-              padding: EdgeInsets.only(
-                left: Dimensions.dimenisonNo16,
-                right: Dimensions.dimenisonNo16,
-                top: Dimensions.dimenisonNo10,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(width: Dimensions.dimenisonNo10),
-                  _formatDate(_currentDate) == 'Today' ||
-                          _formatDate(_currentDate) == 'Tomorrow' ||
-                          _formatDate(_currentDate) == 'Yesterday'
-                      ? SizedBox(
-                          width: Dimensions.dimenisonNo100,
-                          child: Text(
-                            _formatDate(_currentDate),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: Dimensions.dimenisonNo16,
-                              fontWeight: FontWeight.w700,
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              _showCalendar = false;
+            });
+          },
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                  left: Dimensions.dimenisonNo16,
+                  right: Dimensions.dimenisonNo16,
+                  top: Dimensions.dimenisonNo10,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(width: Dimensions.dimenisonNo10),
+                    _formatDate(_currentDate) == 'Today' ||
+                            _formatDate(_currentDate) == 'Tomorrow' ||
+                            _formatDate(_currentDate) == 'Yesterday'
+                        ? SizedBox(
+                            width: Dimensions.dimenisonNo100,
+                            child: Text(
+                              _formatDate(_currentDate),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: Dimensions.dimenisonNo16,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          )
+                        : SizedBox(
+                            width: Dimensions.dimenisonNo50,
+                          ),
+
+                    // Decrease date button
+                    GestureDetector(
+                      onTap: _decrementDate,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF4B4B4B),
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.dimenisonNo5),
+                        ),
+                        child: const Icon(
+                          Icons.arrow_left_sharp,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: Dimensions.dimenisonNo10),
+                    // Increase date button
+                    GestureDetector(
+                      onTap: _incrementDate,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF4B4B4B),
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.dimenisonNo5),
+                        ),
+                        child: const Icon(
+                          Icons.arrow_right_sharp,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: Dimensions.dimenisonNo12),
+                    // Date input field
+                    SizedBox(
+                      width: Dimensions.dimenisonNo110,
+                      child: Center(
+                        child: TextField(
+                          controller: _dateController,
+                          readOnly: true,
+                          onTap: () {
+                            setState(() {
+                              _showCalendar = !_showCalendar;
+                            });
+                          },
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: Dimensions.dimenisonNo16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          decoration: InputDecoration(
+                            filled:
+                                true, // This is required to display the background color
+                            fillColor: AppColor.whileColor,
+                            border: InputBorder.none, // Add this line
+                            enabledBorder: InputBorder.none, // Add this line
+                            focusedBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: Dimensions.dimenisonNo12,
                             ),
                           ),
-                        )
-                      : SizedBox(
-                          width: Dimensions.dimenisonNo50,
-                        ),
-
-                  // Decrease date button
-                  GestureDetector(
-                    onTap: _decrementDate,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF4B4B4B),
-                        borderRadius:
-                            BorderRadius.circular(Dimensions.dimenisonNo5),
-                      ),
-                      child: const Icon(
-                        Icons.arrow_left_sharp,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: Dimensions.dimenisonNo10),
-                  // Increase date button
-                  GestureDetector(
-                    onTap: _incrementDate,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF4B4B4B),
-                        borderRadius:
-                            BorderRadius.circular(Dimensions.dimenisonNo5),
-                      ),
-                      child: const Icon(
-                        Icons.arrow_right_sharp,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: Dimensions.dimenisonNo12),
-                  // Date input field
-                  SizedBox(
-                    width: Dimensions.dimenisonNo110,
-                    child: Center(
-                      child: TextField(
-                        controller: _dateController,
-                        readOnly: true,
-                        onTap: () {
-                          setState(() {
-                            _showCalendar = !_showCalendar;
-                          });
-                        },
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: Dimensions.dimenisonNo16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        decoration: InputDecoration(
-                          filled:
-                              true, // This is required to display the background color
-                          fillColor: AppColor.whileColor,
-                          border: InputBorder.none, // Add this line
-                          enabledBorder: InputBorder.none, // Add this line
-                          focusedBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: Dimensions.dimenisonNo12,
-                          ),
                         ),
                       ),
                     ),
-                  ),
-                  // Toggle calendar visibility
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _showCalendar = !_showCalendar;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.arrow_drop_down,
-                    ),
-                  ),
-                  Text(widget.salonModel.name ??
-                      'Salon Name'), // Safely handle null
-                  const Spacer(),
-                  AddButton(
-                      text: "Add Appointment",
-                      onTap: () {
-                        Routes.instance.push(
-                            widget: AddNewAppointment(
-                                salonModel: widget.salonModel),
-                            context: context);
-                      }),
-                ],
-              ),
-            ),
-            const Divider(thickness: 5),
-            SizedBox(
-              height: Dimensions.dimenisonNo16,
-            ),
-            // Show booking list for the selected date
-            _isLoading
-                ? Padding(
-                    padding: EdgeInsets.only(top: Dimensions.dimenisonNo200),
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : Expanded(
-                    child: Consumer<BookingProvider>(
-                      builder: (context, bookingProvider, child) {
-                        if (bookingProvider.getBookingList.isEmpty) {
-                          return const Center(
-                            child: Text('No bookings available for this date.'),
-                          );
-                        }
-                        return ListView.builder(
-                          itemCount: bookingProvider.getBookingList.length,
-                          itemBuilder: (context, index) {
-                            OrderModel order =
-                                bookingProvider.getBookingList[index];
-                            return GestureDetector(
-                              onTap: () =>
-                                  widget.onBookingSelected(order, index),
-                              child: UserBookingTap(orderModel: order),
-                            );
-                          },
-                        );
+                    // Toggle calendar visibility
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _showCalendar = !_showCalendar;
+                        });
                       },
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                      ),
                     ),
-                  ),
-          ],
+                    Text(widget.salonModel.name ??
+                        'Salon Name'), // Safely handle null
+                    const Spacer(),
+                    ElevatedButton(
+                        onPressed: () {
+                          Routes.instance.push(
+                              widget: FormTimeSection(), context: context);
+                        },
+                        child: Text("hii")),
+                    AddButton(
+                        text: "Add Appointment",
+                        onTap: () {
+                          Routes.instance.push(
+                              widget: AddNewAppointment(
+                                  salonModel: widget.salonModel),
+                              context: context);
+                        }),
+                  ],
+                ),
+              ),
+              const Divider(thickness: 5),
+              SizedBox(
+                height: Dimensions.dimenisonNo16,
+              ),
+              // Show booking list for the selected date
+              _isLoading
+                  ? Padding(
+                      padding: EdgeInsets.only(top: Dimensions.dimenisonNo200),
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : Expanded(
+                      child: Consumer<BookingProvider>(
+                        builder: (context, bookingProvider, child) {
+                          if (bookingProvider.getBookingList.isEmpty) {
+                            return const Center(
+                              child:
+                                  Text('No bookings available for this date.'),
+                            );
+                          }
+                          return ListView.builder(
+                            itemCount: bookingProvider.getBookingList.length,
+                            itemBuilder: (context, index) {
+                              OrderModel order =
+                                  bookingProvider.getBookingList[index];
+                              return GestureDetector(
+                                onTap: () =>
+                                    widget.onBookingSelected(order, index),
+                                child: UserBookingTap(orderModel: order),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+            ],
+          ),
         ),
         // Display calendar if toggle is on
         if (_showCalendar)

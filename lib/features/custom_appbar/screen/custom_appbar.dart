@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +6,7 @@ import 'package:samay_admin_plan/constants/router.dart';
 import 'package:samay_admin_plan/features/custom_appbar/widget/appbar_item.dart';
 import 'package:samay_admin_plan/features/home/main_home/home_screen.dart';
 import 'package:samay_admin_plan/features/services_page/screen/services_page.dart';
+import 'package:samay_admin_plan/firebase_helper/firebase_firestore_helper/firebase_firestore.dart';
 import 'package:samay_admin_plan/provider/app_provider.dart';
 import 'package:samay_admin_plan/utility/color.dart';
 import 'package:samay_admin_plan/utility/dimenison.dart';
@@ -91,7 +93,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               child: IconButton(
                 icon: const Icon(Icons.settings_outlined, color: Colors.black),
                 onPressed: () {
-                  // Handle settings button press
+                  FirebaseAuth.instance.signOut();
                 },
               ),
             ),

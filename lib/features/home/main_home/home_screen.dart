@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/models/user_order/user_order_model.dart';
 import 'package:samay_admin_plan/features/custom_appbar/screen/load_appbar.dart';
 import 'package:samay_admin_plan/features/home/user_info_sidebar/screen/user_info_sidebar.dart';
@@ -22,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = false;
   OrderModel? selectedOrder;
   int? selectIndex;
+  SalonModel? salonModal;
 
   @override
   void initState() {
@@ -30,6 +32,31 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Fetch data needed for the screen
+  // void getData() async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //   AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
+  //   BookingProvider bookingProvider =
+  //       Provider.of<BookingProvider>(context, listen: false);
+  //   ServiceProvider serviceProvider =
+  //       Provider.of<ServiceProvider>(context, listen: false);
+  //   try {
+  //     await appProvider.getSalonInfoFirebase();
+  //     await appProvider.getAdminInfoFirebase();
+  //     await serviceProvider
+  //         .callBackFunction(appProvider.getSalonInformation.id);
+  //     bookingProvider.getWatchList.clear();
+  //     salonModal = appProvider.getSalonInformation;
+  //   } catch (e) {
+  //     print("Error fetching data: $e");
+  //     // Optional: Show error UI
+  //   } finally {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
   void getData() async {
     setState(() {
       isLoading = true;
@@ -45,12 +72,17 @@ class _HomeScreenState extends State<HomeScreen> {
       await serviceProvider
           .callBackFunction(appProvider.getSalonInformation.id);
       bookingProvider.getWatchList.clear();
+      salonModal = appProvider.getSalonInformation;
     } catch (e) {
       print("Error fetching data: $e");
+      // Optional: Show error UI
     } finally {
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        // Check if the widget is still mounted
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -65,6 +97,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(context);
+
+    // Provide fallback UI in case salonModal is null
+    if (salonModal == null) {
+      return Scaffold(
+        body: Center(
+          child: isLoading
+              ? CircularProgressIndicator()
+              : Text("Failed to load salon information."),
+        ),
+      );
+    }
 
     return Scaffold(
       backgroundColor: AppColor.whileColor,
@@ -84,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // Left Side: User Booking List
                 Expanded(
                   child: UserList(
-                    salonModel: appProvider.getSalonInformation,
+                    salonModel: salonModal!,
                     onBookingSelected: _onBookingSelected,
                   ),
                 ),

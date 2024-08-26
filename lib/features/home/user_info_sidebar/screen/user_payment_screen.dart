@@ -8,10 +8,8 @@ import 'package:samay_admin_plan/utility/dimenison.dart';
 
 class UserSideBarPaymentScreen extends StatelessWidget {
   final OrderModel orderModel;
-  const UserSideBarPaymentScreen({
-    Key? key,
-    required this.orderModel,
-  }) : super(key: key);
+  const UserSideBarPaymentScreen({Key? key, required this.orderModel, u})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

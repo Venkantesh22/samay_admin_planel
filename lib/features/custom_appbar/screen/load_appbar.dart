@@ -77,7 +77,8 @@ class _LoadAppBarState extends State<LoadAppBar> {
               child: IconButton(
                 icon: const Icon(Icons.settings_outlined, color: Colors.black),
                 onPressed: () {
-                  // Handle settings button press
+                  Routes.instance
+                      .push(widget: ServicesPages(), context: context);
                 },
               ),
             ),

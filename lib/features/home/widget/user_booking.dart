@@ -37,25 +37,29 @@ class UserBookingTap extends StatelessWidget {
             ),
           ),
           SizedBox(width: Dimensions.dimenisonNo20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                orderModel.userModel.name,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Dimensions.dimenisonNo16,
+          SizedBox(
+            width: Dimensions.dimenisonNo200,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  orderModel.userModel.name,
+                  style: TextStyle(
+                    overflow: TextOverflow.ellipsis,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Dimensions.dimenisonNo16,
+                  ),
                 ),
-              ),
-              Text(
-                orderModel.userModel.phone.toString(),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: Dimensions.dimenisonNo14,
+                Text(
+                  orderModel.userModel.phone.toString(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: Dimensions.dimenisonNo14,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const Spacer(),
           Center(

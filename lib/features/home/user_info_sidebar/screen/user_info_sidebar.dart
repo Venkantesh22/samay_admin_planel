@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:samay_admin_plan/constants/router.dart';
+import 'package:samay_admin_plan/features/edit_appointment/screen/edit_appointment.dart';
 import 'package:samay_admin_plan/features/home/user_info_sidebar/screen/user_payment_screen.dart';
 import 'package:samay_admin_plan/features/home/user_info_sidebar/widget/infor.dart';
 import 'package:samay_admin_plan/features/home/user_info_sidebar/widget/row_of_state.dart';
@@ -55,8 +56,9 @@ class _UserInfoSideBarState extends State<UserInfoSideBar> {
         decoration: const BoxDecoration(
           border: Border(
             left: BorderSide(
-                width: 2.0,
-                color: Colors.black), // Set the width and color of the border
+              width: 2.0,
+              color: Colors.black,
+            ),
           ),
         ),
         child: Column(
@@ -67,7 +69,6 @@ class _UserInfoSideBarState extends State<UserInfoSideBar> {
                 left: Dimensions.dimenisonNo16,
                 right: Dimensions.dimenisonNo16,
                 top: Dimensions.dimenisonNo18,
-                // top: Dimensions.dimenisonNo18_5,
               ),
               child: Row(
                 children: [
@@ -80,6 +81,20 @@ class _UserInfoSideBarState extends State<UserInfoSideBar> {
                     ),
                   ),
                   Spacer(),
+                  IconButton(
+                    onPressed: () {
+                      Routes.instance.push(
+                          widget: EditAppointment(
+                              index: widget.index,
+                              orderModer: widget.orderModel),
+                          context: context);
+                    },
+                    icon: const Icon(
+                      Icons.edit_square,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(width: Dimensions.dimenisonNo5),
                   IconButton(
                     onPressed: () {},
                     icon: const Icon(
@@ -106,27 +121,28 @@ class _UserInfoSideBarState extends State<UserInfoSideBar> {
                     ),
                     radius: Dimensions.dimenisonNo20,
                   ),
-                  SizedBox(
-                    width: Dimensions.dimenisonNo10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.orderModel.userModel.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: Dimensions.dimenisonNo16,
+                  SizedBox(width: Dimensions.dimenisonNo10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.orderModel.userModel.name,
+                          style: TextStyle(
+                            overflow: TextOverflow.clip,
+                            fontWeight: FontWeight.bold,
+                            fontSize: Dimensions.dimenisonNo16,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "M.no ${widget.orderModel.userModel.phone}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: Dimensions.dimenisonNo14,
+                        Text(
+                          "M.no ${widget.orderModel.userModel.phone}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: Dimensions.dimenisonNo14,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Spacer(),
                   IconButton(
@@ -139,9 +155,7 @@ class _UserInfoSideBarState extends State<UserInfoSideBar> {
                       // _launchDialer(orderModel.userModel.phone.toString());
                     },
                   ),
-                  SizedBox(
-                    width: Dimensions.dimenisonNo10,
-                  ),
+                  SizedBox(width: Dimensions.dimenisonNo10),
                   CustomIconButton(
                     iconSize: Dimensions.dimenisonNo30,
                     icon: FontAwesomeIcons.whatsapp,
@@ -166,9 +180,7 @@ class _UserInfoSideBarState extends State<UserInfoSideBar> {
                 ),
               ),
             ),
-            SizedBox(
-              height: Dimensions.dimenisonNo16,
-            ),
+            SizedBox(height: Dimensions.dimenisonNo16),
             userInfoColumn(
               title: "Appointment Date",
               infoText:
@@ -179,29 +191,23 @@ class _UserInfoSideBarState extends State<UserInfoSideBar> {
               infoText: widget.orderModel.serviceDate,
             ),
             userInfoColumn(
-                title: "Appointment No.",
-                infoText: ' 000${widget.orderModel.appointmentNo.toString()}'),
-            Divider(
-              thickness: Dimensions.dimenisonNo5,
+              title: "Appointment No.",
+              infoText: ' 000${widget.orderModel.appointmentNo.toString()}',
             ),
+            Divider(thickness: Dimensions.dimenisonNo5),
             Padding(
-              padding: EdgeInsets.only(
-                left: Dimensions.dimenisonNo16,
-              ),
+              padding: EdgeInsets.only(left: Dimensions.dimenisonNo16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Service List",
                     style: TextStyle(
-                      // color: Colors.black.withOpacity(0.699999988079071),
                       fontSize: Dimensions.dimenisonNo15,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(
-                    height: Dimensions.dimenisonNo10,
-                  ),
+                  SizedBox(height: Dimensions.dimenisonNo10),
                   ...widget.orderModel.services.map(
                     (singleService) {
                       return Padding(
@@ -215,28 +221,82 @@ class _UserInfoSideBarState extends State<UserInfoSideBar> {
                 ],
               ),
             ),
-            SizedBox(
-              height: Dimensions.dimenisonNo10,
-            ),
+            SizedBox(height: Dimensions.dimenisonNo10),
             Divider(),
             widget.orderModel.userNote.length >= 2
                 ? userInfoColumn(
                     title: "Client Note", infoText: widget.orderModel.userNote)
                 : const userInfoColumn(
                     title: "Client Note", infoText: "No user note"),
-            SizedBox(
-              height: Dimensions.dimenisonNo10,
-            ),
-            // Divider(),
-
             SizedBox(height: Dimensions.dimenisonNo10),
-            const Divider(
-              thickness: 3,
+            const Divider(thickness: 3),
+            Padding(
+              padding: EdgeInsets.only(left: Dimensions.dimenisonNo16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Appointment Book Details",
+                    style: TextStyle(
+                      fontSize: Dimensions.dimenisonNo15,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: widget.orderModel.timeDateList.length,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        // Display the first element separately
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Book on  ${widget.orderModel.timeDateList[0].date}  at  ${widget.orderModel.timeDateList[0].time} by ${widget.orderModel.userModel.name}",
+                              style:
+                                  TextStyle(fontSize: Dimensions.dimenisonNo12),
+                            ),
+                            // Display all remaining elements
+                            SizedBox(
+                              height: 4,
+                            ),
+                            if (widget.orderModel.timeDateList.length > 1)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ...widget.orderModel.timeDateList
+                                      .sublist(1)
+                                      .map(
+                                    (singleTimeDate) {
+                                      return
+                                          // singleTimeDate.updateBy == "User"
+                                          //     ? Text(
+                                          //         "update on ${singleTimeDate.date} at ${singleTimeDate.time} by ${singleTimeDate.updateBy}",
+                                          //         style: TextStyle(
+                                          //             fontSize:
+                                          //                 Dimensions.dimenisonNo12),
+                                          //       )
+                                          //     :
+                                          Text(
+                                        "update on ${singleTimeDate.date} at ${singleTimeDate.time} by ${singleTimeDate.updateBy}",
+                                        style: TextStyle(
+                                            fontSize: Dimensions.dimenisonNo12),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                          ],
+                        );
+                      } else {
+                        // Returning an empty container to avoid redundant data (first element)
+                        return SizedBox.shrink();
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
-            userInfoColumn(
-                title: "Appointment Book Details",
-                infoText:
-                    "${widget.orderModel.serviceBookDate} - ${widget.orderModel.serviceBookTime}"),
             SizedBox(height: Dimensions.dimenisonNo20),
             Container(
               padding:

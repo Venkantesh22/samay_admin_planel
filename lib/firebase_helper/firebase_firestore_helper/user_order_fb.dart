@@ -2,13 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:samay_admin_plan/constants/constants.dart';
+import 'package:samay_admin_plan/constants/global_variable.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/models/service_model/service_model.dart';
+import 'package:samay_admin_plan/models/timestamped_model/date_time_model.dart';
 import 'package:samay_admin_plan/models/user_model/user_model.dart';
 import 'package:samay_admin_plan/models/user_order/user_order_model.dart';
 
 class UserBookingFB {
   static UserBookingFB instance = UserBookingFB();
+
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -86,7 +89,7 @@ class UserBookingFB {
   }
 
 // Update Appointment by Id
-  Future<void> updateAppointmentFB(
+  Future<bool> updateAppointmentFB(
       String userId, appointmentId, OrderModel orderModel) async {
     await _firebaseFirestore
         .collection('UserOrder')
@@ -94,8 +97,10 @@ class UserBookingFB {
         .collection('order')
         .doc(appointmentId)
         .update(orderModel.toJson());
+    return true;
   }
 
+// Save new Appointment
   Future<bool> saveAppointmentManual(
       List<ServiceModel> listOfServices,
       UserModel userModel,
@@ -107,12 +112,12 @@ class UserBookingFB {
       String serviceStartTime,
       String serviceEndTime,
       String userNote,
-      String serviceBookDate,
-      String serviceBookTime,
       SalonModel? salonModel,
       BuildContext context) async {
     try {
       String? adminUid = _auth.currentUser?.uid;
+      final List<TimeDateModel> timeDateList = [];
+
       if (listOfServices == null) {
         Navigator.of(context, rootNavigator: true)
             .pop(); // Dismiss any loading dialog
@@ -139,6 +144,14 @@ class UserBookingFB {
           .collection('order')
           .doc();
 
+      //Add TimeDate list
+      TimeDateModel timeDateModel = TimeDateModel(
+          id: documentReference.id,
+          date: GlobalVariable.getCurrentDate(),
+          time: GlobalVariable.getCurrentTime(),
+          updateBy: "Vender");
+      timeDateList.add(timeDateModel);
+
       documentReference.set({
         "orderId": documentReference.id,
         "appointmentNo": appointmentNo,
@@ -153,8 +166,9 @@ class UserBookingFB {
         "serviceStartTime": serviceStartTime,
         "serviceEndTime": serviceEndTime,
         "userNote": userNote,
-        "serviceBookDate": serviceBookDate,
-        "serviceBookTime": serviceBookTime,
+
+        "timeDateList": timeDateList.map((e) => e.toJson()).toList(),
+        "isUpdate": false,
       });
 
       return true;

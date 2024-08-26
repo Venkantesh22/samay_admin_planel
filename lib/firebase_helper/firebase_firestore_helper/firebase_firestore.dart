@@ -16,6 +16,7 @@ import 'package:samay_admin_plan/firebase_helper/firebase_storage_helper/firebas
 import 'package:samay_admin_plan/models/category_model/category_model.dart';
 import 'package:samay_admin_plan/models/salon_form_models/salon_infor_model.dart';
 import 'package:samay_admin_plan/models/service_model/service_model.dart';
+import 'package:samay_admin_plan/models/timestamped_model/date_time_model.dart';
 
 class FirebaseFirestoreHelper {
   static FirebaseFirestoreHelper instance = FirebaseFirestoreHelper();
@@ -51,6 +52,12 @@ class FirebaseFirestoreHelper {
           .collection("salon")
           .doc();
 
+      TimeDateModel timeDateModel = TimeDateModel(
+          id: reference.id,
+          date: GlobalVariable.getCurrentDate(),
+          time: GlobalVariable.getCurrentTime(),
+          updateBy: "vender");
+
       SalonModel salonModel = SalonModel(
         id: reference.id,
         adminId: adminUid!,
@@ -77,6 +84,7 @@ class FirebaseFirestoreHelper {
         friday: '',
         saturday: '',
         sunday: '',
+        // timeDateModel: timeDateModel,
       );
       // upload image of create new folder then upload
 
@@ -88,9 +96,6 @@ class FirebaseFirestoreHelper {
       salonModel.image = uploadImageUrl;
 
       await reference.set(salonModel.toJson());
-      // GlobalVariable.salonID = reference.id;
-      // print("Print ID ${reference.id}");
-      // print("Print ID ${GlobalVariable.salonID}");
 
       return salonModel;
     } catch (e) {

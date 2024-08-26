@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:samay_admin_plan/constants/constants.dart';
 import 'package:samay_admin_plan/firebase_helper/firebase_firestore_helper/user_order_fb.dart';
 import 'package:samay_admin_plan/models/service_model/service_model.dart';
 import 'package:samay_admin_plan/models/user_order/user_order_model.dart';
@@ -44,10 +45,19 @@ class BookingProvider with ChangeNotifier {
   }
 
   // Update appointment
-  Future<void> updateAppointment(
+  Future<bool> updateAppointment(
       int index, String userId, appointmentId, OrderModel orderModel) async {
-    await _userBookingFB.updateAppointmentFB(userId, appointmentId, orderModel);
-    _bookinglist[index] = orderModel;
+    try {
+      await _userBookingFB.updateAppointmentFB(
+          userId, appointmentId, orderModel);
+      _bookinglist[index] = orderModel;
+      return true;
+    } catch (e) {
+      showMessage("Error : Appointment is not update");
+      print("Error : Appointment is not update");
+
+      return false;
+    }
   }
 
   // Calculate total time for all services in the watch list

@@ -453,3 +453,28 @@ bool addNewAppointmentVaildation(
     return true;
   }
 }
+
+// Update Appointment Text Field Validation.
+bool updateAppointmentVaildation(
+  final String name,
+  final String number,
+) {
+  if (name.isEmpty && number.isEmpty) {
+    showMessage("All Fields are empty");
+    return false;
+  } else if (name.isEmpty) {
+    showMessage("Enter First Name");
+    return false;
+  } else if (number.isEmpty) {
+    showMessage("Enter Phone Number");
+    return false;
+  } else if (number.length != 10) {
+    showMessage("Enter 10 digit mobile number.");
+    return false;
+  } else if (!RegExp(r'^\d+$').hasMatch(number)) {
+    showMessage('Please enter only digits in Mobile');
+    return false;
+  } else {
+    return true;
+  }
+}
