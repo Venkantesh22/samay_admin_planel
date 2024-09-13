@@ -264,7 +264,7 @@ class _EditAppointmentState extends State<EditAppointment> {
                                   padding:
                                       EdgeInsets.all(Dimensions.dimenisonNo16),
                                   child: Text(
-                                    "Add New Appointment",
+                                    "Update Appointment",
                                     style: TextStyle(
                                       fontSize: Dimensions.dimenisonNo20,
                                       fontWeight: FontWeight.w600,
@@ -892,6 +892,41 @@ class _EditAppointmentState extends State<EditAppointment> {
                                                   Row(
                                                     children: [
                                                       Text(
+                                                        'Platform fee',
+                                                        style: TextStyle(
+                                                          fontSize: Dimensions
+                                                              .dimenisonNo14,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          letterSpacing: 0.90,
+                                                        ),
+                                                      ),
+                                                      const Spacer(),
+                                                      Icon(
+                                                        Icons.currency_rupee,
+                                                        size: Dimensions
+                                                            .dimenisonNo16,
+                                                      ),
+                                                      Text(
+                                                        GlobalVariable
+                                                            .salonPlatformFee
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                          fontSize: Dimensions
+                                                              .dimenisonNo14,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          letterSpacing: 0.90,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                      height: Dimensions
+                                                          .dimenisonNo10),
+                                                  Row(
+                                                    children: [
+                                                      Text(
                                                         'Total',
                                                         style: TextStyle(
                                                           fontSize: Dimensions
@@ -952,15 +987,18 @@ class _EditAppointmentState extends State<EditAppointment> {
                                                         name: _nameController
                                                             .text
                                                             .trim(),
-                                                        phone: int.parse(
-                                                            _mobileController
-                                                                .text
-                                                                .trim()),
+                                                        phone: _mobileController
+                                                            .text
+                                                            .trim(),
                                                         image: widget.orderModer
                                                             .userModel.image,
                                                         email: widget.orderModer
                                                             .userModel.email,
                                                         password: " ",
+                                                        timeDateModel: widget
+                                                            .orderModer
+                                                            .userModel
+                                                            .timeDateModel,
                                                       );
 
                                                       // Create the time and date model
@@ -988,39 +1026,41 @@ class _EditAppointmentState extends State<EditAppointment> {
 
                                                       if (_isVaildater) {
                                                         // Declare the orderModel variable before using it
-                                                        OrderModel orderModel = widget.orderModer.copyWith(
-                                                            services:
-                                                                bookingProvider
-                                                                    .getWatchList,
-                                                            userModel: userInfo,
-                                                            status: widget
-                                                                .orderModer
-                                                                .status,
-                                                            totalPrice:
-                                                                bookingProvider
-                                                                    .getfinalTotal,
-                                                            payment:
-                                                                "PAP (Pay At Place)",
-                                                            serviceDuration:
-                                                                bookingProvider
-                                                                    .getServiceBookingDuration,
-                                                            serviceDate:
-                                                                _appointmentDateController
-                                                                    .text
-                                                                    .trim(),
-                                                            serviceStartTime:
-                                                                _appointmentTimeController
-                                                                    .text
-                                                                    .trim(),
-                                                            serviceEndTime:
-                                                                _serviceEndTime,
-                                                            userNote:
-                                                                _userNote
-                                                                    .text
-                                                                    .trim(),
-                                                            timeDateList:
-                                                                timeDateList,
-                                                            isUpdate: true);
+                                                        OrderModel orderModel =
+                                                            widget.orderModer
+                                                                .copyWith(
+                                                          services:
+                                                              bookingProvider
+                                                                  .getWatchList,
+                                                          userModel: userInfo,
+                                                          totalPrice:
+                                                              bookingProvider
+                                                                  .getfinalTotal
+                                                                  .toString(),
+                                                          payment:
+                                                              "PAP (Pay At Place)",
+                                                          serviceDuration:
+                                                              bookingProvider
+                                                                  .getServiceBookingDuration,
+                                                          serviceDate:
+                                                              _appointmentDateController
+                                                                  .text
+                                                                  .trim(),
+                                                          serviceStartTime:
+                                                              _appointmentTimeController
+                                                                  .text
+                                                                  .trim(),
+                                                          serviceEndTime:
+                                                              _serviceEndTime,
+                                                          userNote: _userNote
+                                                              .text
+                                                              .trim(),
+                                                          timeDateList:
+                                                              timeDateList,
+                                                          isUpdate: true,
+                                                          // appointmentStatus:
+                                                          //     "update",
+                                                        );
 
                                                         // Now use orderModel in the updateAppointment function
                                                         Future<bool> isUpdate =

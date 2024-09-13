@@ -310,26 +310,69 @@ class RowOfStates extends StatelessWidget {
                     ),
                   )
 
-                //! Confirmed Complete
+//                 //!  Complete Appointment
 
-                : Container(
-                    height: Dimensions.dimenisonNo60,
-                    padding: EdgeInsets.only(
-                      left: Dimensions.dimenisonNo16,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Current State",
-                          style: TextStyle(fontSize: Dimensions.dimenisonNo14),
+                : orderModel.status == "Completed"
+                    ? Container(
+                        height: Dimensions.dimenisonNo60,
+                        padding: EdgeInsets.only(
+                          left: Dimensions.dimenisonNo16,
                         ),
-                        SizedBox(
-                          height: Dimensions.dimenisonNo10,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Current State",
+                              style:
+                                  TextStyle(fontSize: Dimensions.dimenisonNo14),
+                            ),
+                            SizedBox(
+                              height: Dimensions.dimenisonNo10,
+                            ),
+                            StateText(status: orderModel.status),
+                          ],
                         ),
-                        StateText(status: orderModel.status),
-                      ],
-                    ),
-                  );
+                      )
+                    : orderModel.status == "(Cancel)"
+                        ? Container(
+                            height: Dimensions.dimenisonNo60,
+                            padding: EdgeInsets.only(
+                              left: Dimensions.dimenisonNo16,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Current State",
+                                  style: TextStyle(
+                                      fontSize: Dimensions.dimenisonNo14),
+                                ),
+                                SizedBox(
+                                  height: Dimensions.dimenisonNo10,
+                                ),
+                                StateText(status: orderModel.status),
+                              ],
+                            ),
+                          )
+                        : Container(
+                            height: Dimensions.dimenisonNo60,
+                            padding: EdgeInsets.only(
+                              left: Dimensions.dimenisonNo16,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Current State",
+                                  style: TextStyle(
+                                      fontSize: Dimensions.dimenisonNo14),
+                                ),
+                                SizedBox(
+                                  height: Dimensions.dimenisonNo10,
+                                ),
+                                StateText(status: orderModel.status),
+                              ],
+                            ),
+                          );
   }
 }

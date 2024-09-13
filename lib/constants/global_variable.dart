@@ -13,7 +13,7 @@ class GlobalVariable {
 // variable for increment appointment no.
   static String samayCollectionId = '6fa4GusAyAIkcAuBkYlu';
   static String salonCollectionId = 'j5bzQoxDswYJdSLQI3Lw';
-  static num appointmentNO = 0.0;
+  static int appointmentNO = 0;
 
   // Function to get current date and time in a formatted string
   static String getCurrentDate() {
@@ -25,4 +25,7 @@ class GlobalVariable {
     DateTime now = DateTime.now();
     return DateFormat('hh:mm a').format(now); // HH:mm a (e.g. 03:45 PM)
   }
+
+  //Samay Admin plain
+  static int salonPlatformFee = 20;
 }

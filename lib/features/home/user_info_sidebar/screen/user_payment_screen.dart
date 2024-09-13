@@ -13,7 +13,7 @@ class UserSideBarPaymentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double subtotal = orderModel.totalPrice - 20;
+    // final double subtotal = orderModel.totalPrice - 20;
 
     return Scaffold(
       appBar: const CustomAppBar(),
@@ -43,12 +43,12 @@ class UserSideBarPaymentScreen extends StatelessWidget {
                     // lastText: "Pay at Place",
                   ),
                   SizedBox(height: Dimensions.dimenisonNo5),
-                  CustomText(
-                    firstText: "Subtotal:",
-                    lastText: subtotal.toString(),
-                    // lastText: '2222',
-                    showicon: true,
-                  ),
+                  // CustomText(
+                  //   firstText: "Subtotal:",
+                  //   lastText: subtotal.toString(),
+                  //   // lastText: '2222',
+                  //   showicon: true,
+                  // ),
                   SizedBox(height: Dimensions.dimenisonNo5),
                   const Divider(),
                   CustomText(

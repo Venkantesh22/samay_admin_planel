@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:samay_admin_plan/models/timestamped_model/date_time_model.dart';
+
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
 String userModelToJson(UserModel data) => json.encode(data.toJson());
@@ -12,22 +14,25 @@ class UserModel {
     required this.image,
     required this.email,
     required this.password,
+    required this.timeDateModel,
   });
 
   String id;
   String name;
-  int phone;
+  String phone;
   String image;
   String email;
   String password;
+  TimeDateModel timeDateModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
         name: json["name"],
-        phone: json["phone"] != null ? int.parse(json["phone"].toString()) : 0,
+        phone: json["phone" ?? "0"],
         image: json["image"],
         email: json["email"],
         password: json["password"],
+        timeDateModel: TimeDateModel.fromJson(json["timeDateModel"] ?? {}),
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,14 +42,16 @@ class UserModel {
         "image": image,
         "email": email,
         "password": password,
+        // "timeDateModel": timeDateModel.toJson(),
       };
 
   UserModel copyWith({
     String? name,
-    int? phone,
+    String? phone,
     String? image,
     String? email,
     String? password,
+    TimeDateModel? timeDateModel,
   }) {
     return UserModel(
       id: id,
@@ -53,6 +60,7 @@ class UserModel {
       image: image ?? this.image,
       email: email ?? this.email,
       password: password ?? this.password,
+      timeDateModel: timeDateModel ?? this.timeDateModel,
     );
   }
 }

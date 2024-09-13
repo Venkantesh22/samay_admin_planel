@@ -30,24 +30,16 @@ class StateText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // reschedule state
-        status == "Reschedule"
-            ? Row(
-                children: [
-                  Icon(
-                    CupertinoIcons.exclamationmark_circle,
-                    size: Dimensions.dimenisonNo18,
+
+        // (Update) state
+        status == "(Update)"
+            ? Text(
+                status,
+                style: GoogleFonts.roboto(
+                    fontSize: Dimensions.dimenisonNo16,
                     color: AppColor.buttonColor,
-                  ),
-                  SizedBox(width: Dimensions.dimenisonNo5),
-                  Text(
-                    status,
-                    style: GoogleFonts.roboto(
-                      fontSize: Dimensions.dimenisonNo16,
-                      color: AppColor.buttonColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: .90),
               )
             // Pending state
             : status == "Pending"
@@ -111,7 +103,7 @@ class StateText extends StatelessWidget {
                             ],
                           )
                         // Cancel state
-                        : status == "Cancel"
+                        : status == "(Cancel)"
                             ? Row(
                                 children: [
                                   Container(

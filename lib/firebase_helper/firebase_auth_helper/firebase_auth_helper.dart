@@ -44,8 +44,7 @@ class FirebaseAuthHelper {
       final adminData =
           AdminModel(uidOfCreateUser, name, email, int.parse(number), password);
 
-      // String? uploadImageUrl = await FirebaseStorageHelper.instance
-      //     .uploadImageToStorage(adminData, selectedImage);
+     
       String? uploadImageUrl = await FirebaseStorageHelper.instance
           .uploadProfileImageToStorage(
               adminData.id, "adminProfileimages", selectedImage);

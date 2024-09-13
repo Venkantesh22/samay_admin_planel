@@ -9,6 +9,7 @@ class SamayFB {
 
   Future<int> incrementSalonAppointmentNo() async {
     int newAppointmentNo = 0;
+
     try {
       // Reference to the document within the nested collection "salon"
       DocumentReference salonDocRef = _firebaseFirestore
@@ -50,28 +51,3 @@ class SamayFB {
     }
   }
 }
-
-
-
- // // Update salon Appointment No
-  // Future<void> updateSalonAppointmentNoFB(SalonModel salonModel) async {
-  //   _firebaseFirestore
-  //       .collection("Samay")
-  //       .doc(GlobalVariable.salonCollectionId)
-  //       .collection("salon")
-  //       .doc(GlobalVariable.salonCollectionId)
-  //       .update(salonModel.toJson());
-  // }
-
-  // // Get salon Appointment No
-  // Future<SalonModel> getSalonAppointmentNoFB() async {
-  //   DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-  //       await _firebaseFirestore
-  //           .collection("Samay")
-  //           .doc(GlobalVariable.salonCollectionId)
-  //           .collection("salon")
-  //           .doc(GlobalVariable.salonCollectionId)
-  //           .get();
-
-  //   return SalonModel.fromJson(documentSnapshot.data()!);
-  // }
